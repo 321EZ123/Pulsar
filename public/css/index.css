@@ -6,42 +6,22 @@
 } 
 
 body {
-
-    background: linear-gradient(135deg, #000000, #1b043a, #1a1342); /* Darker blue gradient */
-    background-size: 300% 300%;
-
-    -webkit-animation: backgroundAnim 60s ease infinite;
-    -moz-animation: backgroundAnim 60s ease infinite;
-    animation: backgroundAnim 60s ease infinite;
-    background-attachment: fixed;
-    font-family: Arial, sans-serif;
+    font-family: "Varela Round", sans-serif;
+    background-image: linear-gradient(315deg, #03055b, black);
+    animation-name: gradAnimate;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+    color: #c0c0c0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-
     min-height: 100vh;
-    padding-bottom: 60px; /* Space for footer */
-
-
-
-
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
 }
 
-@-webkit-keyframes backgroundAnim {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@-moz-keyframes backgroundAnim {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@keyframes backgroundAnim {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
 .bodyy {
     width: 100%;
     height: 100vh;
@@ -53,7 +33,7 @@ body {
 .nav-bar {
     height: 80px;
     width: 100%;
-    background: #333;
+    background: #111;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -200,7 +180,8 @@ body:hover .custom-cursor {
 }
 
 #stitle {
-    font-size: 3rem; /* Adjust as necessary */
+    text-align: center;
+    font-size: 3.2rem; /* Adjust as necessary */
     color: #ffffff; /* Text color */
     text-shadow: 
         0 0 5px rgba(7, 105, 234, 0.8), /* Inner glow */
@@ -208,7 +189,13 @@ body:hover .custom-cursor {
         0 0 20px rgba(7, 105, 234, 0.3); /* Outer glow */
     animation: glowFadeAnim 3s ease-in-out infinite alternate; /* Combined animation */
 }
-
+#sigma {
+    font-size: 25px;
+    text-align: center;
+    size: 50px;
+    color: white;
+    text-decoration: none;
+}
 @keyframes glowFadeAnim {
     0% { 
         opacity: 1; 
@@ -301,6 +288,3 @@ h3{
 .btn:hover {
     transform: scale(1.15);
 }
-
-
-
