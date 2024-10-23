@@ -17,9 +17,6 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- UV Scripts -->
-    <script src="uv/uv.bundle.js" defer></script>
-    <script src="uv/uv.config.js" defer></script>
-    <script src="baremux/index.js" defer></script>
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="css/index.css">
     <script>
@@ -33,6 +30,101 @@
 
         window.addEventListener('keydown', redirectToNewURL);
     </script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    
+            @keyframes settingsSpin {
+                0% {rotate: 0deg;}
+                100% {rotate: 360deg;}
+            }
+        
+            @keyframes gradAnimate {
+                0% {background-position: 0% 2%;}
+                50% {background-position: 100% 99%;}
+                100% {background-position: 0% 2%;}
+            }
+            
+            body {
+                font-family: "Varela Round", sans-serif;
+                background-image: linear-gradient(315deg, #03055b, black);
+                animation-name: gradAnimate;
+                animation-duration: 10s;
+                animation-iteration-count: infinite;
+                animation-timing-function: ease;
+                color: #c0c0c0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .description {
+                text-align: center;
+                font-size: 1.2em;
+                color: #f0f0f0;
+            }
+            .search-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            #uv-form {
+                display: flex;
+                width: 90%;
+                max-width: 600px;
+            }
+            #uv-address {
+                flex: 1;
+                padding: 15px;
+                border: 1px solid #555;
+                border-radius: 4px 0 0 4px;
+                font-size: 16px;
+                background-color: #000000;
+                color: #c0c0c0;
+            }
+            #logo {
+                border-radius: 300px;
+            }
+            input[type="submit"] {
+                padding: 15px;
+                border: none;
+                background: linear-gradient(45deg, #003366, #006699);
+                color: #fff;
+                border-radius: 0 4px 4px 0;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background 0.3s, box-shadow 0.3s;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            }
+            input[type="submit"]:hover {
+                background: linear-gradient(45deg, #006699, #003366);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            }
+            main {
+                margin-top: 100px;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            footer {
+                background-color: #000000;
+                padding: 10px;
+                text-align: center;
+                font-size: 14px;
+                color: #777;
+                width: 100%;
+            }
+            footer a {
+                color: #c0c0c0;
+                text-decoration: none;
+                margin: 0 5px;
+            }
+    
+            i[class="fas fa-cog"]:hover {
+                animation-name: settingsSpin;
+                animation-duration: 0.5s;
+            }
+        </style>
 </head>
 <body>
     <div class="custom-cursor" id="customCursor">
@@ -59,20 +151,40 @@
             <i class="fas fa-cog"></i> Settings
         </a>
     </div>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 
-    <div id="main">
-        <!-- Title -->
         <h1 id="stitle">Pulsar</h1>
-        <!-- Description -->
-        <p id="description">A barebones example from MotorTruck1221's guide "Creating a proxy frontend from scratch"</p>
-        <!-- Search bar -->
-        <input id="address" type="text" placeholder="Search..." />
-        <!-- iframe where the content will be loaded -->
-        <iframe id="frame" class="dnone"></iframe>
-        <input type="submit" value="Go">
-        <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden">
+        <main>
+            <div class="search-container">
+                <form id="uv-form">
+                    <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden">
+                    <input id="uv-address" name="url" type="text" placeholder="Search..." required>
+                    <input type="submit" value="Go">
+                </form>
+            </div>
+        </main>
+         <div class="desc left-margin">
+           <p id="uv-error"></p>
+           <pre id="uv-error-code"></pre>
+         </div>
+        </div>
     </div>
-
+<span id="sigma" >
+        <a id="sigma" href="https://discord.gg/zJhPJYJCeJ" target="_blank" class="fa-brands fa-discord"></a>
+        <a id="sigma" href="https://github.com/Yeti1o1/Pulsar" target="_blank"class="fa-brands fa-github"></a>
+        <a id="sigma" href="" target="_blank"class="fa-solid fa-cloud"></a>
+        </span>
+     <script src="uv/uv.bundle.js" defer></script>
+     <script src="uv/uv.config.js" defer></script>
+     <script src="register-sw.js" defer></script>
+     <script src="search.js" defer></script>
+     <script src="index.js" defer></script>
+     <script src="error.js" defer></script>
     <script>
         async function regSW() {
             if (!navigator.serviceWorker) {
@@ -123,7 +235,5 @@
                 });
             });
         </script>
-         <script src="scripts.js"></script>
-        <script>const url = search(address.value, searchEngine.value); </script>
 </body>
 </html>
