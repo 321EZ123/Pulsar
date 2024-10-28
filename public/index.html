@@ -125,12 +125,10 @@
                 animation-duration: 0.5s;
             }
         </style>
-         <script src="uv/uv.bundle.js" defer></script>
-     <script src="uv/uv.config.js" defer></script>
-     <script src="register-sw.js" defer></script>
-     <script src="search.js" defer></script>
-     <script src="index.js" defer></script>
-     <script src="error.js" defer></script>
+  <script src="uv/uv.bundle.js"></script>
+  <script src="uv/uv.config.js"></script>
+  <script src="assets/register-sw.js"></script>
+
 </head>
 <body>
     <div class="custom-cursor" id="customCursor">
@@ -189,35 +187,6 @@
         <a id="sigma" href="https://github.com/Yeti1o1/Pulsar" target="_blank"class="fa-brands fa-github"></a>
         <a id="sigma" href="" target="_blank"class="fas fa-folder"></a>
         </span>
-    <script>
-        async function regSW() {
-            if (!navigator.serviceWorker) {
-                throw new Error("Your browser doesn't support service workers.");
-            }
-            await navigator.serviceWorker.register("/sw.js");
-        }
-        regSW();
-
-        async function setTransport() {
-            const conn = new BareMux.BareMuxConnection("/baremux/worker.js");
-            const wispUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
-            await conn.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
-        }
-
-        async function proxy(url) {
-            const iframe = document.getElementById("frame");
-            const uvUrl = __uv$config.prefix + __uv$config.encodeUrl(url);
-            await setTransport();
-            iframe.classList.remove("dnone");
-            iframe.src = uvUrl;
-        }
-
-        document.getElementById("address").addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                proxy(document.getElementById("address").value);
-            }
-        });
-    </script>
         <script>
             const customCursor = document.getElementById('customCursor');
             const spikes = document.getElementById('spikes');
@@ -239,6 +208,6 @@
                 });
             });
         </script>
-         <script src="scripts.js" defer></script>
+  <script src="assets/script.js" defer></script>
 </body>
 </html>
