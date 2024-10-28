@@ -125,6 +125,12 @@
                 animation-duration: 0.5s;
             }
         </style>
+         <script src="uv/uv.bundle.js" defer></script>
+     <script src="uv/uv.config.js" defer></script>
+     <script src="register-sw.js" defer></script>
+     <script src="search.js" defer></script>
+     <script src="index.js" defer></script>
+     <script src="error.js" defer></script>
 </head>
 <body>
     <div class="custom-cursor" id="customCursor">
@@ -164,7 +170,7 @@
 
         <h1 id="stitle">Pulsar</h1>
         <main>
-            <div class="search-container">
+            <div class="container">
                 <form id="uv-form">
                     <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden">
                     <input id="uv-address" name="url" type="text" placeholder="Search..." required>
@@ -183,12 +189,6 @@
         <a id="sigma" href="https://github.com/Yeti1o1/Pulsar" target="_blank"class="fa-brands fa-github"></a>
         <a id="sigma" href="" target="_blank"class="fas fa-folder"></a>
         </span>
-     <script src="uv/uv.bundle.js" defer></script>
-     <script src="uv/uv.config.js" defer></script>
-     <script src="register-sw.js" defer></script>
-     <script src="search.js" defer></script>
-     <script src="index.js" defer></script>
-     <script src="error.js" defer></script>
     <script>
         async function regSW() {
             if (!navigator.serviceWorker) {
