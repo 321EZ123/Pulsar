@@ -205,6 +205,7 @@ body:hover .custom-cursor {
     animation: glowFadeAnim 3s ease-in-out infinite alternate; /* Combined animation */
 }
 #sigma {
+    bottom:0%;
     font-size: 25px;
     text-align: center;
     size: 50px;
