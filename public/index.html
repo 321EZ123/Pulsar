@@ -32,6 +32,32 @@
     </script>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 20px auto; /* Keep container centered */
+                width: 100%;
+                max-width: 500px; /* Increase width slightly */
+            }
+
+            #uv-address {
+                flex: 1;
+                padding: 14px; /* Increase padding */
+                font-size: 18px; /* Slightly larger font */
+            }
+
+            #sigma {
+                display: flex;
+                justify-content: center;
+                margin-top: 30px; /* Add space between search bar and icons */
+            }
+
+            #sigma a {
+                margin: 0 10px; /* Adjust spacing between icons */
+                font-size: 24px; /* Adjust icon size as desired */
+            }
     
             @keyframes settingsSpin {
                 0% {rotate: 0deg;}
@@ -43,6 +69,8 @@
                 50% {background-position: 100% 99%;}
                 100% {background-position: 0% 2%;}
             }
+
+
             
             body {
                 font-family: "Varela Round", sans-serif;
@@ -167,6 +195,7 @@
 </br>
 
         <h1 id="stitle">Pulsar</h1>
+        <p class="memo">Browse the web unblocked, for free</p>
   <div class="container">
     <input id="uv-address" type="text" class="input" placeholder="Search...">
     <input type="submit" value="Go">
