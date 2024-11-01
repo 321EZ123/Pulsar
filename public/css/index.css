@@ -56,7 +56,13 @@ body {
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 5px;
-
+.memo {
+    text-align: center;
+    font-size: 1.1em;
+    color: #f0f0f0;
+    margin-top: 10px; /* Space between "Pulsar" and the memo */
+    font-style: italic; /* Optional: adds an italic style for a softer look */
+}
 }
 .credit {
     position: absolute;
@@ -71,13 +77,6 @@ body {
     top: 25px;
     right: 16px;
     z-index: 500;
-  }
-.memo {
-    text-align: center;
-    font-size: 1.1em;
-    color: #f0f0f0;
-    margin-top: 10px; /* Space between "Pulsar" and the memo */
-    font-style: italic; /* Optional: adds an italic style for a softer look */
   }
 
 .nav-button img {
@@ -294,18 +293,18 @@ h4{
 }
 
 /* Style the button container */
-.btn-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    padding: 2rem;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem; /* Make buttons smaller */
+    border-radius: 8px;
+    font-size: 1rem; /* Adjust font size */
+    cursor: pointer;
 }
 
-/* Style the buttons */
-.btn {
-    background-color: #333;
-    color: white;
+.btn:hover {
+    transform: scale(1.15);
+}
+color: white;
     border: none;
     padding: 0.5rem 1rem; /* Make buttons smaller */
     border-radius: 8px;
