@@ -56,13 +56,7 @@ body {
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 5px;
-.memo {
-    text-align: center;
-    font-size: 1.1em;
-    color: #f0f0f0;
-    margin-top: 10px; /* Space between "Pulsar" and the memo */
-    font-style: italic; /* Optional: adds an italic style for a softer look */
-}
+
 }
 .credit {
     position: absolute;
@@ -210,8 +204,15 @@ body:hover .custom-cursor {
         0 0 20px rgba(7, 105, 234, 0.3); /* Outer glow */
     animation: glowFadeAnim 3s ease-in-out infinite alternate; /* Combined animation */
 }
+#memo {
+    text-align: center;
+    align: center;
+    font-size: 1.1em;
+    color: #f0f0f0;
+    margin-top: 10px; /* Space between "Pulsar" and the memo */
+    font-style: italic; /* Optional: adds an italic style for a softer look */
+}
 #sigma {
-    bottom:0%;
     font-size: 25px;
     text-align: center;
     size: 50px;
@@ -293,18 +294,18 @@ h4{
 }
 
 /* Style the button container */
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem; /* Make buttons smaller */
-    border-radius: 8px;
-    font-size: 1rem; /* Adjust font size */
-    cursor: pointer;
+.btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 2rem;
 }
 
-.btn:hover {
-    transform: scale(1.15);
-}
-color: white;
+/* Style the buttons */
+.btn {
+    background-color: #333;
+    color: white;
     border: none;
     padding: 0.5rem 1rem; /* Make buttons smaller */
     border-radius: 8px;
