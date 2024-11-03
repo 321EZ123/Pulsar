@@ -88,7 +88,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #393e46; /* Track color */
+    background: #111; /* Track color */
     border-radius: 10px; /* Rounded corners for the track */
 }
 
