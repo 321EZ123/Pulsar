@@ -58,6 +58,18 @@ body {
     border-radius: 5px;
 
 }
+/* Button and overlay styles remain the same */
+#fullscreenBtn {
+    position: fixed;
+    top: 0;
+    right: 10px;
+    bottom: 10px;
+    z-index: 10;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    display: none;
+}
 .credit {
     position: absolute;
     height: 24px;
