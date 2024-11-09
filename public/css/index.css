@@ -33,7 +33,7 @@ body {
 .nav-bar {
     height: 80px;
     width: 100%;
-    background: #111;
+    background: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
