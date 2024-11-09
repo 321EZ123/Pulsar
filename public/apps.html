@@ -34,12 +34,11 @@
             display: none;
             position: fixed;
             top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            left: 15%;
+            right: 15%;
             border: none;
-            margin: 0;
-            padding: 0;
+            margin: auto;
+
         }
         .imgg {
             width: 300px;
@@ -84,10 +83,33 @@
             max-height: 160px;
             text-align: center;
         }
+
+#myUL {
+  /* Remove default list styling */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd; /* Add a border to all links */
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6; /* Grey background color */
+  padding: 12px; /* Add some padding */
+  text-decoration: none; /* Remove default text underline */
+  font-size: 18px; /* Increase the font-size */
+  color: black; /* Add a black text color */
+  display: block; /* Make it into a block element to fill the whole list */
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee; /* Add a hover effect to all links, except for headers */
+}
     </style>
 </head>
 <body>
     <div class="custom-cursor" id="customCursor"></div>
+    </div>
     <a href="index.html" class="logo">
         <img src="Images/Pulsar Network nobg.png" alt="Pulsar Logo">
     </a>
@@ -113,8 +135,11 @@
             <i class="fas fa-book"></i> 
         </a>
 
-    <div class="btn-container">
-        <h3 id="gameSection"></h3>
+<h3 id="gameSection">
+</br></br>
+<a href="games.html" style="text-decoration: none; color: inherit;"><u>HTML</u></a>  |  <a href="swf games.html" style="text-decoration: none; color: inherit;">SWF</a>
+<br><br>
+</h3>
         <button class="btn" onclick="Bl();HBC('Apps/Advanced Code Editor 1.html')">
         <img class="imgg" src="Images/Advanced Code Editor 1.png" alt="Advanced Code Editor 1">Advanced Code Editor 1</button>
         <button class="btn" onclick="Bl();HBC('Apps/Advanced Code Editor 2.html')">
@@ -135,99 +160,177 @@
         <img class="imgg" src="Images/Wordle Bot.png" alt="Wordle Bot">Wordle Bot</button>
         
 
+<div class="btn-container">
 
 
-        <iframe id="gameFrame" frameborder="0" marginheight="0" marginwidth="0"></iframe>
-    </div>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
+<!-- Overlay for background cover -->
+<div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+background-image: linear-gradient(315deg, #03055b, black); display: none; z-index: 5;"></div>
 
-    <script>
-        function Ba() {
-            var x = document.getElementById("gameFrame");
-            x.style.backgroundColor = "white";
+<!-- Iframe container and fullscreen button -->
+<div style="position: relative; z-index: 10; display: flex; justify-content: center; padding: 0 20px;">
+    <!-- Center iframe with equal space on left and right -->
+    <iframe id="gameFrame" frameborder="0" marginheight="0" marginwidth="0" style="width: 80%; max-width: 1200px; 
+    height: calc(90vh - 160px); display: none; margin-top: 160px;"></iframe>
+</div>
+
+<!-- Fullscreen button (using FontAwesome icon) -->
+<button id="fullscreenBtn" onclick="toggleFullscreen()" style="position: fixed; top: 50%; right: 15%; bottom: 50%; z-index: 10; display: none; background: transparent; border: none; padding: 0px;">
+    <i class="fas fa-expand" style="font-size: 24px; color: white;"></i> <!-- FontAwesome Fullscreen icon -->
+</button>
+
+<!-- Custom cursor element -->
+<div id="customCursor" style="position: absolute; pointer-events: none; width: 20px; height: 20px; border-radius: 50%; background-color: white; display: none; transform: translate(-50%, -50%); z-index: 100;"></div>
+
+<script>
+    function Ba() {
+        var x = document.getElementById("gameFrame");
+        x.style.backgroundColor = "white";
+    }
+
+    function Bl() {
+        var x = document.getElementById("gameFrame");
+        x.style.backgroundColor = "black";
+    }
+
+    function HBC(url) {
+        var gameSection = document.getElementById("gameSection");
+        gameSection.style.display = "none"; // Hide the game section
+
+        var gameFrame = document.getElementById("gameFrame");
+        gameFrame.style.display = "block"; // Show the iframe
+        gameFrame.src = url;               // Set the iframe source
+
+        var fullscreenBtn = document.getElementById("fullscreenBtn");
+        fullscreenBtn.style.display = "block"; // Show the fullscreen button
+
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "block"; // Show the overlay
+
+        customCursor.style.display = 'none'; // Ensure it's hidden initially
+    }
+
+    function toggleFullscreen() {
+        const iframe = document.getElementById("gameFrame");
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        } else if (iframe.requestFullscreen) {
+            iframe.requestFullscreen();
+        } else if (iframe.mozRequestFullScreen) { // Firefox
+            iframe.mozRequestFullScreen();
+        } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari, Opera
+            iframe.webkitRequestFullscreen();
+        } else if (iframe.msRequestFullscreen) { // IE/Edge
+            iframe.msRequestFullscreen();
         }
-    </script>
-    <script>
-        function Bl() {
-            var x = document.getElementById("gameFrame");
-            x.style.backgroundColor = "black";
-        }
-    </script>
-    <script>
-        function HBC(url) {
-            var gameSection = document.getElementById("gameSection");
-            gameSection.style.display = "none"; // Hide the game section
-            var gameFrame = document.getElementById("gameFrame");
-            gameFrame.style.display = "block"; // Show the iframe
-            gameFrame.src = url;               // Set the iframe source
-            customCursor.style.display = 'none'; // Ensure it's hidden initially
-    
-        }
-    </script>
-    <script>
-        const customCursor = document.getElementById('customCursor');
-        const spikes = document.getElementById('spikes');
-        let mouseX = 0;
-        let mouseY = 0;
-    
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX; // Use clientX to get mouse position relative to the viewport
-            mouseY = e.clientY; // Use clientY to get mouse position relative to the viewport
-            customCursor.style.display = 'block'; // Show the cursor on mouse move
+    }
+
+    // Function to scroll to top and hide content when any button is clicked
+    function hideContent() {
+        var gameFrame = document.getElementById("gameFrame");
+        gameFrame.style.display = "none"; // Hide iframe
+
+        var fullscreenBtn = document.getElementById("fullscreenBtn");
+        fullscreenBtn.style.display = "none"; // Hide fullscreen button
+
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "none"; // Hide overlay
+    }
+
+    // Function to disable page scrolling
+    function disableScrolling() {
+        document.body.style.overflow = "hidden"; // Disable scrolling
+    }
+
+    // Function to enable page scrolling
+    function enableScrolling() {
+        document.body.style.overflow = ""; // Enable scrolling
+    }
+
+    // Scroll to top, hide content, and disable scrolling when any button is clicked
+    document.querySelectorAll('.btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Scroll to the top of the page
+            window.scrollTo(0, 0);
+            
+            // Disable scrolling
+            disableScrolling();
         });
-    
-        function updateCursor() {
-            // Set the position of the custom cursor
+    });
+
+    // Custom cursor functionality
+    const customCursor = document.getElementById('customCursor'); // Custom cursor element
+    const gameFrame = document.getElementById('gameFrame'); // Iframe element
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        customCursor.style.display = 'block';
+    });
+
+    function updateCursor() {
+        customCursor.style.left = `${mouseX}px`;
+        customCursor.style.top = `${mouseY}px`;
+
+        const cursorRect = customCursor.getBoundingClientRect();
+        if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
             customCursor.style.left = `${mouseX}px`;
             customCursor.style.top = `${mouseY}px`;
-    
-            // Teleport if it's more than 10 pixels away from the mouse position
-            const cursorRect = customCursor.getBoundingClientRect();
-            if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
-                customCursor.style.left = `${mouseX}px`;
-                customCursor.style.top = `${mouseY}px`;
-            }
-            requestAnimationFrame(updateCursor);
         }
         requestAnimationFrame(updateCursor);
-    
-        const hoverElements = document.querySelectorAll('.nav-button');
-        hoverElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                spikes.classList.add('visible');
-            });
-            element.addEventListener('mouseleave', () => {
-                spikes.classList.remove('visible');
-            });
+    }
+    requestAnimationFrame(updateCursor);
+
+    // Hide the custom cursor when mouse enters the iframe
+    gameFrame.addEventListener('mouseenter', () => {
+        customCursor.style.display = 'none';
+    });
+
+    // Show the custom cursor when mouse leaves the iframe
+    gameFrame.addEventListener('mouseleave', () => {
+        customCursor.style.display = 'block';
+    });
+
+    const hoverElements = document.querySelectorAll('.nav-button');
+    hoverElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            spikes.classList.add('visible');
         });
-    </script>
-    </body>
-    </html>
-    
+        element.addEventListener('mouseleave', () => {
+            spikes.classList.remove('visible');
+        });
+    });
+
+    function myFunction() {
+        var input, filter, ul, li, a, i, txtValue, buttons, btnText, btnAlt;
+        input = document.getElementById('myInput');
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName('li');
+
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a ? (a.textContent || a.innerText) : "";
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+
+        buttons = document.querySelectorAll(".btn");
+        buttons.forEach(function(button) {
+            btnText = button ? (button.textContent || button.innerText) : "";
+            btnAlt = button.querySelector("img") ? button.querySelector("img").alt : "";
+            if (btnText.toUpperCase().indexOf(filter) > -1 || btnAlt.toUpperCase().indexOf(filter) > -1) {
+                button.style.display = "";
+            } else {
+                button.style.display = "none";
+            }
+        });
+    }
+</script>
+</body>
+</html>
