@@ -1,335 +1,442 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="referrer" content="no-referrer">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#222831">
-    <meta name="googlebot" content="index, follow, snippet">
-    <meta name="robots" content="index, follow">
-    <title>Pulsar</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/Blank1.css">
-    <link rel="stylesheet" type="text/css" href="css/Blank2.css">
-    <link rel="icon" type="image/x-icon" href="Images/favicon.png">
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="referrer" content="no-referrer">
+        <meta http-equiv="X-Content-Type-Options" content="nosniff">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#222831">
+        <meta name="googlebot" content="index, follow, snippet">
+        <meta name="robots" content="index, follow">
+        <title>Pulsar</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/Blank1.css">
+        <link rel="stylesheet" type="text/css" href="css/Blank2.css">
+        <link rel="icon" type="image/x-icon" href="Images/favicon.png">
+        <script>
+            function redirectToNewURL(event) {
+                if (event.keyCode === 221) {
+                    var newURL = 'https://classroom.google.com/?pli=1';
+                    window.location.href = newURL;
+                }
+            }
+            window.addEventListener('keydown', redirectToNewURL);
+        </script>
+        <style>
+            
+            #gameSection {
+                display: block;
+            }
+            #gameFrame {
+        display: none;
+        position: fixed;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: none;
+        margin: auto;
+        margin-top: 10%;
+        width: 80%;
+        max-width: 1200px;
+        height: calc(0vh - 160px);
+        padding-bottom: 40px; /* Adjust this value for more padding */
+        background-color: #000; /* Ensures the padding area is black */
+    }
+    
+    
+            .imgg {
+                width: 300px;
+                max-height: 160px; 
+                min-height: 160px;
+                margin-top: 5px; 
+                margin-bottom: 15px; 
+                border-radius: inherit;
+                position: relative;
+            }
+            .btn {
+                display: flex;
+                flex-direction: column; 
+                align-items: center; 
+                padding: 0px;
+            }
+            .btn-container {
+                position: relative;
+            }
+            h3 {
+                color: #ffffff;
+                text-align: center;
+                font-size: 30px;
+            }
+            .nav-bar {
+                min-height: 17%;
+            }
+            .btn {
+                background-color: #22283100;
+                color: #0099ff;
+                font-weight: bold;
+                border: none;
+                letter-spacing: 1.5px;
+                overflow: hidden;
+                transition: 0s;
+                cursor: default;
+                margin: 15px 10px 0px;
+                width: calc((100% - 1px) / 3);
+                max-width: 300px;
+                height: calc((100% - 1px) / 3);
+                min-height: 160px;
+                max-height: 160px;
+                text-align: center;
+                opacity: 0; /* Start hidden */
+        animation: fadeIn 0.5s ease forwards; /* Apply fade-in animation */
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+            #fullscreenBtn {
+        position: fixed;
+        right: 15%;
+        z-index: 10;
+        display: none;
+        background: transparent;
+        border: none;
+        padding: 0px;
+    }
+    
+    #myUL {
+      /* Remove default list styling */
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    #myUL li a {
+      border: 1px solid #ddd; /* Add a border to all links */
+      margin-top: -1px; /* Prevent double borders */
+      background-color: #f6f6f6; /* Grey background color */
+      padding: 12px; /* Add some padding */
+      text-decoration: none; /* Remove default text underline */
+      font-size: 18px; /* Increase the font-size */
+      color: black; /* Add a black text color */
+      display: block; /* Make it into a block element to fill the whole list */
+    }
+    
+    #myUL li a:hover:not(.header) {
+      background-color: #eee; /* Add a hover effect to all links, except for headers */
+    }
+        </style>
+    </head>
+    <body>
+        <div class="custom-cursor" id="customCursor"></div>
+        </div>
+        <a href="index.html" class="logo">
+            <img src="Images/Pulsar Network nobg.png" alt="Pulsar Logo">
+        </a>
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <a href="index.html" class="nav-button" onclick="clearGameAutoOpen()">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="chat.html" class="nav-button" onclick="clearGameAutoOpen()">
+                <i class="fas fa-comment-dots fa-flip-horizontal"></i> Chat
+            </a>
+            <a href="games.html" class="nav-button" onclick="clearGameAutoOpen()">
+                <i class="fas fa-gamepad"></i> Games
+            </a>
+            <a href="apps.html" class="nav-button" onclick="clearGameAutoOpen()">
+                <i class="fas fa-mobile-alt"></i> Apps
+            </a>
+            <a href="settings.html" class="nav-button" onclick="clearGameAutoOpen()">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </div>
+            <a href="credits.html" class="credit" onclick="clearGameAutoOpen()">
+                <i class="fas fa-book"></i> 
+            </a>
+    
+    <h3 id="gameSection">
+    <br><br>
+    
+    <ul id="myUL">
+    </br></br>
+
+    </h3>
+    
+    <div class="btn-container">
+    
+        <button class="btn" onclick="Bl();HBC('Apps/Advanced Code Editor 1.html')">
+            <img class="imgg" src="Images/Advanced Code Editor 1.png" alt="Advanced Code Editor 1">
+        </button>
+        <button class="btn" onclick="Bl();HBC('Apps/Advanced Code Editor 2.html')">
+            <img class="imgg" src="Images/Advanced Code Editor 2.png" alt="Advanced Code Editor 2">
+        </button>
+        <button class="btn" onclick="Bl();HBC('Apps/Calculator Algebra.html')">
+            <img class="imgg" src="Images/Calculator Algebra.png" alt="Calculator Algebra">
+        </button>
+        <button class="btn" onclick="Bl();HBC('Apps/Calculator Simple.html')">
+            <img class="imgg" src="Images/Calculator Simple.png" alt="Calculator Simple">
+        </button>
+        <button class="btn" onclick="Bl();HBC('Apps/Emulators/Emulator JS/CLICK ME.html')">
+            <img class="imgg" src="Images/Emulator JS.png" alt="Emulator JS">
+        </button>
+        <button class="btn" onclick="Bl();HBC('Apps/Emulators/Emulator WebRetro/CLICK ME.html')">
+            <img class="imgg" src="Images/Emulator WebRetro.png" alt="Emulator WebRetro">
+        </button>
+        <button class="btn" onclick="Bl();HBC('Apps/Ruffle/CLICK ME.html')">
+            <img class="imgg" src="Images/Ruffle.png" alt="Ruffle">
+        </button>
+        <button class="btn" onclick="Bl();HBC('Apps/Turbowarp/CLICK ME.html')">
+            <img class="imgg" src="Images/Turbowarp.png" alt="Turbowarp">
+        </button>
+        <button class="btn" onclick="Bl();HBC('Apps/Wordle Bot/CLICK ME.html')">
+            <img class="imgg" src="Images/Wordle Bot.png" alt="Wordle Bot">
+        </button>
+    
+    <!-- Overlay for background cover -->
+    <div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background-image: linear-gradient(315deg, #03055b, black); display: none; z-index: 5;"></div>
+    
+    <!-- Iframe container and fullscreen button -->
+    <div style="position: relative; z-index: 10; display: flex; justify-content: center; padding: 0 20px;">
+        <!-- Center iframe with equal space on left and right -->
+        <iframe id="gameFrame" frameborder="0" marginheight="0" marginwidth="0" 
+            style="width: 1200px; height: 83.5vh; display: none;"></iframe>
+    </div>
+    
+    <!-- Fullscreen button (using FontAwesome icon) -->
+    <button id="fullscreenBtn" onclick="toggleFullscreen()" 
+        style="position: fixed; top: calc(91%); right: 50.7%; left: 49.3%; font-size: 1.5vw; z-index: 10; display: none; 
+        background: transparent; border: none; padding: 0px;">
+        <i class="fas fa-expand" style="color: white;"></i>
+    </button>
+    
+    
+    <!-- Custom cursor element -->
+    <div id="customCursor" style="position: absolute; pointer-events: none; width: 20px; height: 20px; border-radius: 50%; background-color: white; display: none; transform: translate(-50%, -50%); z-index: 100;"></div>
+    
     <script>
-        function redirectToNewURL(event) {
-            if (event.keyCode === 221) {
-                var newURL = 'https://classroom.google.com/?pli=1';
-                window.location.href = newURL;
+    
+        function Bl() {
+            var x = document.getElementById("gameFrame");
+            x.style.backgroundColor = "black";
+        }
+    
+        function HBC(url) {
+            const gameFrame = document.getElementById("gameFrame");
+            const fullscreenBtn = document.getElementById("fullscreenBtn");
+            const overlay = document.getElementById("overlay");
+    
+            gameFrame.style.display = "block"; // Show iframe
+            gameFrame.src = url;               // Set iframe source
+            fullscreenBtn.style.display = "block"; // Show fullscreen button
+            overlay.style.display = "block"; // Show overlay
+    
+            // Store URL in localStorage for future reloads
+            localStorage.setItem('lastClickedUrl', url);
+    
+            // Disable page scrolling
+            disableScrolling();
+        }
+    
+        // Check for a previously saved URL and load it if available
+        window.addEventListener('load', () => {
+            const savedUrl = localStorage.getItem('lastClickedUrl');
+            if (savedUrl) {
+                HBC(savedUrl); // Load the saved URL into the iframe and disable scrolling
+            }
+        });
+    
+        function toggleFullscreen() {
+            const iframe = document.getElementById("gameFrame");
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) { // Firefox
+                iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { // IE/Edge
+                iframe.msRequestFullscreen();
             }
         }
-        window.addEventListener('keydown', redirectToNewURL);
-    </script>
-    <style>
-        #gameSection {
-            display: block;
+    
+    
+        // Function to scroll to top and hide content when any button is clicked
+        function hideContent() {
+            var gameFrame = document.getElementById("gameFrame");
+            gameFrame.style.display = "none"; // Hide iframe
+    
+            var fullscreenBtn = document.getElementById("fullscreenBtn");
+            fullscreenBtn.style.display = "none"; // Hide fullscreen button
+    
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "none"; // Hide original overlay
+    
+            // Enable scrolling if no iframe is shown
+            enableScrolling();
         }
-        #gameFrame {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 15%;
-            right: 15%;
-            border: none;
-            margin: auto;
-
+    
+        // Function to disable page scrolling
+        function disableScrolling() {
+            document.body.style.overflow = "hidden"; // Disable scrolling
         }
-        .imgg {
-            width: 300px;
-            max-height: 160px; 
-            min-height: 160px;
-            margin-top: 5px; 
-            margin-bottom: 15px; 
-            border-radius: inherit;
-            position: relative;
+    
+        // Function to enable page scrolling
+        function enableScrolling() {
+            document.body.style.overflow = ""; // Enable scrolling
         }
-        .btn {
-            display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            padding: 0px;
-        }
-        .btn-container {
-            position: relative;
-        }
-        h3 {
-            color: #ffffff;
-            text-align: center;
-            font-size: 30px;
-        }
-        .nav-bar {
-            min-height: 17%;
-        }
-        .btn {
-            background-color: #22283100;
-            color: #0099ff;
-            font-weight: bold;
-            border: none;
-            letter-spacing: 1.5px;
-            overflow: hidden;
-            transition: 0s;
-            cursor: default;
-            margin: 15px 10px 0px;
-            width: calc((100% - 1px) / 3);
-            max-width: 300px;
-            height: calc((100% - 1px) / 3);
-            min-height: 160px;
-            max-height: 160px;
-            text-align: center;
-        }
-
-#myUL {
-  /* Remove default list styling */
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-#myUL li a {
-  border: 1px solid #ddd; /* Add a border to all links */
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6; /* Grey background color */
-  padding: 12px; /* Add some padding */
-  text-decoration: none; /* Remove default text underline */
-  font-size: 18px; /* Increase the font-size */
-  color: black; /* Add a black text color */
-  display: block; /* Make it into a block element to fill the whole list */
-}
-
-#myUL li a:hover:not(.header) {
-  background-color: #eee; /* Add a hover effect to all links, except for headers */
-}
-    </style>
-</head>
-<body>
-    <div class="custom-cursor" id="customCursor"></div>
-    </div>
-    <a href="index.html" class="logo">
-        <img src="Images/Pulsar Network nobg.png" alt="Pulsar Logo">
-    </a>
-    <!-- Navigation Bar -->
-    <div class="nav-bar">
-        <a href="index.html" class="nav-button">
-            <i class="fas fa-home"></i> Home
-        </a>
-        <a href="chat.html" class="nav-button">
-            <i class="fas fa-comment-dots fa-flip-horizontal"></i> Chat
-        </a>
-        <a href="games.html" class="nav-button">
-            <i class="fas fa-gamepad"></i> Games
-        </a>
-        <a href="apps.html" class="nav-button">
-            <i class="fas fa-mobile-alt"></i> Apps
-        </a>
-        <a href="settings.html" class="nav-button">
-            <i class="fas fa-cog"></i> Settings
-        </a>
-    </div>
-        <a href="credits.html" class="credit">
-            <i class="fas fa-book"></i> 
-        </a>
-
-<h3 id="gameSection">
-
-<ul id="myUL">
-</br></br>
-</h3>
-
-<div class="btn-container">
-
-        <button class="btn" onclick="Bl();HBC('Apps/Advanced Code Editor 1.html')">
-        <img class="imgg" src="Images/Advanced Code Editor 1.png" alt="Advanced Code Editor 1">Advanced Code Editor 1</button>
-        <button class="btn" onclick="Bl();HBC('Apps/Advanced Code Editor 2.html')">
-        <img class="imgg" src="Images/Advanced Code Editor 2.png" alt="Advanced Code Editor 2">Advanced Code Editor 2</button>
-        <button class="btn" onclick="Bl();HBC('Apps/Calculator Algebra.html')">
-        <img class="imgg" src="Images/Calculator Algebra.png" alt="Calculator Algebra">Calculator Algebra</button>
-        <button class="btn" onclick="Bl();HBC('Apps/Calculator Simple.html')">
-        <img class="imgg" src="Images/Calculator Simple.png" alt="Calculator Simple">Calculator Simple</button>
-        <button class="btn" onclick="Bl();HBC('Apps/Emulators/Emulator JS/CLICK ME.html')">
-        <img class="imgg" src="Images/Emulator JS.png" alt="Emulator JS">Emulator JS</button>
-        <button class="btn" onclick="Bl();HBC('Apps/Emulators/Emulator WebRetro/CLICK ME.html')">
-        <img class="imgg" src="Images/Emulator WebRetro.png" alt="Emulator WebRetro">Emulator WebRetro</button>
-        <button class="btn" onclick="Bl();HBC('Apps/Ruffle/CLICK ME.html')">
-        <img class="imgg" src="Images/Ruffle.png" alt="Ruffle">Ruffle</button>
-        <button class="btn" onclick="Bl();HBC('Apps/Turbowarp/CLICK ME.html')">
-        <img class="imgg" src="Images/Turbowarp.png" alt="Turbowarp">Turbowarp</button>
-        <button class="btn" onclick="Bl();HBC('Apps/Wordle Bot/CLICK ME.html')">
-        <img class="imgg" src="Images/Wordle Bot.png" alt="Wordle Bot">Wordle Bot</button>
-
-<!-- Overlay for background cover -->
-<div id="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-background-image: linear-gradient(315deg, #03055b, black); display: none; z-index: 5;"></div>
-
-<!-- Iframe container and fullscreen button -->
-<div style="position: relative; z-index: 10; display: flex; justify-content: center; padding: 0 20px;">
-    <!-- Center iframe with equal space on left and right -->
-    <iframe id="gameFrame" frameborder="0" marginheight="0" marginwidth="0" style="width: 80%; max-width: 1200px; 
-    height: calc(90vh - 160px); display: none; margin-top: 160px;"></iframe>
-</div>
-
-<!-- Fullscreen button (using FontAwesome icon) -->
-<button id="fullscreenBtn" onclick="toggleFullscreen()" style="position: fixed; top: 50%; right: 15%; bottom: 50%; z-index: 10; display: none; background: transparent; border: none; padding: 0px;">
-    <i class="fas fa-expand" style="font-size: 24px; color: white;"></i> <!-- FontAwesome Fullscreen icon -->
-</button>
-
-<!-- Custom cursor element -->
-<div id="customCursor" style="position: absolute; pointer-events: none; width: 20px; height: 20px; border-radius: 50%; background-color: white; display: none; transform: translate(-50%, -50%); z-index: 100;"></div>
-
-<script>
-    function Ba() {
-        var x = document.getElementById("gameFrame");
-        x.style.backgroundColor = "white";
-    }
-
-    function Bl() {
-        var x = document.getElementById("gameFrame");
-        x.style.backgroundColor = "black";
-    }
-
-    function HBC(url) {
-        var gameSection = document.getElementById("gameSection");
-        gameSection.style.display = "none"; // Hide the game section
-
-        var gameFrame = document.getElementById("gameFrame");
-        gameFrame.style.display = "block"; // Show the iframe
-        gameFrame.src = url;               // Set the iframe source
-
-        var fullscreenBtn = document.getElementById("fullscreenBtn");
-        fullscreenBtn.style.display = "block"; // Show the fullscreen button
-
-        var overlay = document.getElementById("overlay");
-        overlay.style.display = "block"; // Show the overlay
-
-        customCursor.style.display = 'none'; // Ensure it's hidden initially
-    }
-
-    function toggleFullscreen() {
-        const iframe = document.getElementById("gameFrame");
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        } else if (iframe.requestFullscreen) {
-            iframe.requestFullscreen();
-        } else if (iframe.mozRequestFullScreen) { // Firefox
-            iframe.mozRequestFullScreen();
-        } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari, Opera
-            iframe.webkitRequestFullscreen();
-        } else if (iframe.msRequestFullscreen) { // IE/Edge
-            iframe.msRequestFullscreen();
-        }
-    }
-
-    // Function to scroll to top and hide content when any button is clicked
-    function hideContent() {
-        var gameFrame = document.getElementById("gameFrame");
-        gameFrame.style.display = "none"; // Hide iframe
-
-        var fullscreenBtn = document.getElementById("fullscreenBtn");
-        fullscreenBtn.style.display = "none"; // Hide fullscreen button
-
-        var overlay = document.getElementById("overlay");
-        overlay.style.display = "none"; // Hide overlay
-    }
-
-    // Function to disable page scrolling
-    function disableScrolling() {
-        document.body.style.overflow = "hidden"; // Disable scrolling
-    }
-
-    // Function to enable page scrolling
-    function enableScrolling() {
-        document.body.style.overflow = ""; // Enable scrolling
-    }
-
-    // Scroll to top, hide content, and disable scrolling when any button is clicked
-    document.querySelectorAll('.btn').forEach(function(button) {
-        button.addEventListener('click', function() {
-            // Scroll to the top of the page
-            window.scrollTo(0, 0);
-            
-            // Disable scrolling
-            disableScrolling();
+    
+        // Scroll to top, hide content, and disable scrolling when any button is clicked
+        document.querySelectorAll('.btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                // Scroll to the top of the page
+                window.scrollTo(0, 0);
+                
+                // Disable scrolling
+                disableScrolling();
+            });
         });
-    });
-
-    // Custom cursor functionality
-    const customCursor = document.getElementById('customCursor'); // Custom cursor element
-    const gameFrame = document.getElementById('gameFrame'); // Iframe element
-    let mouseX = 0;
-    let mouseY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        customCursor.style.display = 'block';
-    });
-
-    function updateCursor() {
-        customCursor.style.left = `${mouseX}px`;
-        customCursor.style.top = `${mouseY}px`;
-
-        const cursorRect = customCursor.getBoundingClientRect();
-        if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
+    
+        // Custom cursor functionality
+        const customCursor = document.getElementById('customCursor'); // Custom cursor element
+        const gameFrame = document.getElementById('gameFrame'); // Iframe element
+        let mouseX = 0;
+        let mouseY = 0;
+    
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            customCursor.style.display = 'block';
+        });
+    
+        function updateCursor() {
             customCursor.style.left = `${mouseX}px`;
             customCursor.style.top = `${mouseY}px`;
+    
+            const cursorRect = customCursor.getBoundingClientRect();
+            if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
+                customCursor.style.left = `${mouseX}px`;
+                customCursor.style.top = `${mouseY}px`;
+            }
+            requestAnimationFrame(updateCursor);
         }
         requestAnimationFrame(updateCursor);
-    }
-    requestAnimationFrame(updateCursor);
-
-    // Hide the custom cursor when mouse enters the iframe
-    gameFrame.addEventListener('mouseenter', () => {
-        customCursor.style.display = 'none';
-    });
-
-    // Show the custom cursor when mouse leaves the iframe
-    gameFrame.addEventListener('mouseleave', () => {
-        customCursor.style.display = 'block';
-    });
-
-    const hoverElements = document.querySelectorAll('.nav-button');
-    hoverElements.forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            spikes.classList.add('visible');
+    
+        // Hide the custom cursor when mouse enters the iframe
+        gameFrame.addEventListener('mouseenter', () => {
+            customCursor.style.display = 'none';
         });
-        element.addEventListener('mouseleave', () => {
-            spikes.classList.remove('visible');
+    
+        // Show the custom cursor when mouse leaves the iframe
+        gameFrame.addEventListener('mouseleave', () => {
+            customCursor.style.display = 'block';
         });
-    });
-
-    function myFunction() {
-        var input, filter, ul, li, a, i, txtValue, buttons, btnText, btnAlt;
-        input = document.getElementById('myInput');
-        filter = input.value.toUpperCase();
-        ul = document.getElementById("myUL");
-        li = ul.getElementsByTagName('li');
-
-        for (i = 0; i < li.length; i++) {
-            a = li[i].getElementsByTagName("a")[0];
-            txtValue = a ? (a.textContent || a.innerText) : "";
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                li[i].style.display = "";
-            } else {
-                li[i].style.display = "none";
+    
+        const hoverElements = document.querySelectorAll('.nav-button');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                spikes.classList.add('visible');
+            });
+            element.addEventListener('mouseleave', () => {
+                spikes.classList.remove('visible');
+            });
+        });
+    
+        function myFunction() {
+            var input, filter, ul, li, a, i, txtValue, buttons, btnText, btnAlt;
+            input = document.getElementById('myInput');
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName('li');
+    
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a ? (a.textContent || a.innerText) : "";
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
             }
+    
+            buttons = document.querySelectorAll(".btn");
+            buttons.forEach(function(button) {
+                btnText = button ? (button.textContent || button.innerText) : "";
+                btnAlt = button.querySelector("img") ? button.querySelector("img").alt : "";
+                if (btnText.toUpperCase().indexOf(filter) > -1 || btnAlt.toUpperCase().indexOf(filter) > -1) {
+                    button.style.display = "";
+                } else {
+                    button.style.display = "none";
+                }
+            });
         }
-
-        buttons = document.querySelectorAll(".btn");
-        buttons.forEach(function(button) {
-            btnText = button ? (button.textContent || button.innerText) : "";
-            btnAlt = button.querySelector("img") ? button.querySelector("img").alt : "";
-            if (btnText.toUpperCase().indexOf(filter) > -1 || btnAlt.toUpperCase().indexOf(filter) > -1) {
-                button.style.display = "";
-            } else {
-                button.style.display = "none";
-            }
-        });
+    </script>
+    
+    <script>
+        // Function to reset local storage for auto-opening game
+        function resetGameAutoOpen() {
+            localStorage.removeItem('lastGameUrl');
+        }
+    </script>
+    
+    <script>
+        // Function to clear the last clicked game URL from local storage
+        function clearGameAutoOpen() {
+            localStorage.removeItem('lastClickedUrl');
+        }
+    </script>
+    <script>
+    const buttons = document.querySelectorAll('.btn');
+    const searchBar = document.getElementById('myInput'); // Assuming 'myInput' is the search bar's ID
+    
+    let instantLoadTriggered = false; // Flag to track if instant load was triggered
+    
+    // Apply staggered delay on initial load
+    buttons.forEach((button, index) => {
+        button.style.animationDelay = `${index * 0.03}s`;
+    });
+    
+    // Listen for input in the search bar
+    searchBar.addEventListener('input', () => {
+        if (searchBar.value.trim() !== '' && !instantLoadTriggered) {
+            // Remove delay for all buttons and mark as instantly loaded
+            buttons.forEach(button => {
+                button.style.animationDelay = '0s';
+            });
+            instantLoadTriggered = true;
+        }
+    });
+    
+    </script>
+    <script>
+    // Prevents page from restoring scroll position on reload
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
     }
-</script>
-</body>
-</html>
+    
+    // Scrolls to the top when the page is loaded
+    window.addEventListener('load', () => {
+        window.scrollTo(0, 0);
+    });
+    
+    
+    </script>
+    <script>
+        window.addEventListener('load', () => {
+        const savedUrl = localStorage.getItem('lastClickedUrl');
+        if (savedUrl) {
+            HBC(savedUrl);
+        }
+    });
+    
+    </script>
+    </body>
+    </html>
+    
