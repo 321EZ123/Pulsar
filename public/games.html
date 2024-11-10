@@ -27,19 +27,27 @@
         window.addEventListener('keydown', redirectToNewURL);
     </script>
     <style>
+        
         #gameSection {
             display: block;
         }
         #gameFrame {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 15%;
-            right: 15%;
-            border: none;
-            margin: auto;
+    display: none;
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    margin: auto;
+    margin-top: 10%;
+    width: 80%;
+    max-width: 1200px;
+    height: calc(0vh - 160px);
+    padding-bottom: 40px; /* Adjust this value for more padding */
+    background-color: #000; /* Ensures the padding area is black */
+}
 
-        }
+
         .imgg {
             width: 300px;
             max-height: 160px; 
@@ -82,7 +90,24 @@
             min-height: 160px;
             max-height: 160px;
             text-align: center;
-        }
+            opacity: 0; /* Start hidden */
+    animation: fadeIn 0.5s ease forwards; /* Apply fade-in animation */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+        #fullscreenBtn {
+    position: fixed;
+    right: 15%;
+    z-index: 10;
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 0px;
+}
 
 #myUL {
   /* Remove default list styling */
@@ -115,23 +140,23 @@
     </a>
     <!-- Navigation Bar -->
     <div class="nav-bar">
-        <a href="index.html" class="nav-button">
+        <a href="index.html" class="nav-button" onclick="clearGameAutoOpen()">
             <i class="fas fa-home"></i> Home
         </a>
-        <a href="chat.html" class="nav-button">
+        <a href="chat.html" class="nav-button" onclick="clearGameAutoOpen()">
             <i class="fas fa-comment-dots fa-flip-horizontal"></i> Chat
         </a>
-        <a href="games.html" class="nav-button">
+        <a href="games.html" class="nav-button" onclick="clearGameAutoOpen()">
             <i class="fas fa-gamepad"></i> Games
         </a>
-        <a href="apps.html" class="nav-button">
+        <a href="apps.html" class="nav-button" onclick="clearGameAutoOpen()">
             <i class="fas fa-mobile-alt"></i> Apps
         </a>
-        <a href="settings.html" class="nav-button">
+        <a href="settings.html" class="nav-button" onclick="clearGameAutoOpen()">
             <i class="fas fa-cog"></i> Settings
         </a>
     </div>
-        <a href="credits.html" class="credit">
+        <a href="credits.html" class="credit" onclick="clearGameAutoOpen()">
             <i class="fas fa-book"></i> 
         </a>
 
@@ -147,13 +172,13 @@
 
 <div class="btn-container">
 
-</li><button class="btn" onclick="Ba();HBC('HTML Games/1v1.lol/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/1v1.lol/CLICK ME.html')">
 <img class="imgg"src="Images/1v1.lol.png"alt="1v1.LOL">1v1.LOL</button></li> 
-</li><button class="btn" onclick="Ba();HBC('HTML Games/2 Player Rocket League/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/2 Player Rocket League/CLICK ME.html')">
 <img class="imgg" src="Images/2 Player Rocket League.png" alt="2 Player Rocket League">2 Player Rocket League</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/2048/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/2048/CLICK ME.html')">
 <img class="imgg" src="Images/2048.png" alt="2048">2048</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/2048 9007199254740992/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/2048 9007199254740992/CLICK ME.html')">
 <img class="imgg" src="Images/2048 9007199254740992.png" alt="2048 9007199254740992">2048 9007199254740992</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/2048 Couch/CLICK ME.html')">
 <img class="imgg" src="Images/2048 Couch.png" alt="2048 Couch">2048 Couch</button></li>
@@ -167,29 +192,29 @@
 <img class="imgg" src="Images/4 Player Arcade.png" alt="4 Player Arcade">4 Player Arcade</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/99 Balls.html')">
 <img class="imgg" src="Images/99 Balls.png" alt="99 Balls">99 Balls</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/A Dark Room/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/A Dark Room/CLICK ME.html')">
 <img class="imgg" src="Images/A Dark Room.png" alt="A Dark Room">A Dark Room</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Appel.html')">
 <img class="imgg" src="Images/Appel.png" alt="Appel">Appel</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Arrow.html')">
 <img class="imgg" src="Images/Arrow.png" alt="Arrow">Arrow</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Asteroids/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Asteroids/CLICK ME.html')">
 <img class="imgg" src="Images/Asteroids.png" alt="Asteroids">Asteroids</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Asciispace.html')">
 <img class="imgg" src="Images/Asciispace.png" alt="Asciispace">Asciispace</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Awesome Tanks.html')">
 <img class="imgg" src="Images/Awesome Tanks.png" alt="Awesome Tanks">Awesome Tanks</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Ball Blast.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Ball Blast.html')">
 <img class="imgg" src="Images/Ball Blast.png" alt="Ball Blast">Ball Blast</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Ball Sort Halloween/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Ball Sort Halloween/CLICK ME.html')">
 <img class="imgg" src="Images/Ball Sort Halloween.png" alt="Ball Sort Halloween">Ball Sort Halloween</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Ball Sort Puzzle/CLICK ME.html')">
 <img class="imgg" src="Images/Ball Sort Puzzle.png" alt="Ball Sort Puzzle">Ball Sort Puzzle</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Ball Sort Soccer/CLICK ME.html')">
 <img class="imgg" src="Images/Ball Sort Soccer.png" alt="Ball Sort Soccer">Ball Sort Soccer</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Bee Swarm Simulator.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Bee Swarm Simulator.html')">
 <img class="imgg" src="Images/Bee Swarm Simulator.png" alt="Bee Swarm Simulator">Bee Swarm Simulator</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Bit Planes/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Bit Planes/CLICK ME.html')">
 <img class="imgg" src="Images/Bit Planes.png" alt="Bit Planes">Bit Planes</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Bitcoin Clicker/CLICK ME.html')">
 <img class="imgg" src="Images/Bitcoin Clicker.png" alt="Bitcoin Clicker">Bitcoin Clicker</button></li>
@@ -251,51 +276,51 @@
 <img class="imgg" src="Images/Drift Chase.png" alt="Drift Chase">Drift Chase</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Drive Mad.html')">
 <img class="imgg" src="Images/Drive Mad.png" alt="Drive Mad">Drive Mad</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Drop The Ball 1.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Drop The Ball 1.html')">
 <img class="imgg" src="Images/Drop The Ball 1.png" alt="Drop The Ball 1">Drop The Ball 1</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Drop The Ball 2.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Drop The Ball 2.html')">
 <img class="imgg" src="Images/Drop The Ball 2.png" alt="Drop The Ball 2">Drop The Ball 2</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Dungeon Raid.html')">
 <img class="imgg" src="Images/Dungeon Raid.png" alt="Dungeon Raid">Dungeon Raid</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Dunk Shot.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Dunk Shot.html')">
 <img class="imgg" src="Images/Dunk Shot.png" alt="Dunk Shot">Dunk Shot</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Edge Not Found.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Edge Not Found.html')">
 <img class="imgg" src="Images/Edge Not Found.png" alt="Edge Not Found">Edge Not Found</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Egg That Dino 3.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Egg That Dino 3.html')">
 <img class="imgg" src="Images/Egg That Dino 3" alt="Egg That Dino 3">Egg That Dino 3</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Elastic Man.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Elastic Man.html')">
 <img class="imgg" src="Images/Elastic Man.png" alt="Elastic Man">Elastic Man</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Epic Ninja.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Epic Ninja.html')">
 <img class="imgg" src="Images/Epic Ninja.png" alt="Epic Ninja">Epic Ninja</button></li> 
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Evade.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Evade.html')">
 <img class="imgg" src="Images/Evade.png" alt="Evade">Evade</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Evil Glitch/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Evil Glitch/CLICK ME.html')">
 <img class="imgg" src="Images/Evil Glitch.png" alt="Evil Glitch">Evil Glitch</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Falling.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Falling.html')">
 <img class="imgg" src="Images/Falling.png" alt="Falling">Falling</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Fill Infinite.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Fill Infinite.html')">
 <img class="imgg" src="Images/Fill Infinite.png" alt="Fill Infinite">Fill Infinite</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Flappy Bird/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Flappy Bird/CLICK ME.html')">
 <img class="imgg" src="Images/Flappy Bird.png" alt="Flappy Bird">Flappy Bird</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Flappy Copter/CLICK ME.html')">
 <img class="imgg" src="Images/Flappy Copter.png" alt="Flappy Copter">Flappy Copter</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Fluidism/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Fluidism/CLICK ME.html')">
 <img class="imgg" src="Images/Fluidism.png" alt="Fluidism">Fluidism</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Geometry Dash.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Geometry Dash.html')">
 <img class="imgg" src="Images/Geometry Dash.png" alt="Geometry Dash">Geometry Dash</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Getting Over It.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Getting Over It.html')">
 <img class="imgg" src="Images/Getting Over It.png" alt="Getting Over It">Getting Over It</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Google Snake.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Google Snake.html')">
 <img class="imgg" src="Images/Google Snake.png" alt="Google Snake">Google Snake</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Helix Jump/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Helix Jump/CLICK ME.html')">
 <img class="imgg" src="Images/Helix Jump.png" alt="Helix Jump">Helix Jump</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Hextris/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Hextris/CLICK ME.html')">
 <img class="imgg" src="Images/Hextris.png" alt="Hextris">Hextris</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Its Raining Boxes.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Its Raining Boxes.html')">
 <img class="imgg" src="Images/Its Raining Boxes.png" alt="It's Raining Boxes">It's Raining Boxes</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Johnny Upgrade.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Johnny Upgrade.html')">
 <img class="imgg" src="Images/Johnny Upgrade.png" alt="Johnny Upgrade">Johnny Upgrade</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Jumpy Balls.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Jumpy Balls.html')">
 <img class="imgg" src="Images/Jumpy Balls.png" alt="Jumpy Balls">Jumpy Balls</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Just One Boss.html')">
 <img class="imgg" src="Images/Just One Boss.png" alt="Just One Boss">Just One Boss</button></li>
@@ -337,7 +362,7 @@
 <img class="imgg" src="Images/Pacman Classic.png" alt="Pacman Classic">Pacman Classic</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Packabunchas.html')">
 <img class="imgg" src="Images/Packabunchas.png" alt="Packabunchas">Packabunchas</button></li>
-</li><button class="btn" onclick="Ba();HBC('HTML Games/Paperclips/CLICK ME.html')">
+</li><button class="btn" onclick="Bl();HBC('HTML Games/Paperclips/CLICK ME.html')">
 <img class="imgg" src="Images/Paperclips.png" alt="Paperclips">Paperclips</button></li>
 </li><button class="btn" onclick="Bl();HBC('HTML Games/Paper.io 2.html')">
 <img class="imgg" src="Images/Paper.io 2.png" alt="Paper.io 2">Paper.io 2</button></li>
@@ -485,23 +510,22 @@ background-image: linear-gradient(315deg, #03055b, black); display: none; z-inde
 <!-- Iframe container and fullscreen button -->
 <div style="position: relative; z-index: 10; display: flex; justify-content: center; padding: 0 20px;">
     <!-- Center iframe with equal space on left and right -->
-    <iframe id="gameFrame" frameborder="0" marginheight="0" marginwidth="0" style="width: 80%; max-width: 1200px; 
-    height: calc(90vh - 160px); display: none; margin-top: 160px;"></iframe>
+    <iframe id="gameFrame" frameborder="0" marginheight="0" marginwidth="0" 
+        style="width: 1200px; height: 83.5vh; display: none;"></iframe>
 </div>
 
 <!-- Fullscreen button (using FontAwesome icon) -->
-<button id="fullscreenBtn" onclick="toggleFullscreen()" style="position: fixed; top: 50%; right: 15%; bottom: 50%; z-index: 10; display: none; background: transparent; border: none; padding: 0px;">
-    <i class="fas fa-expand" style="font-size: 24px; color: white;"></i> <!-- FontAwesome Fullscreen icon -->
+<button id="fullscreenBtn" onclick="toggleFullscreen()" 
+    style="position: fixed; top: calc(91%); right: 50.7%; left: 49.3%; font-size: 1.5vw; z-index: 10; display: none; 
+    background: transparent; border: none; padding: 0px;">
+    <i class="fas fa-expand" style="color: white;"></i>
 </button>
+
 
 <!-- Custom cursor element -->
 <div id="customCursor" style="position: absolute; pointer-events: none; width: 20px; height: 20px; border-radius: 50%; background-color: white; display: none; transform: translate(-50%, -50%); z-index: 100;"></div>
 
 <script>
-    function Ba() {
-        var x = document.getElementById("gameFrame");
-        x.style.backgroundColor = "white";
-    }
 
     function Bl() {
         var x = document.getElementById("gameFrame");
@@ -509,21 +533,29 @@ background-image: linear-gradient(315deg, #03055b, black); display: none; z-inde
     }
 
     function HBC(url) {
-        var gameSection = document.getElementById("gameSection");
-        gameSection.style.display = "none"; // Hide the game section
+        const gameFrame = document.getElementById("gameFrame");
+        const fullscreenBtn = document.getElementById("fullscreenBtn");
+        const overlay = document.getElementById("overlay");
 
-        var gameFrame = document.getElementById("gameFrame");
-        gameFrame.style.display = "block"; // Show the iframe
-        gameFrame.src = url;               // Set the iframe source
+        gameFrame.style.display = "block"; // Show iframe
+        gameFrame.src = url;               // Set iframe source
+        fullscreenBtn.style.display = "block"; // Show fullscreen button
+        overlay.style.display = "block"; // Show overlay
 
-        var fullscreenBtn = document.getElementById("fullscreenBtn");
-        fullscreenBtn.style.display = "block"; // Show the fullscreen button
+        // Store URL in localStorage for future reloads
+        localStorage.setItem('lastClickedUrl', url);
 
-        var overlay = document.getElementById("overlay");
-        overlay.style.display = "block"; // Show the overlay
-
-        customCursor.style.display = 'none'; // Ensure it's hidden initially
+        // Disable page scrolling
+        disableScrolling();
     }
+
+    // Check for a previously saved URL and load it if available
+    window.addEventListener('load', () => {
+        const savedUrl = localStorage.getItem('lastClickedUrl');
+        if (savedUrl) {
+            HBC(savedUrl); // Load the saved URL into the iframe and disable scrolling
+        }
+    });
 
     function toggleFullscreen() {
         const iframe = document.getElementById("gameFrame");
@@ -540,6 +572,7 @@ background-image: linear-gradient(315deg, #03055b, black); display: none; z-inde
         }
     }
 
+
     // Function to scroll to top and hide content when any button is clicked
     function hideContent() {
         var gameFrame = document.getElementById("gameFrame");
@@ -549,7 +582,10 @@ background-image: linear-gradient(315deg, #03055b, black); display: none; z-inde
         fullscreenBtn.style.display = "none"; // Hide fullscreen button
 
         var overlay = document.getElementById("overlay");
-        overlay.style.display = "none"; // Hide overlay
+        overlay.style.display = "none"; // Hide original overlay
+
+        // Enable scrolling if no iframe is shown
+        enableScrolling();
     }
 
     // Function to disable page scrolling
@@ -646,6 +682,65 @@ background-image: linear-gradient(315deg, #03055b, black); display: none; z-inde
             }
         });
     }
+</script>
+
+<script>
+    // Function to reset local storage for auto-opening game
+    function resetGameAutoOpen() {
+        localStorage.removeItem('lastGameUrl');
+    }
+</script>
+
+<script>
+    // Function to clear the last clicked game URL from local storage
+    function clearGameAutoOpen() {
+        localStorage.removeItem('lastClickedUrl');
+    }
+</script>
+<script>
+const buttons = document.querySelectorAll('.btn');
+const searchBar = document.getElementById('myInput'); // Assuming 'myInput' is the search bar's ID
+
+let instantLoadTriggered = false; // Flag to track if instant load was triggered
+
+// Apply staggered delay on initial load
+buttons.forEach((button, index) => {
+    button.style.animationDelay = `${index * 0.03}s`;
+});
+
+// Listen for input in the search bar
+searchBar.addEventListener('input', () => {
+    if (searchBar.value.trim() !== '' && !instantLoadTriggered) {
+        // Remove delay for all buttons and mark as instantly loaded
+        buttons.forEach(button => {
+            button.style.animationDelay = '0s';
+        });
+        instantLoadTriggered = true;
+    }
+});
+
+</script>
+<script>
+// Prevents page from restoring scroll position on reload
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+// Scrolls to the top when the page is loaded
+window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
+});
+
+
+</script>
+<script>
+    window.addEventListener('load', () => {
+    const savedUrl = localStorage.getItem('lastClickedUrl');
+    if (savedUrl) {
+        HBC(savedUrl);
+    }
+});
+
 </script>
 </body>
 </html>
