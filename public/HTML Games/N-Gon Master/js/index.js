@@ -12,6 +12,10 @@ Math.hash = s => {
 
 // document.getElementById("seed").placeholder = Math.initialSeed = Math.floor(Date.now() % 100000) //random every time:  just the time in milliseconds UTC
 
+window.addEventListener('error', error => {
+    simulation.inGameConsole(`<strong style='color:red;'>ERROR:</strong> ${error.message}  <u>${error.filename}:${error.lineno}</u>`)
+});
+
 document.getElementById("seed").placeholder = Math.initialSeed = String(Math.floor(Date.now() % 100000))
 Math.seed = Math.abs(Math.hash(Math.initialSeed)) //update randomizer seed in case the player changed it
 Math.seededRandom = function (min = 0, max = 1) { // in order to work 'Math.seed' must NOT be undefined
@@ -39,6 +43,110 @@ function shuffle(array) {
     }
     return array;
 }
+// function vertexCollision(v1, v1End, domain, best) {
+//     let results
+//     for (let i = 0; i < domain.length; ++i) {
+//         let vertices = domain[i].vertices;
+//         const len = vertices.length - 1;
+//         for (let j = 0; j < len; j++) {
+//             results = simulation.checkLineIntersection(v1, v1End, vertices[j], vertices[j + 1]);
+//             if (results.onLine1 && results.onLine2) {
+//                 const dx = v1.x - results.x;
+//                 const dy = v1.y - results.y;
+//                 const dist2 = dx * dx + dy * dy;
+//                 if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
+//                     best = {
+//                         x: results.x,
+//                         y: results.y,
+//                         dist2: dist2,
+//                         who: domain[i],
+//                         v1: vertices[j],
+//                         v2: vertices[j + 1]
+//                     };
+//                 }
+//             }
+//         }
+//         results = simulation.checkLineIntersection(v1, v1End, vertices[0], vertices[len]);
+//         if (results.onLine1 && results.onLine2) {
+//             const dx = v1.x - results.x;
+//             const dy = v1.y - results.y;
+//             const dist2 = dx * dx + dy * dy;
+//             if (dist2 < best.dist2) {
+//                 best = {
+//                     x: results.x,
+//                     y: results.y,
+//                     dist2: dist2,
+//                     who: domain[i],
+//                     v1: vertices[0],
+//                     v2: vertices[len]
+//                 };
+//             }
+//         }
+//     }
+//     return best
+// }
+//this function is used for finding the point where a ray hits things,  used for lasers mostly
+function vertexCollision(v1, v1End, domains) {  //= [map, body, [playerBody, playerHead]]     //m.isCloak ? [map, body] : [map, body, [playerBody, playerHead]]
+    let results
+    let best = { x: null, y: null, dist2: Infinity, who: null, v1: null, v2: null };
+    for (let j = 0; j < domains.length; j++) {
+        let domain = domains[j]
+        for (let i = 0; i < domain.length; ++i) {
+            let vertices = domain[i].vertices;
+            const len = vertices.length - 1;
+            for (let j = 0; j < len; j++) {
+                results = simulation.checkLineIntersection(v1, v1End, vertices[j], vertices[j + 1]);
+                if (results.onLine1 && results.onLine2) {
+                    const dx = v1.x - results.x;
+                    const dy = v1.y - results.y;
+                    const dist2 = dx * dx + dy * dy;
+                    if (dist2 < best.dist2 && (!domain[i].mob || domain[i].alive)) {
+                        best = {
+                            x: results.x,
+                            y: results.y,
+                            dist2: dist2,
+                            who: domain[i],
+                            v1: vertices[j],
+                            v2: vertices[j + 1]
+                        };
+                    }
+                }
+            }
+            results = simulation.checkLineIntersection(v1, v1End, vertices[0], vertices[len]);
+            if (results.onLine1 && results.onLine2) {
+                const dx = v1.x - results.x;
+                const dy = v1.y - results.y;
+                const dist2 = dx * dx + dy * dy;
+                if (dist2 < best.dist2) {
+                    best = {
+                        x: results.x,
+                        y: results.y,
+                        dist2: dist2,
+                        who: domain[i],
+                        v1: vertices[0],
+                        v2: vertices[len]
+                    };
+                }
+            }
+        }
+    }
+    return best
+}
+
+// prompts to reload and exit  for JUNK tech named "beforeunload"
+function beforeUnloadEventListener(event) {
+    event.preventDefault();
+    if (tech.isExitPrompt) {
+        tech.damage *= 1.25
+        // simulation.inGameConsole(`<strong class='color-d'>damage</strong> <span class='color-symbol'>*=</span> ${1.25}`)
+        simulation.inGameConsole(`<span class='color-var'>tech</span>.damage *= ${1.25} //beforeunload`);
+        if (Math.random() < 0.25) {
+            removeEventListener('beforeunload', beforeUnloadEventListener);
+        }
+    }
+}
+// addEventListener('beforeunload', beforeUnloadEventListener);
+
 
 //collision groups
 //   cat.player | cat.map | cat.body | cat.bullet | cat.powerUp | cat.mob | cat.mobBullet | cat.mobShield | cat.phased
@@ -88,7 +196,7 @@ let color = { //light
 // check for URL parameters to load an experimental game
 //**********************************************************************
 
-//example  https://landgreen.github.io/sidescroller/index.html?
+//example  https://landgreen.github.io/n-gon/index.html?
 //          &gun1=minigun&gun2=laser
 //          &tech1=laser-bot&tech2=mass%20driver&tech3=overcharge&tech4=laser-bot&tech5=laser-bot&field=phase%20decoherence%20field&difficulty=2
 //add ? to end of url then for each power up add
@@ -148,11 +256,11 @@ window.addEventListener('load', () => {
                 }
             }
 
-            if (property === "difficulty") {
-                simulation.difficultyMode = Number(set[property])
-                lore.setTechGoal()
-                document.getElementById("difficulty-select-experiment").value = Number(set[property])
-            }
+            // if (property === "difficulty") {
+            //     simulation.difficultyMode = Number(set[property])
+            //     lore.setTechGoal()
+            //     document.getElementById("difficulty-select-experiment").value = Number(set[property])
+            // }
             if (property === "molMode") {
                 simulation.molecularMode = Number(set[property])
                 const i = 4 //update experiment text
@@ -261,7 +369,6 @@ const build = {
                     }
                 }
 
-
                 // fade alpha for all pixels
                 // for (let i = 0; i < data.length; i += 4) {
                 //     if (data[i + 3] > 0) {
@@ -305,17 +412,14 @@ const build = {
         // console.log(localSettings.isHideImages, from)
     },
     hideHUD() {
-
         if (simulation.isTraining) {
             localSettings.isHideHUD = false
         } else {
             localSettings.isHideHUD = !localSettings.isHideHUD
         }
-
         if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
         document.getElementById("hide-hud").checked = localSettings.isHideHUD
         document.getElementById("hide-hud").classList.toggle("ticked")
-
         simulation.removeEphemera("dmgDefBars")
         if (!localSettings.isHideHUD) {
             simulation.ephemera.push({
@@ -337,97 +441,125 @@ const build = {
         }
     },
     pauseGrid() {
-        // build.pixelDraw();
-
         build.generatePauseLeft() //makes the left side of the pause menu with the tech
         build.generatePauseRight() //makes the right side of the pause menu with the tech
-
-        document.getElementById("tech").style.display = "none"
+        // build.sortTech('') //sorts tech into the order the player got them using tech.tech[i].cycle = m.cycle
+        document.getElementById("right-HUD").style.display = "none"
         document.getElementById("guns").style.display = "none"
         document.getElementById("field").style.display = "none"
         document.getElementById("health").style.display = "none"
         document.getElementById("health-bg").style.display = "none"
         document.getElementById("defense-bar").style.display = "none"
         document.getElementById("damage-bar").style.display = "none"
-
-
         //show in game console
-        // document.getElementById("text-log").style.display = "inline"
         simulation.lastLogTime = m.cycle //hide in game console
-
     },
     generatePauseLeft() {
-        //used for junk estimation
-        let junkCount = 0
-        let totalCount = 1 //start at one to avoid NaN issues
-        for (let i = 0; i < tech.tech.length; i++) {
-            if (tech.tech[i].count < tech.tech[i].maxCount && tech.tech[i].allowed() && !tech.tech[i].isBanished) {
-                totalCount += tech.tech[i].frequency
-                if (tech.tech[i].isJunk) junkCount += tech.tech[i].frequency
-            }
-        }
         //left side
         let botText = ""
-        if (tech.nailBotCount) botText += `<br>nail-bots: ${tech.nailBotCount}`
-        if (tech.orbitBotCount) botText += `<br>orbital-bots: ${tech.orbitBotCount}`
-        if (tech.boomBotCount) botText += `<br>boom-bots: ${tech.boomBotCount}`
-        if (tech.laserBotCount) botText += `<br>laser-bots: ${tech.laserBotCount}`
-        if (tech.foamBotCount) botText += `<br>foam-bots: ${tech.foamBotCount}`
-        if (tech.soundBotCount) botText += `<br>sound-bots: ${tech.soundBotCount}`
-        if (tech.dynamoBotCount) botText += `<br>dynamo-bots: ${tech.dynamoBotCount}`
-        if (tech.plasmaBotCount) botText += `<br>plasma-bots: ${tech.plasmaBotCount}`
-        if (tech.missileBotCount) botText += `<br>missile-bots: ${tech.missileBotCount}`
+        if (tech.nailBotCount) botText += `<br><strong class='color-bot no-box'>nail-bots ${tech.nailBotCount}</strong>`
+        if (tech.orbitBotCount) botText += `<br><strong class='color-bot no-box'>orbital-bots ${tech.orbitBotCount}</strong>`
+        if (tech.boomBotCount) botText += `<br><strong class='color-bot no-box'>boom-bots ${tech.boomBotCount}</strong>`
+        if (tech.laserBotCount) botText += `<br><strong class='color-bot no-box'>laser-bots ${tech.laserBotCount}</strong>`
+        if (tech.foamBotCount) botText += `<br><strong class='color-bot no-box'>foam-bots ${tech.foamBotCount}</strong>`
+        if (tech.soundBotCount) botText += `<br><strong class='color-bot no-box'>sound-bots ${tech.soundBotCount}</strong>`
+        if (tech.dynamoBotCount) botText += `<br><strong class='color-bot no-box'>dynamo-bots ${tech.dynamoBotCount}</strong>`
+        if (tech.plasmaBotCount) botText += `<br><strong class='color-bot no-box'>plasma-bots ${tech.plasmaBotCount}</strong>`
+        if (tech.missileBotCount) botText += `<br><strong class='color-bot no-box'>missile-bots ${tech.missileBotCount}</strong>`
 
-        let text = `<div class="pause-grid-module" style = "padding: 10px; line-height: 110%;">
-<span style = "font-size: 0.87em;">
-<span style="font-size:1.5em;font-weight: 600; float: left;">PAUSED</span> 
-<span style="float: right;">press ${input.key.pause} to resume</span>
-<br>
-<br>
-<button onclick="build.shareURL(false)" class='sort-button' style="font-size:1em;float: right;">copy build url</button>
+        // <strong class='color-g'>${b.activeGun === null || b.activeGun === undefined ? "undefined" : b.guns[b.activeGun].name}</strong> (${b.activeGun === null || b.activeGun === undefined ? "0" : b.guns[b.activeGun].ammo})
 
+        let text = `<div class="pause-grid-module" style="padding: 8px;">
+<span style="font-size:1.4em;font-weight: 600; float: left;">PAUSED</span> 
+<em style="float: right;color:#ccc;">press ${input.key.pause} to resume</em>
+<br>
 <input onclick="build.showImages('pause')" type="checkbox" id="hide-images-pause" name="hide-images-pause" ${localSettings.isHideImages ? "checked" : ""}>
 <label for="hide-images-pause" title="hide images for fields, guns, and tech" style="font-size:1.15em;" >hide images</label>
 <br>
+<button onclick="build.shareURL(false)" class='sort-button' style="font-size:1em;float: right;">copy build URL</button>
 <input onclick="build.hideHUD('settings')" type="checkbox" id="hide-hud" name="hide-hud" ${localSettings.isHideHUD ? "checked" : ""}>
-<label for="hide-hud" title="hide: tech, defense, damage, in game console" style="font-size:1.15em;">minimal HUD</label>
-<br>
+<label for="hide-hud" title="hide: tech, damage taken, damage, in game console" style="font-size:1.15em;">minimal HUD</label>
+</div>
 
-<br><strong class='color-d'>damage</strong>: ${((tech.damageFromTech())).toPrecision(4)} &nbsp; &nbsp; difficulty: ${((m.dmgScale)).toPrecision(4)}
-<br><strong class='color-defense'>defense</strong>: ${tech.isEnergyHealth ? (1 - Math.pow(m.defense(), 0.13)).toPrecision(5) : (1 - m.defense()).toPrecision(5)} &nbsp; &nbsp; difficulty: ${(1 / simulation.dmgScale).toPrecision(4)}
-<br><strong><em>fire rate</em></strong>: ${((1 - b.fireCDscale) * 100).toFixed(b.fireCDscale < 0.1 ? 2 : 0)}%
-${tech.duplicationChance() ? `<br><strong class='color-dup'>duplication</strong>: ${(tech.duplicationChance() * 100).toFixed(0)}%` : ""}
+<div class="pause-grid-module">
+<details id = "simulation-variables-details" style="padding: 0 8px;line-height: 140%;">
+<summary>simulation variables</summary>
+<div class="pause-details">
+<strong class='color-d'>damage</strong> ${((tech.damageFromTech())).toPrecision(4)}x
+<span style="float: right;"><strong class='color-d'>level</strong> ${((m.dmgScale)).toPrecision(4)}x</span>
+<br><strong class='color-defense'>damage taken</strong> ${(m.defense()).toPrecision(4)}x
+<span style="float: right;"><strong class='color-defense'>level</strong> ${(simulation.dmgScale).toPrecision(4)}x</span>
+<br><strong class='color-h'>health</strong> (${(m.health * 100).toFixed(0)} / ${(m.maxHealth * 100).toFixed(0)})
+<span style="float: right;">${powerUps.research.count} ${powerUps.orb.research()}</span>
+<br><strong class='color-f'>energy</strong> (${(m.energy * 100).toFixed(0)} / ${(m.maxEnergy * 100).toFixed(0)}) + (${(m.fieldRegen * 6000 * level.isReducedRegen).toFixed(0)}/s)
+<span style="float: right;">${tech.totalCount} ${powerUps.orb.tech()}</span>
+<br><strong><em>fire rate</em></strong> ${(1 / b.fireCDscale).toFixed(2)}x
+<span style="float: right;">mass ${player.mass.toFixed(1)}</span>
 ${m.coupling ? `<br><span style = 'font-size:90%;'>` + m.couplingDescription(m.coupling) + `</span> from ${(m.coupling).toFixed(0)} ${powerUps.orb.coupling(1)}` : ""}
+<br><strong class='color-dup'>duplication</strong> ${(tech.duplicationChance() * 100).toFixed(0)}%
+<span style="float: right;"><strong class='color-junk'>JUNK</strong> ${(100 * (tech.junkChance + level.junkAdded)).toFixed(0)}%</span>
 ${botText}
 <br>
-<br><strong class='color-h'>health</strong>: (${(m.health * 100).toFixed(0)} / ${(m.maxHealth * 100).toFixed(0)})
-<span style="float: right;">mass: ${player.mass.toFixed(1)}</span>
-<br><strong class='color-f'>energy</strong>: (${(m.energy * 100).toFixed(0)} / ${(m.maxEnergy * 100).toFixed(0)}) + (${(m.fieldRegen * 6000).toFixed(0)}/s)
-<span style="float: right;">position: (${player.position.x.toFixed(1)}, ${player.position.y.toFixed(1)})</span> 
-<br><strong class='color-g'>gun</strong>: ${b.activeGun === null || b.activeGun === undefined ? "undefined" : b.guns[b.activeGun].name} &nbsp; <strong class='color-g'>ammo</strong>: ${b.activeGun === null || b.activeGun === undefined ? "0" : b.guns[b.activeGun].ammo}
-<span style="float: right;">mouse: (${simulation.mouseInGame.x.toFixed(1)}, ${simulation.mouseInGame.y.toFixed(1)})</span> 
-<br><strong class='color-m'>tech</strong>: ${tech.totalCount}  &nbsp; <strong class='color-r'>research</strong>: ${powerUps.research.count}
-<span style="float: right;">velocity: (${player.velocity.x.toFixed(3)}, ${player.velocity.y.toFixed(3)})</span> 
-${junkCount ? `<br><strong class='color-junk'>JUNK</strong>: ${(junkCount / totalCount * 100).toFixed(1)}%  ` : ""}
-<br>
-<br>level: ${level.levelsCleared} ${level.levels[level.onLevel]} (${level.difficultyText()})
-<br>seed: ${Math.initialSeed} &nbsp; ${m.cycle} cycles
-<br>mobs: ${mob.length} &nbsp; blocks: ${body.length} &nbsp; bullets: ${bullet.length} &nbsp; power ups: ${powerUp.length} 
+<br> ${level.levelAnnounce()}
+<span style="float: right;">position (${player.position.x.toFixed(0)}, ${player.position.y.toFixed(0)})</span>
+<br>seed ${Math.initialSeed}
+<span style="float: right;">mouse (${simulation.mouseInGame.x.toFixed(0)}, ${simulation.mouseInGame.y.toFixed(0)})</span>
+<br>cycles ${m.cycle}
+<span style="float: right;">velocity (${player.velocity.x.toFixed(2)}, ${player.velocity.y.toFixed(2)})</span>
+<br>mobs ${mob.length} (${spawn.pickList[0]},  ${spawn.pickList[0]})
+<span style="float: right;">blocks ${body.length}</span>
+<br>bullets ${bullet.length}
+<span style="float: right;">power ups ${powerUp.length}</span>
+
 ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
-</span></div>`;
-        // deaths: ${mobs.mobDeaths} &nbsp;
-        if (tech.isPauseSwitchField && !simulation.isChoosing) {
+</div>
+</details>
+</div>`
+        text += `<div class="pause-grid-module card-background" style="height:auto;">
+<details id="difficulty-parameters-details" style="padding: 0 8px;">
+<summary>difficulty parameters</summary>
+<div class="pause-details">
+        ${simulation.difficultyMode > 0 ? `<div class="pause-difficulty-row"><strong>0.87x</strong> <strong class='color-d'>damage</strong>, <strong>1.2x</strong> <strong class='color-defense'>damage taken</strong> per level<br><strong>+1</strong> boss on each level</div>` : " "}
+        ${simulation.difficultyMode > 1 ? `<div class="pause-difficulty-row"><strong>more</strong> mob per level<br><strong>faster</strong> mobs per level</div>` : " "}
+        ${simulation.difficultyMode > 2 ? `<div class="pause-difficulty-row"><strong>0.87x</strong> <strong class='color-d'>damage</strong>, <strong>1.2x</strong> <strong class='color-defense'>damage taken</strong> per level<br><strong>+1</strong> random <strong class="constraint">constraint</strong> on each level</div>` : " "}
+        ${simulation.difficultyMode > 3 ? `<div class="pause-difficulty-row"><strong>+1</strong> boss on each level<br>bosses spawn <strong>1</strong> fewer ${powerUps.orb.tech()}</div>` : " "}
+        ${simulation.difficultyMode > 4 ? `<div class="pause-difficulty-row"><strong>0.87x</strong> <strong class='color-d'>damage</strong>, <strong>1.2x</strong> <strong class='color-defense'>damage taken</strong> per level<br><strong>+1</strong> random <strong class="constraint">constraint</strong> on each level</div>` : " "}
+        ${simulation.difficultyMode > 5 ? `<div class="pause-difficulty-row"><strong>0.5x</strong> initial <strong class='color-d'>damage</strong><br><strong>2x</strong> initial <strong class='color-defense'>damage taken</strong></div>` : " "}        
+</div>
+</details>
+${simulation.difficultyMode > 2 ? `<details id="constraints-details" style="padding: 0 8px;"><summary>active constraints</summary><div class="pause-details"><span class="constraint">${level.constraintDescription1}<br>${level.constraintDescription2}</span></div></details>` : ""}
+ </div>`
+        if (!localSettings.isHideHUD) text += `<div class="pause-grid-module card-background" style="height:auto;">
+<details id = "console-log-details" style="padding: 0 8px;">
+<summary>console log</summary>
+<div class="pause-details">
+    <div class="pause-grid-module" style="background-color: rgba(255,255,255,0.3);font-size: 0.8em;">${document.getElementById("text-log").innerHTML}</div>
+</div>
+</details>
+</div>`
+        if ((tech.isPauseSwitchField || simulation.testing)) {  //&& !simulation.isChoosing
+            // const fieldNameP = m.fieldUpgrades[m.fieldMode > 1 ? m.fieldMode - 1 : m.fieldUpgrades.length - 1].name
+            // const fieldNameN = m.fieldUpgrades[m.fieldMode === m.fieldUpgrades.length - 2 ? 1 : m.fieldMode + 1].name
+            //button above for previous
+            text += `<div class="pause-grid-module" id ="pause-field-previous" style="animation: fieldColorCycle 3s linear infinite alternate; border-top: 1px solid #000;border-bottom: 1px solid #000;">
+                           <div class="grid-title" style="text-align: center;">↑ <div class="circle-grid field"></div> ↑</div></div>`
+            //button for current
             const style = localSettings.isHideImages ? `style="height:auto;"` : `style="background-image: url('img/field/${m.fieldUpgrades[m.fieldMode].name}${m.fieldMode === 0 ? m.fieldUpgrades[0].imageNumber : ""}.webp');"`
-            text += `<div class="pause-grid-module card-background" id ="pause-field" ${style} >
-                           <div class="card-text" style = "animation: fieldColorCycle 1s linear infinite alternate;">
-                           <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
-                           ${m.fieldUpgrades[m.fieldMode].description}</div> </div>`
+            text += `<div class="pause-grid-module card-background" id="pause-field" ${style} >
+                                                    <div class="card-text">
+                                                        <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
+                                                        ${m.fieldUpgrades[m.fieldMode].description}</div> </div>`
+            //button below for next
+            text += `<div class="pause-grid-module" id="pause-field-next" style="animation: fieldColorCycle 3s linear infinite alternate;border-bottom: 1px solid #000;">
+                                                    <div class="grid-title" style="text-align: center;">↓ <div class="circle-grid field"></div> ↓</div></div>`
+
+
         } else {
             const style = localSettings.isHideImages ? `style="height:auto;"` : `style="background-image: url('img/field/${m.fieldUpgrades[m.fieldMode].name}${m.fieldMode === 0 ? m.fieldUpgrades[0].imageNumber : ""}.webp');"`
-            text += `<div class="pause-grid-module card-background" id ="pause-field" ${style} >
-                           <div class="card-text">
-                           <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
-                           ${m.fieldUpgrades[m.fieldMode].description}</div> </div>`
+            text += `<div class="pause-grid-module card-background" id="pause-field" ${style} >
+                                                    <div class="card-text">
+                                                        <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
+                                                        ${m.fieldUpgrades[m.fieldMode].description}</div> </div>`
         }
         // for (let i = 0, len = b.inventory.length; i < len; i++) {
         //     text += `<div class="pause-grid-module"><div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[b.inventory[i]].name)} - <span style="font-size:100%;font-weight: 100;">${b.guns[b.inventory[i]].ammo}</span></div> ${b.guns[b.inventory[i]].description}</div>`
@@ -435,66 +567,40 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         for (let i = 0, len = b.inventory.length; i < len; i++) {
             const style = localSettings.isHideImages ? `style="height:auto;"` : `style="background-image: url('img/gun/${b.guns[b.inventory[i]].name}.webp');"`
             text += `<div class="pause-grid-module card-background" ${style} >
-                           <div class="card-text">
-                           <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[b.inventory[i]].name)} - <span style="font-size:100%;font-weight: 100;">${b.guns[b.inventory[i]].ammo}</span></div>
-                           ${b.guns[b.inventory[i]].description}</div> </div>`
+                                                    <div class="card-text">
+                                                        <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[b.inventory[i]].name)} - <span style="font-size:100%;font-weight: 100;">${b.guns[b.inventory[i]].ammo}</span></div>
+                                                        ${b.guns[b.inventory[i]].descriptionFunction()}</div> </div>`
         }
-        if (!localSettings.isHideHUD) text += `<div class="pause-grid-module pause-console" style = "background-color: rgba(255,255,255,0.3);">${document.getElementById("text-log").innerHTML}</div>` //show last in game console message
         let el = document.getElementById("pause-grid-left")
         el.style.display = "grid"
         el.innerHTML = text
+        requestAnimationFrame(() => {
+            if (localSettings.isAllowed) {
+                document.getElementById("simulation-variables-details").open = localSettings.pauseMenuDetailsOpen[0]
+                document.getElementById("difficulty-parameters-details").open = localSettings.pauseMenuDetailsOpen[1]
+                document.getElementById("console-log-details").open = localSettings.pauseMenuDetailsOpen[2]
+                if (document.getElementById("constraints-details")) document.getElementById("constraints-details").open = localSettings.pauseMenuDetailsOpen[3]
+            }
+        });
     },
     generatePauseRight() {
-        //right side
-        // <input onclick="" type="checkbox" id="sort-damage" name="sort-damage" style="width:1em; height:1em;">
-        //       <label for="sort-damage" title="sort tech by damage"><strong class='color-d'>damage</strong></label>
-
-        //       <input onclick="build.sortTech('guntech')" type="checkbox" id="sort-guntech" name="sort-guntech" style="width:1em; height:1em;">
-        //       <label for="sort-guntech" title="sort guntech"> <strong class='color-g'>gun</strong><strong class='color-m'>tech</strong></label>
-
-        // <button onclick="build.sortTech('bot')" class='sort-button'><strong class='color-bot'>bot</strong></button>
         let text = `<div class="sort">
-<button onclick="build.sortTech('damage')" class='sort-button'><strong class='color-d'>damage</strong></button>
-<button onclick="build.sortTech('guntech')" class='sort-button'><strong class='color-g'>gun</strong><strong class='color-m'>tech</strong></button>
-<button onclick="build.sortTech('fieldtech')" class='sort-button'><strong class='color-f'>field</strong><strong class='color-m'>tech</strong></button>
-<button onclick="build.sortTech('heal')" class='sort-button'><strong class='color-h'>heal</strong></button>
-<button onclick="build.sortTech('defense')" class='sort-button'><strong style="letter-spacing: 1px;font-weight: 100;">defense</strong></button>
-<button onclick="build.sortTech('energy')" class='sort-button'><strong class='color-f'>energy</strong></button>
-<input type="search" id="sort-input" style="width: 8em;font-size: 0.6em;color:#000;" placeholder="sort by"/>
-<button onclick="build.sortTech('input')" class='sort-button' style="border-radius: 0em;border: 1.5px #000 solid;font-size: 0.6em;" value="damage">sort</button>
+    <button onclick="build.sortTech('guntech')" class='sort-button'>${powerUps.orb.gunTech()}</button>
+    <button onclick="build.sortTech('fieldtech')" class='sort-button'>${powerUps.orb.fieldTech()}</button>
+    <button onclick="build.sortTech('damage')" class='sort-button'><strong class='color-d'>damage</strong></button>
+    <button onclick="build.sortTech('damage taken')" class='sort-button'><strong style="letter-spacing: 1px;font-weight: 100;">dmg taken</strong></button>
+    <button onclick="build.sortTech('heal')" class='sort-button'><strong class='color-h'>heal</strong></button>
+    <button onclick="build.sortTech('energy')" class='sort-button'><strong class='color-f'>energy</strong></button>
+    <input type="search" id="sort-input" style="width: 8em;font-size: 0.6em;color:#000;" placeholder="sort by" />
+    <button onclick="build.sortTech('input')" class='sort-button' style="border-radius: 0em;border: 1.5px #000 solid;font-size: 0.6em;" value="damage">sort</button>
 </div>`;
-        // const style = (tech.isPauseEjectTech && !simulation.isChoosing) ? 'style="animation: techColorCycle 1s linear infinite alternate;"' : ''
         const ejectClass = (tech.isPauseEjectTech && !simulation.isChoosing) ? 'pause-eject' : ''
         for (let i = 0, len = tech.tech.length; i < len; i++) {
             if (tech.tech[i].count > 0) {
-                // const techCountText = tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : "";
-                // if (tech.tech[i].isNonRefundable) {
-                //     text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" style = "border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding-top: 6px; padding-bottom: 6px;"><div class="grid-title">${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
-                // } else if (tech.tech[i].isFieldTech) {
-                //     text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" ${style}><div class="grid-title">
-                //                             <span style="position:relative;">
-                //                                 <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-                //                               <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
-                //                             </span>
-                //                             &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
-                // } else if (tech.tech[i].isGunTech) {
-                //     text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" ${style}><div class="grid-title">
-                //                             <span style="position:relative;">
-                //                                 <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-                //                                 <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
-                //                             </span>
-                //                             &nbsp; &nbsp; &nbsp; &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
-                // } else if (tech.tech[i].isLore) {
-                //     text += `<div class="pause-grid-module"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[i].name} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
-                // } else {
-                //     text += `<div class="pause-grid-module" id ="${i}-pause-tech" onclick="powerUps.pauseEjectTech(${i})" ${style}><div class="grid-title"><div class="circle-grid tech"></div> &nbsp; ${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
-                // }
                 const style = (localSettings.isHideImages || tech.tech[i].isJunk || tech.tech[i].isLore) ? `style="height:auto;"` : `style = "background-image: url('img/${tech.tech[i].name}.webp');"`
                 const techCountText = tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : "";
-                if (tech.tech[i].isNonRefundable) {
-                    text += `<div class="pause-grid-module" id ="${i}-pause-tech"  style = "border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding: 6px;"><div class="grid-title">${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
-                    // } else if (tech.tech[i].isLore) {
-                    //     text += `<div class="pause-grid-module"><div class="grid-title lore-text"><div class="circle-grid lore"></div> &nbsp; ${tech.tech[i].name} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() :tech.tech[i].description}</div></div>`
+                if (tech.tech[i].isInstant) {
+                    // text += `<div class="pause-grid-module" id ="${i}-pause-tech"  style = "border: 0px; opacity:0.5; font-size: 60%; line-height: 130%; margin: 1px; padding: 6px;"><div class="grid-title">${tech.tech[i].link} ${techCountText}</div>${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div></div>`
                 } else if (tech.tech[i].isFieldTech) {
                     text += `<div id="${i}-pause-tech" class="pause-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
                     text += build.fieldTechText(i) + "</div>"
@@ -504,6 +610,9 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
                 } else if (tech.tech[i].isSkin) {
                     text += `<div id="${i}-pause-tech" class="pause-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
                     text += build.skinTechText(i) + "</div>"
+                } else if (tech.tech[i].isJunk) {
+                    text += `<div id="${i}-pause-tech" class="pause-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
+                    text += build.junkTechText(i) + "</div>"
                 } else {
                     text += `<div id="${i}-pause-tech" class="pause-grid-module card-background ${ejectClass}" onclick="powerUps.pauseEjectTech(${i})" ${style}>`
                     text += build.techText(i) + "</div>"
@@ -515,6 +624,17 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         const el = document.getElementById("pause-grid-right")
         el.style.display = "grid"
         el.innerHTML = text
+
+        //add event listener for pressing enter key when in sort
+        function pressEnterSort(event) {
+            if (event.key === 'Enter') {
+                requestAnimationFrame(() => { document.getElementById("sort-input").focus(); });
+                // event.preventDefault(); // Prevent the default action to avoid form submission or any other default action
+                build.sortTech('input')
+            }
+        }
+        document.getElementById("sort-input").addEventListener('keydown', pressEnterSort);
+        requestAnimationFrame(() => { document.getElementById("sort-input").focus(); });
     },
     sortTech(find, isExperiment = false) {
         const sortKeyword = (a, b) => {
@@ -525,11 +645,19 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
             return 0;
         }
 
+        // if (find === '') {
+        //     tech.tech.sort((a, b) => { //sorts tech into the order the player got them using tech.tech[i].cycle = m.cycle
+        //         console.log(a.cycle, b.cycle)
+        //         if (a.cycle === undefined && b.cycle !== undefined) return -1;
+        //         if (a.cycle !== undefined && b.cycle === undefined) return 1;
+        //         if (a.cycle === undefined && b.cycle === undefined) return 0;
+        //         if (a.cycle !== b.cycle) return a.cycle - b.cycle;
+        //     });
+        // } else
         if (find === 'guntech') {
             tech.tech.sort((a, b) => {
                 if (a.isGunTech && b.isGunTech) {
-                    if (a.allowed() > b.allowed()) return -1; //sort to the top
-                    if (!a.allowed() < b.allowed()) return 1; //sort to the bottom
+                    return (a.allowed() === b.allowed()) ? 0 : a.allowed() ? -1 : 1;
                 }
                 if (a.isGunTech && !b.isGunTech) return -1; //sort to the top
                 if (!a.isGunTech && b.isGunTech) return 1; //sort to the bottom
@@ -538,30 +666,30 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         } else if (find === 'fieldtech') {
             tech.tech.sort((a, b) => {
                 if (a.isFieldTech && b.isFieldTech) {
-                    if (a.allowed() > b.allowed()) return -1; //sort to the top
-                    if (!a.allowed() < b.allowed()) return 1; //sort to the bottom
+                    return (a.allowed() === b.allowed()) ? 0 : a.allowed() ? -1 : 1;
                 }
                 if (a.isFieldTech && !b.isFieldTech) return -1; //sort to the top
                 if (!a.isFieldTech && b.isFieldTech) return 1; //sort to the bottom
                 return 0;
             });
         } else if (find === 'allowed') {
+            // tech.tech.sort((a, b) => {
+            //     if (a.allowed() > !b.allowed()) return -1; //sort to the top
+            //     if (!a.allowed() < b.allowed()) return 1; //sort to the bottom
+            //     return 0;
+            // });
             tech.tech.sort((a, b) => {
-                if (a.allowed() > b.allowed()) return -1; //sort to the top
-                if (!a.allowed() < b.allowed()) return 1; //sort to the bottom
-                return 0;
+                return (a.allowed() === b.allowed()) ? 0 : a.allowed() ? -1 : 1;
             });
         } else if (find === 'have') {
             tech.tech.sort((a, b) => {
-                if (a.count > b.count) return -1; //sort to the top
-                if (!a.count < b.count) return 1; //sort to the bottom
+                return (a.allowed() === b.allowed()) ? 0 : a.allowed() ? -1 : 1;
                 return 0;
             });
         } else if (find === 'heal') {
             tech.tech.sort((a, b) => {
                 if (a.isHealTech && b.isHealTech) {
-                    if (a.allowed() > b.allowed()) return -1; //sort to the top
-                    if (!a.allowed() < b.allowed()) return 1; //sort to the bottom
+                    return (a.allowed() === b.allowed()) ? 0 : a.allowed() ? -1 : 1;
                 }
                 if (a.isHealTech && !b.isHealTech) return -1; //sort to the top
                 if (!a.isHealTech && b.isHealTech) return 1; //sort to the bottom
@@ -570,8 +698,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         } else if (find === 'bot') {
             tech.tech.sort((a, b) => {
                 if (a.isBotTech && b.isBotTech) {
-                    if (a.allowed() > b.allowed()) return -1; //sort to the top
-                    if (!a.allowed() < b.allowed()) return 1; //sort to the bottom
+                    return (a.allowed() === b.allowed()) ? 0 : a.allowed() ? -1 : 1;
                 }
                 if (a.isBotTech && !b.isBotTech) return -1; //sort to the top
                 if (!a.isBotTech && b.isBotTech) return 1; //sort to the bottom
@@ -580,8 +707,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         } else if (document.getElementById("sort-input").value === 'skin') {
             tech.tech.sort((a, b) => {
                 if (a.isSkin && b.isSkin) {
-                    if (a.allowed() > b.allowed()) return -1; //sort to the top
-                    if (!a.allowed() < b.allowed()) return 1; //sort to the bottom
+                    return (a.allowed() === b.allowed()) ? 0 : a.allowed() ? -1 : 1;
                 }
                 if (a.isSkin && !b.isSkin) return -1; //sort to the top
                 if (!a.isSkin && b.isSkin) return 1; //sort to the bottom
@@ -600,7 +726,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         } else if (find === 'energy') {
             tech.tech.sort(sortKeyword);
         } else if (find === 'input') {
-            find = document.getElementById("sort-input").value;
+            find = document.getElementById("sort-input").value.toLowerCase();
             tech.tech.sort(sortKeyword);
         }
         if (isExperiment) {
@@ -611,8 +737,18 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
             build.generatePauseRight() //makes the right side of the pause menu with the tech            
         }
         document.getElementById("sort-input").value = find; //make the sorted string display in the keyword search input field
+        simulation.updateTechHUD();
     },
     unPauseGrid() {
+        if (localSettings.isAllowed) {
+            //save details open/close state
+            if (document.getElementById("simulation-variables-details")) localSettings.pauseMenuDetailsOpen[0] = document.getElementById("simulation-variables-details").open
+            if (document.getElementById("difficulty-parameters-details")) localSettings.pauseMenuDetailsOpen[1] = document.getElementById("difficulty-parameters-details").open
+            if (document.getElementById("console-log-details")) localSettings.pauseMenuDetailsOpen[2] = document.getElementById("console-log-details").open
+            if (document.getElementById("constraints-details")) localSettings.pauseMenuDetailsOpen[3] = document.getElementById("constraints-details").open
+            localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+        }
+
         document.getElementById("guns").style.display = "inline"
         document.getElementById("field").style.display = "inline"
         if (tech.isEnergyHealth) {
@@ -623,7 +759,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
             document.getElementById("health-bg").style.display = "inline"
         }
         if (!localSettings.isHideHUD) {
-            document.getElementById("tech").style.display = "inline"
+            document.getElementById("right-HUD").style.display = "inline"
             document.getElementById("defense-bar").style.display = "inline"
             document.getElementById("damage-bar").style.display = "inline"
         }
@@ -638,37 +774,43 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
     isExperimentRun: false,
     techText(i) {
         return `<div class="card-text" >
-        <div class="grid-title" ><div class="circle-grid tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                                <div class="grid-title" ><div class="circle-grid tech"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+    },
+    instantTechText(i) {
+        // 
+        return `<div class="card-text" >
+                                <div class="grid-title" > <div class="circle-grid-instant"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     skinTechText(i) {
         return `<div class="card-text"> <div class="grid-title">
-        <span style="position:relative;">
-            <div class="circle-grid-skin"></div>
-            <div class="circle-grid-skin-eye"></div>
-        </span> &nbsp; &nbsp; &nbsp;&nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                                <span style="position:relative;">
+                                    <div class="circle-grid-skin"></div>
+                                    <div class="circle-grid-skin-eye"></div>
+                                </span> &nbsp; &nbsp; &nbsp; &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     gunTechText(i) {
         return `<div class="card-text"> <div class="grid-title">
-        <span style="position:relative;">
-            <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-            <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
-        </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                                <span style="position:relative;">
+                                    <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
+                                    <div class="circle-grid gun" style="position:absolute; top:0; left:10px; opacity:0.65;"></div>
+                                </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     fieldTechText(i) {
         return `<div class="card-text"><div class="grid-title">
-        <span style="position:relative;">
-                <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
-                <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
-        </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                                <span style="position:relative;">
+                                    <div class="circle-grid tech" style="position:absolute; top:0; left:0;opacity:0.8;"></div>
+                                    <div class="circle-grid field" style="position:absolute; top:0; left:10px;opacity:0.65;"></div>
+                                </span> &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     junkTechText(i) {
         return `<div class="card-text">
-        <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
-        ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
+                                <div class="grid-title"><div class="circle-grid junk"></div> &nbsp; ${build.nameLink(tech.tech[i].name)} ${tech.tech[i].count > 1 ? `(${tech.tech[i].count}x)` : ""}</div>
+                                ${tech.tech[i].descriptionFunction ? tech.tech[i].descriptionFunction() : tech.tech[i].description}</div>`
     },
     choosePowerUp(index, type, isAllowed = false) {
         if (type === "gun") {
@@ -708,24 +850,22 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
                 // document.getElementById(`field-${i}`).innerHTML = `<div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div> ${m.fieldUpgrades[i].description}`
 
                 document.getElementById(`field-${i}`).innerHTML = `<div class="card-text">
-                <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
-                ${m.fieldUpgrades[i].description}</div>`
+                                <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
+                                ${m.fieldUpgrades[i].description}</div>`
             }
         } else if (type === "tech") {
             if (tech.tech[index].count < tech.tech[index].maxCount) {
-                // if (!tech.tech[index].isLore && !tech.tech[index].isNonRefundable && !who.classList.contains("build-tech-selected")) who.classList.add("build-tech-selected");
+                // if (!tech.tech[index].isLore && !tech.tech[index].isInstant && !who.classList.contains("build-tech-selected")) who.classList.add("build-tech-selected");
                 if (!document.getElementById("tech-" + index).classList.contains("build-tech-selected")) document.getElementById("tech-" + index).classList.add("build-tech-selected");
                 tech.giveTech(index)
-            } else if (!tech.tech[index].isNonRefundable) {
+            } else if (!tech.tech[index].isInstant) {
                 // tech.totalCount -= tech.tech[index].count
-                tech.removeTech(index);
                 document.getElementById("tech-" + index).classList.remove("build-tech-selected");
+                tech.removeTech(index);
             } else {
                 // for non refundable tech this makes it flash off for a second, but return to on to show that it can't be set off
                 document.getElementById("tech-" + index).classList.remove("build-tech-selected")
-                setTimeout(() => {
-                    document.getElementById("tech-" + index).classList.add("build-tech-selected")
-                }, 50);
+                setTimeout(() => { document.getElementById("tech-" + index).classList.add("build-tech-selected") }, 50);
             }
         }
         build.updateExperimentText(isAllowed)
@@ -747,6 +887,8 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
                     } else if (tech.tech[i].isSkin) {
                         techID.classList.remove('experiment-grid-hide');
                         techID.innerHTML = build.skinTechText(i)
+                    } else if (tech.tech[i].isInstant) {
+                        techID.innerHTML = build.instantTechText(i)
                     } else {
                         techID.innerHTML = build.techText(i)
                     }
@@ -772,6 +914,8 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
                         techID.innerHTML = build.junkTechText(i)
                     } else if (tech.tech[i].isSkin) {
                         techID.innerHTML = build.skinTechText(i)
+                    } else if (tech.tech[i].isInstant) {
+                        techID.innerHTML = build.instantTechText(i)
                     } else {
                         techID.innerHTML = build.techText(i)
                     }
@@ -779,75 +923,78 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
             }
         }
     },
+    //     <div>
+    // <select name="difficulty-select" id="difficulty-select-experiment">
+    // <option value="1">easy</option>
+    // <option value="2" selected>normal ⚆</option>
+    // <option value="4">hard ⚆</option>
+    // <option value="5">why ⚇</option>
+    // </select>
+    // &nbsp; &nbsp;
+    //     <label for="hide-images-experiment" title="reload experiment with no images for fields, guns, and tech" style="font-size: 0.85em;">hide images</label>
+    //     <input onclick="build.showImages('experiment')" type="checkbox" id="hide-images-experiment" name="hide-images-experiment" style="width:13px; height:13px;" ${localSettings.isHideImages ? "checked" : ""}>
+    // </div>
+
+    // <button onclick="build.sortTech('allowed', true)" class='sort-button' style="letter-spacing: 1px;font-weight: 400;">allowed</button>
+    // <button onclick="build.sortTech('have', true)" class='sort-button color-m' style="letter-spacing: 1px;font-weight: 800;">have</button>
     populateGrid() { //background-color:var(--build-bg-color);
         let text = `
-<div class="experiment-start-box">  
+<div class="experiment-start-box">
     <div class="sort" style="border: 0px;">
-        <button onclick="build.sortTech('guntech', true)" class='sort-button'><strong class='color-g'>gun</strong><strong class='color-m'>tech</strong></button>
-        <button onclick="build.sortTech('fieldtech', true)" class='sort-button'><strong class='color-f'>field</strong><strong class='color-m'>tech</strong></button>
+        <button onclick="build.sortTech('guntech', true)" class='sort-button'>${powerUps.orb.gunTech()}</button>
+        <button onclick="build.sortTech('fieldtech', true)" class='sort-button'>${powerUps.orb.fieldTech()}</button>
         <button onclick="build.sortTech('damage', true)" class='sort-button'><strong class='color-d'>damage</strong></button>
-        <button onclick="build.sortTech('defense', true)" class='sort-button'><strong style="letter-spacing: 1px;font-weight: 100;">defense</strong></button>
-        <button onclick="build.sortTech('have', true)" class='sort-button color-m' style="letter-spacing: 1px;font-weight: 800;">have</button>
-        <button onclick="build.sortTech('allowed', true)" class='sort-button' style="letter-spacing: 1px;font-weight: 400;">allowed</button>
-        <input type="search" id="sort-input" style="width: 8.7em;font-size: 0.6em;color:#000;" placeholder="sort by"/>
+        <button onclick="build.sortTech('damage taken', true)" class='sort-button'><strong style="letter-spacing: 1px;font-weight: 100;">dmg taken</strong></button>
+        <button onclick="build.sortTech('heal')" class='sort-button'><strong class='color-h'>heal</strong></button>
+        <button onclick="build.sortTech('energy')" class='sort-button'><strong class='color-f'>energy</strong></button>
+        <input type="search" id="sort-input" style="width: 7.5em;font-size: 0.6em;color:#000;" placeholder="sort by" />
         <button onclick="build.sortTech('input', true)" class='sort-button' style="border-radius: 0em;border: 1.5px #000 solid;font-size: 0.6em;" value="damage">sort</button>
     </div>
-<div>
-    <select name="difficulty-select" id="difficulty-select-experiment">
-    <option value="1">easy</option>
-    <option value="2" selected>normal</option>
-    <option value="4">hard</option>
-    <option value="6">why</option>
-    </select>
-    &nbsp; &nbsp;
-        <label for="hide-images-experiment" title="reload experiment with no images for fields, guns, and tech" style="font-size: 0.85em;">hide images</label>
-        <input onclick="build.showImages('experiment')" type="checkbox" id="hide-images-experiment" name="hide-images-experiment" style="width:13px; height:13px;" ${localSettings.isHideImages ? "checked" : ""}>
+    <div>
+        <div style="display: grid;grid-template-columns: repeat(3, 1fr);row-gap: 10px;column-gap: 25px;grid-auto-rows: minmax(5px, auto);margin:-5px 0px 10px 25px;line-height: 100%;">
+            <div style="grid-column: 1;grid-row: 2 / 4;">
+                <svg class="SVG-button" onclick="build.startExperiment()" width="150" height="70" >
+                    <g stroke='none' fill='#333' stroke-width="2" font-size="65px" font-family="Ariel, sans-serif">
+                        <text x="10" y="57">start</text>
+                    </g>
+                </svg>
+            </div>
+            <div style="grid-column: 2;grid-row: 2;">
+                <svg class="SVG-button" onclick="build.reset()" width="50" height="25">
+                    <g stroke='none' fill='#333' stroke-width="2" font-size="17px" font-family="Ariel, sans-serif">
+                        <text x="5" y="18">reset</text>
+                    </g>
+                </svg>
+            </div>
+            <div style="grid-column: 2;grid-row: 3/4;">
+                <svg class="SVG-button" onclick="build.shareURL(true)" width="52" height="25">
+                    <g stroke='none' fill='#333' stroke-width="2" font-size="17px" font-family="Ariel, sans-serif">
+                        <text x="5" y="18">share</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
     </div>
-<div>
-    <div style="display: grid;grid-template-columns: repeat(3, 1fr);row-gap: 10px;column-gap: 25px;grid-auto-rows: minmax(5px, auto);margin:-5px 0px 10px 25px;line-height: 100%;">
-    <div style="grid-column: 1;grid-row: 2 / 4;">
-        <svg class="SVG-button" onclick="build.startExperiment()" width="150" height="70" >
-            <g stroke='none' fill='#333' stroke-width="2" font-size="65px" font-family="Ariel, sans-serif">
-            <text x="10" y="57">start</text>
-            </g>
-        </svg>
-    </div>
-    <div style="grid-column: 2;grid-row: 2;">
-        <svg class="SVG-button" onclick="build.reset()" width="50" height="25">
-            <g stroke='none' fill='#333' stroke-width="2" font-size="17px" font-family="Ariel, sans-serif">
-            <text x="5" y="18">reset</text>
-            </g>
-        </svg>
-    </div>
-    <div style="grid-column: 2;grid-row: 3/4;">
-        <svg class="SVG-button" onclick="build.shareURL(true)" width="52" height="25">
-            <g stroke='none' fill='#333' stroke-width="2" font-size="17px" font-family="Ariel, sans-serif">
-            <text x="5" y="18">share</text>
-            </g>
-        </svg>
-    </div>
-    </div>
-</div>
 </div>`
         const hideStyle = `style="height:auto; border: none; background-color: transparent;"`
         for (let i = 0, len = m.fieldUpgrades.length; i < len; i++) {
             const style = localSettings.isHideImages ? hideStyle : `style="background-image: url('img/field/${m.fieldUpgrades[i].name}${i === 0 ? m.fieldUpgrades[0].imageNumber : ""}.webp');"`
-            text += `<div id="field-${i}" class="experiment-grid-module card-background ${m.fieldMode === i ? "build-field-selected" : ""}" onclick="build.choosePowerUp(${i},'field')" ${style} >
-                    <div class="card-text">
-                    <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
-                    ${m.fieldUpgrades[i].description}</div> </div>`
+            text += `<div id="field-${i}" class="experiment-grid-module card-background ${m.fieldMode === i ? " build-field-selected" : ""}" onclick="build.choosePowerUp(${i},'field')" ${style} >
+                            <div class="card-text">
+                                <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[i].name)}</div>
+                                ${m.fieldUpgrades[i].description}</div> </div>`
         }
         for (let i = 0, len = b.guns.length; i < len; i++) {
             const style = localSettings.isHideImages ? hideStyle : `style="background-image: url('img/gun/${b.guns[i].name}.webp');"`
-            text += `<div id="gun-${i}" class="experiment-grid-module card-background ${b.guns[i].have ? "build-gun-selected" : ""}" onclick="build.choosePowerUp(${i},'gun')" ${style} >
-                    <div class="card-text">
-                    <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[i].name)}</div>
-                    ${b.guns[i].description}</div> </div>`
+            text += `<div id="gun-${i}" class="experiment-grid-module card-background ${b.guns[i].have ? " build-gun-selected" : ""}" onclick="build.choosePowerUp(${i},'gun')" ${style} >
+                        <div class="card-text">
+                            <div class="grid-title"><div class="circle-grid gun"></div> &nbsp; ${build.nameLink(b.guns[i].name)}</div>
+                            ${b.guns[i].descriptionFunction()}</div> </div>`
         }
         for (let i = 0, len = tech.tech.length; i < len; i++) {
             if ((!tech.tech[i].isJunk || localSettings.isJunkExperiment) && !tech.tech[i].isLore) {
                 const style = (localSettings.isHideImages || tech.tech[i].isJunk) ? hideStyle : `style="background-image: url('img/${tech.tech[i].name}.webp');"`
-                if ((tech.tech[i].allowed() || tech.tech[i].count > 0) && (!tech.tech[i].isNonRefundable || localSettings.isJunkExperiment)) { // || tech.tech[i].name === "+1 cardinality") { //|| tech.tech[i].name === "leveraged investment"
+                if ((tech.tech[i].allowed() || tech.tech[i].count > 0) && (!tech.tech[i].isInstant || localSettings.isJunkExperiment)) { // || tech.tech[i].name === "+1 cardinality") { //|| tech.tech[i].name === "leveraged investment"
                     text += `<div id="tech-${i}" class="experiment-grid-module card-background ${tech.tech[i].count ? "build-tech-selected" : ""}" onclick="build.choosePowerUp(${i},'tech')" ${style}>`
                 } else { //disabled
                     text += `<div id="tech-${i}" class="experiment-grid-module card-background experiment-grid-disabled" ${style}>`
@@ -861,6 +1008,8 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
                     text += build.skinTechText(i)
                 } else if (tech.tech[i].isJunk) {
                     text += build.junkTechText(i)
+                } else if (tech.tech[i].isInstant) {
+                    text += build.instantTechText(i)
                 } else {
                     text += build.techText(i)
                 }
@@ -868,19 +1017,26 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
             }
         }
         document.getElementById("experiment-grid").innerHTML = text
-        // for (let i = 0, len = tech.tech.length; i < len; i++) {
-        // if (tech.tech[i].count)
-        // document.getElementById("tech-" + i).classList.add("build-tech-selected")
-        // }
 
-        document.getElementById("difficulty-select-experiment").value = document.getElementById("difficulty-select").value
-        document.getElementById("difficulty-select-experiment").addEventListener("input", () => {
-            simulation.difficultyMode = Number(document.getElementById("difficulty-select-experiment").value)
-            lore.setTechGoal()
-            localSettings.difficultyMode = Number(document.getElementById("difficulty-select-experiment").value)
-            document.getElementById("difficulty-select").value = document.getElementById("difficulty-select-experiment").value
-            if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-        });
+
+
+        //add event listener for pressing enter key when in sort
+        function pressEnterSort(event) {
+            if (event.key === 'Enter') {
+                // event.preventDefault(); // Prevent the default action to avoid form submission or any other default action
+                build.sortTech('input', true)
+            }
+        }
+        document.getElementById("sort-input").addEventListener('keydown', pressEnterSort);
+
+        // document.getElementById("difficulty-select-experiment").value = document.getElementById("difficulty-select").value
+        // document.getElementById("difficulty-select-experiment").addEventListener("input", () => {
+        //     simulation.difficultyMode = Number(document.getElementById("difficulty-select-experiment").value)
+        //     lore.setTechGoal()
+        //     localSettings.difficultyMode = Number(document.getElementById("difficulty-select-experiment").value)
+        //     document.getElementById("difficulty-select").value = document.getElementById("difficulty-select-experiment").value
+        //     if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+        // });
         //add tooltips
         for (let i = 0, len = tech.tech.length; i < len; i++) {
             if (document.getElementById(`tech-${i}`)) {
@@ -888,11 +1044,11 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
                 // document.getElementById(`tech-${i}`).setAttribute('title', tech.tech[i].requires); //add tooltip
             }
         }
-        //highlight selected
 
+        requestAnimationFrame(() => { document.getElementById("sort-input").focus(); });
     },
     nameLink(text) { //converts text into a clickable wikipedia search
-        return `<a target="_blank" href='https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(text).replace(/'/g, '%27')}&title=Special:Search' class="link">${text}</a>`
+        return `<a target="_blank" href='https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(text).replace(/' /g, '%27')}&title=Special:Search' class="link">${text}</a>`
     },
     reset() {
         build.isExperimentSelection = true;
@@ -901,7 +1057,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         build.isExperimentSelection = true;
         build.isExperimentRun = true;
         simulation.paused = true;
-        b.inventory = []; //removes guns and ammo  
+        b.inventory = []; //removes guns and ammo
         for (let i = 0, len = b.guns.length; i < len; ++i) {
             b.guns[i].count = 0;
             b.guns[i].have = false;
@@ -917,7 +1073,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         document.getElementById("experiment-grid").style.display = "grid"
     },
     shareURL(isCustom = false) {
-        let url = "https://landgreen.github.io/sidescroller/index.html?"
+        let url = "https://landgreen.github.io/n-gon/index.html?"
         url += `&seed=${Math.initialSeed}`
         let count = 0;
         for (let i = 0; i < b.inventory.length; i++) {
@@ -929,7 +1085,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         count = 0;
         for (let i = 0; i < tech.tech.length; i++) {
             for (let j = 0; j < tech.tech[i].count; j++) {
-                if (!tech.tech[i].isLore && !tech.tech[i].isJunk && !tech.tech[i].isNonRefundable) {
+                if (!tech.tech[i].isLore && !tech.tech[i].isJunk && !tech.tech[i].isInstant) {
                     url += `&tech${count}=${encodeURIComponent(tech.tech[i].name.trim())}`
                     count++
                 }
@@ -948,7 +1104,7 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
             // url += `&level=${Math.abs(Number(document.getElementById("starting-level").value))}`
             // alert('n-gon build URL copied to clipboard.\nPaste into browser address bar.')
         } else {
-            simulation.makeTextLog("n-gon build URL copied to clipboard.<br>Paste into browser address bar.")
+            simulation.inGameConsole("n-gon build URL copied to clipboard.<br>Paste into browser address bar.")
         }
         console.log('n-gon build URL copied to clipboard.\nPaste into browser address bar.')
         console.log(url)
@@ -974,7 +1130,6 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
     startExperiment() { //start playing the game after exiting the experiment menu
         build.isExperimentSelection = false;
         spawn.setSpawnList(); //gives random mobs,  not starter mobs
-        spawn.setSpawnList();
         if (b.inventory.length > 0) {
             b.activeGun = b.inventory[0] //set first gun to active gun
             b.inventoryGun = 0;
@@ -1001,9 +1156,6 @@ ${simulation.isCheating ? "<br><br><em>lore disabled</em>" : ""}
         } else { //if you have no tech (not cheating) remove all power ups that might have spawned from tech
             for (let i = 0; i < powerUp.length; ++i) Matter.Composite.remove(engine.world, powerUp[i]);
             powerUp = [];
-            // if (build.hasExperimentalMode) {
-            //     for (let i = 0; i < 7; i++) tech.giveTech("undefined")
-            // }
         }
         document.body.style.cursor = "none";
         document.body.style.overflow = "hidden"
@@ -1092,7 +1244,7 @@ const input = {
         document.getElementById("key-pause").innerHTML = cleanText(input.key.pause)
         document.getElementById("key-next-gun").innerHTML = cleanText(input.key.nextGun)
         document.getElementById("key-previous-gun").innerHTML = cleanText(input.key.previousGun)
-        document.getElementById("key-testing").innerHTML = cleanText(input.key.testing) //if (localSettings.loreCount > 0) 
+        document.getElementById("key-testing").innerHTML = cleanText(input.key.testing) //if (localSettings.loreCount > 0)
 
         document.getElementById("splash-up").innerHTML = cleanText(input.key.up)[0]
         document.getElementById("splash-down").innerHTML = cleanText(input.key.down)[0]
@@ -1256,12 +1408,14 @@ window.addEventListener("keydown", function (event) {
             simulation.previousGun();
             break
         case input.key.pause:
-            if (!simulation.isChoosing && input.isPauseKeyReady && m.alive) {
+            if (input.isPauseKeyReady && m.alive && !build.isExperimentSelection) {
                 input.isPauseKeyReady = false
-                setTimeout(function () {
-                    input.isPauseKeyReady = true
-                }, 300);
-                if (simulation.paused) {
+                setTimeout(function () { input.isPauseKeyReady = true }, 300);
+                if (simulation.isChoosing) {
+
+                    build.pauseGrid()
+
+                } else if (simulation.paused) {
                     build.unPauseGrid()
                     simulation.paused = false;
                     // level.levelAnnounce();
@@ -1273,13 +1427,30 @@ window.addEventListener("keydown", function (event) {
                     document.body.style.cursor = "auto";
 
                     if (tech.isPauseSwitchField || simulation.testing) {
-                        document.getElementById("pause-field").addEventListener("click", () => {
+                        document.getElementById("pause-field-previous").addEventListener("click", () => {
+                            const energy = m.energy //save current energy
+                            if (m.fieldMode === 4 && simulation.molecularMode > 0) {
+                                simulation.molecularMode--
+                                m.fieldUpgrades[4].description = m.fieldUpgrades[4].setDescription()
+                            } else {
+                                m.setField((m.fieldMode < 2) ? m.fieldUpgrades.length - 1 : m.fieldMode - 1) //cycle to previous field, skip field emitter
+                                if (m.fieldMode === 4) {
+                                    simulation.molecularMode = 3
+                                    m.fieldUpgrades[4].description = m.fieldUpgrades[4].setDescription()
+                                }
+                            }
+                            m.energy = energy //return to current energy
+                            document.getElementById("pause-field").style.backgroundImage = `url('img/field/${m.fieldUpgrades[m.fieldMode].name}${m.fieldMode === 0 ? Math.floor(Math.random() * 10) : ""}.webp')`
+                            document.getElementById("pause-field").innerHTML = `<div class="card-text"> <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>${m.fieldUpgrades[m.fieldMode].description}</div>`
+                        });
+
+                        document.getElementById("pause-field-next").addEventListener("click", () => {
                             const energy = m.energy //save current energy
                             if (m.fieldMode === 4 && simulation.molecularMode < 3) {
                                 simulation.molecularMode++
                                 m.fieldUpgrades[4].description = m.fieldUpgrades[4].setDescription()
                             } else {
-                                m.setField((m.fieldMode === m.fieldUpgrades.length - 1) ? 0 : m.fieldMode + 1) //cycle to next field
+                                m.setField((m.fieldMode === m.fieldUpgrades.length - 1) ? 1 : m.fieldMode + 1) //cycle to next field, skip field emitter
                                 if (m.fieldMode === 4) {
                                     simulation.molecularMode = 0
                                     m.fieldUpgrades[4].description = m.fieldUpgrades[4].setDescription()
@@ -1288,91 +1459,90 @@ window.addEventListener("keydown", function (event) {
                             m.energy = energy //return to current energy
                             // document.getElementById("pause-field").innerHTML = `<div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${m.fieldUpgrades[m.fieldMode].name}</div> ${m.fieldUpgrades[m.fieldMode].description}`
                             document.getElementById("pause-field").style.backgroundImage = `url('img/field/${m.fieldUpgrades[m.fieldMode].name}${m.fieldMode === 0 ? Math.floor(Math.random() * 10) : ""}.webp')`
-                            document.getElementById("pause-field").innerHTML = `
-                            <div class="card-text" style = "animation: fieldColorCycle 1s linear infinite alternate;">
-                            <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div>
-                            ${m.fieldUpgrades[m.fieldMode].description}</div>`
+                            document.getElementById("pause-field").innerHTML = `<div class="card-text"> <div class="grid-title"><div class="circle-grid field"></div> &nbsp; ${build.nameLink(m.fieldUpgrades[m.fieldMode].name)}</div> ${m.fieldUpgrades[m.fieldMode].description}</div>`
                         });
                     }
                 }
             }
             break
         case input.key.testing:
-            if (m.alive && localSettings.loreCount > 0 && !simulation.paused) {
-                if (simulation.difficultyMode > 4) {
-                    simulation.makeTextLog("<em>testing mode disabled for this difficulty</em>");
+            if (m.alive && localSettings.loreCount > 0 && !simulation.paused && !build.isExperimentSelection) {
+                if (simulation.difficultyMode > 5) {
+                    simulation.inGameConsole("<em>testing mode disabled for this difficulty</em>");
                     break
                 }
                 if (simulation.testing) {
                     simulation.testing = false;
                     simulation.loop = simulation.normalLoop
                     if (simulation.isConstructionMode) document.getElementById("construct").style.display = 'none'
-                    simulation.makeTextLog("", 0);
-                } else { //if (keys[191])
+                    simulation.inGameConsole("", 0);
+                } else {
                     simulation.testing = true;
                     simulation.loop = simulation.testingLoop
-                    if (simulation.isConstructionMode) document.getElementById("construct").style.display = 'inline'
                     if (simulation.testing) tech.setCheating();
-                    simulation.makeTextLog(
-                        `<table class="pause-table">
-                            <tr>
-                                <td class='key-input-pause'>T</td>
-                                <td class='key-used'><strong>toggle testing</strong></td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>R</td>
-                                <td class='key-used'>teleport to mouse</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>F</td>
-                                <td class='key-used'>cycle field</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>G</td>
-                                <td class='key-used'>all guns</td>
-                            </tr>                            
-                            <tr>
-                                <td class='key-input-pause'>H</td>
-                                <td class='key-used'>+100% defense</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>B</td>
-                                <td class='key-used'>damage, research</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>N</td>
-                                <td class='key-used'>fill health, energy</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>Y</td>
-                                <td class='key-used'>random tech</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>U</td>
-                                <td class='key-used'>next level</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>J</td>
-                                <td class='key-used'>clear mobs</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>I/O</td>
-                                <td class='key-used'>zoom in / out</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>1-8</td>
-                                <td class='key-used'>spawn things</td>
-                            </tr>
-                            <tr>
-                                <td class='key-input-pause'>⇧X</td>
-                                <td class='key-used'>restart</td>
-                            </tr>    
-                        </table>`, Infinity);
+                    if (simulation.isConstructionMode) {
+                        document.getElementById("construct").style.display = 'inline'
+                    } else {
+                        simulation.inGameConsole(
+                            `<table class="pause-table">
+                <tr>
+                    <td class='key-input-pause'>T</td>
+                    <td class='key-used'><strong>toggle testing</strong></td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>R</td>
+                    <td class='key-used'>teleport to mouse</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>F</td>
+                    <td class='key-used'>cycle field</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>G</td>
+                    <td class='key-used'>all guns</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>H</td>
+                    <td class='key-used'>+100% defense</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>B</td>
+                    <td class='key-used'>damage, research</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>N</td>
+                    <td class='key-used'>fill health, energy</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>Y</td>
+                    <td class='key-used'>random tech</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>U</td>
+                    <td class='key-used'>next level</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>J</td>
+                    <td class='key-used'>clear mobs</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>I/O</td>
+                    <td class='key-used'>zoom in / out</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>1-8</td>
+                    <td class='key-used'>spawn things</td>
+                </tr>
+                <tr>
+                    <td class='key-input-pause'>⇧X</td>
+                    <td class='key-used'>restart</td>
+                </tr></table>`, Infinity);
+                    }
                 }
             }
             break
     }
-    if (b.inventory.length > 1 && !simulation.testing) {
+    if (b.inventory.length > 1 && !simulation.testing && !tech.isGunCycle) {
         switch (event.code) {
             case "Digit1":
                 simulation.switchToGunInInventory(0);
@@ -1417,14 +1587,16 @@ window.addEventListener("keydown", function (event) {
         if (event.key === "X") m.death(); //only uppercase
         switch (event.key.toLowerCase()) {
             case "o":
-                simulation.isAutoZoom = false;
-                simulation.zoomScale /= 0.9;
-                simulation.setZoom();
+                // simulation.isAutoZoom = false;
+                // simulation.zoomScale /= 0.9;
+                // simulation.setZoom();
+                simulation.zoomTransition(simulation.zoomScale / 0.9)
                 break;
             case "i":
-                simulation.isAutoZoom = false;
-                simulation.zoomScale *= 0.9;
-                simulation.setZoom();
+                // simulation.isAutoZoom = false;
+                // simulation.zoomScale *= 0.9;
+                // simulation.setZoom();
+                simulation.zoomTransition(simulation.zoomScale * 0.9)
                 break
             case "`":
                 powerUps.directSpawn(simulation.mouseInGame.x, simulation.mouseInGame.y, "research");
@@ -1487,10 +1659,7 @@ window.addEventListener("keydown", function (event) {
             case "r":
                 m.resetHistory();
                 Matter.Body.setPosition(player, simulation.mouseInGame);
-                Matter.Body.setVelocity(player, {
-                    x: 0,
-                    y: 0
-                });
+                Matter.Body.setVelocity(player, { x: 0, y: 0 });
                 // move bots to player
                 for (let i = 0; i < bullet.length; i++) {
                     if (bullet[i].botType) {
@@ -1520,7 +1689,7 @@ window.addEventListener("keydown", function (event) {
             case "l":
                 document.getElementById("field").style.display = "none"
                 document.getElementById("guns").style.display = "none"
-                document.getElementById("tech").style.display = "none"
+                document.getElementById("right-HUD").style.display = "none"
                 break
         }
     }
@@ -1638,11 +1807,6 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
     simulation.isCommunityMaps = localSettings.isCommunityMaps
     document.getElementById("community-maps").checked = localSettings.isCommunityMaps
 
-    if (localSettings.difficultyMode === undefined) localSettings.difficultyMode = "2"
-    simulation.difficultyMode = localSettings.difficultyMode
-    lore.setTechGoal()
-    document.getElementById("difficulty-select").value = localSettings.difficultyMode
-
     if (localSettings.fpsCapDefault === undefined) localSettings.fpsCapDefault = 'max'
     if (localSettings.personalSeeds === undefined) localSettings.personalSeeds = [];
     if (localSettings.fpsCapDefault === 'max') {
@@ -1667,9 +1831,22 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
     if (localSettings.isHideImages === undefined) localSettings.isHideImages = true //default to hide images
     document.getElementById("hide-images").checked = localSettings.isHideImages
 
-    if (localSettings.isHideHUD === undefined) localSettings.isHideHUD = false
+    if (localSettings.isHideHUD === undefined) localSettings.isHideHUD = true
     document.getElementById("hide-hud").checked = localSettings.isHideHUD
 
+    if (localSettings.difficultyCompleted === undefined) {
+        localSettings.difficultyCompleted = [null, false, false, false, false, false, false] //null because there isn't a difficulty zero
+        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+    }
+
+    if (localSettings.difficultyMode === undefined) localSettings.difficultyMode = "2"
+    simulation.difficultyMode = localSettings.difficultyMode
+    lore.setTechGoal()
+
+    if (localSettings.pauseMenuDetailsOpen === undefined) {
+        localSettings.pauseMenuDetailsOpen = [true, false, false, true]
+        localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+    }
 } else {
     console.log('setting default localSettings')
     const isAllowed = localSettings.isAllowed //don't overwrite isAllowed value
@@ -1680,6 +1857,7 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
         isJunkExperiment: false,
         isCommunityMaps: false,
         difficultyMode: '2',
+        difficultyCompleted: [null, false, false, false, false, false, false],
         fpsCapDefault: 'max',
         runCount: 0,
         isTrainingNotAttempted: true,
@@ -1690,24 +1868,37 @@ if (localSettings.isAllowed && !localSettings.isEmpty) {
         key: undefined,
         isHideImages: true, //default to hide images
         isHideHUD: false,
+        pauseMenuDetailsOpen: [true, false, false, true]
     };
     input.setDefault()
     if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
     document.getElementById("community-maps").checked = localSettings.isCommunityMaps
     simulation.isCommunityMaps = localSettings.isCommunityMaps
     document.getElementById("hide-images").checked = localSettings.isHideImages
-    document.getElementById("difficulty-select").value = localSettings.difficultyMode
     document.getElementById("fps-select").value = localSettings.fpsCapDefault
     document.getElementById("banned").value = localSettings.banList
 }
 document.getElementById("control-testing").style.visibility = (localSettings.loreCount === 0) ? "hidden" : "visible"
 // document.getElementById("experiment-button").style.visibility = (localSettings.loreCount === 0) ? "hidden" : "visible"
-
 input.controlTextUpdate()
 
+
 //**********************************************************************
-// settings 
+// settings
 //**********************************************************************
+
+
+// difficulty-select-experiment event listener is set in build.makeGrid
+// document.getElementById("difficulty-select").addEventListener("input", () => {
+//     simulation.difficultyMode = Number(document.getElementById("difficulty-select").value)
+//     lore.setTechGoal()
+//     localSettings.difficultyMode = simulation.difficultyMode
+//     localSettings.levelsClearedLastGame = 0 //after changing difficulty, reset run history
+//     localSettings.entanglement = undefined //after changing difficulty, reset stored tech
+//     if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
+// });
+
+
 document.getElementById("fps-select").addEventListener("input", () => {
     let value = document.getElementById("fps-select").value
     if (value === 'max') {
@@ -1730,17 +1921,6 @@ document.getElementById("community-maps").addEventListener("input", () => {
     if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
 });
 
-// difficulty-select-experiment event listener is set in build.makeGrid
-document.getElementById("difficulty-select").addEventListener("input", () => {
-    simulation.difficultyMode = Number(document.getElementById("difficulty-select").value)
-    lore.setTechGoal()
-    localSettings.difficultyMode = simulation.difficultyMode
-    localSettings.levelsClearedLastGame = 0 //after changing difficulty, reset run history
-    localSettings.entanglement = undefined //after changing difficulty, reset stored tech
-    if (localSettings.isAllowed) localStorage.setItem("localSettings", JSON.stringify(localSettings)); //update local storage
-});
-
-
 document.getElementById("updates").addEventListener("toggle", function () {
     function loadJSON(path, success, error) { //generic function to get JSON
         var xhr = new XMLHttpRequest();
@@ -1758,18 +1938,19 @@ document.getElementById("updates").addEventListener("toggle", function () {
         xhr.open("GET", path, true);
         xhr.send();
     }
-    let text = `<strong>n-gon</strong>: <a href="https://github.com/landgreen/n-gon/blob/master/todo.txt">todo list</a> and complete <a href="https://github.com/landgreen/n-gon/commits/master">change-log</a><hr>`
+    let text = `<pre><strong>n-gon</strong>: <a href="https://github.com/landgreen/n-gon/blob/master/todo.txt">todo list</a> and complete <a href="https://github.com/landgreen/n-gon/commits/master">change-log</a><hr>`
     document.getElementById("updates-div").innerHTML = text
 
     ///  https://api.github.com/repos/landgreen/n-gon/stats/commit_activity
     loadJSON('https://api.github.com/repos/landgreen/n-gon/commits',
         function (data) {
-            // console.log(data)
+            // console.log(data[0].sha) //unique code for most recent commit
             for (let i = 0, len = 20; i < len; i++) {
                 text += "<strong>" + data[i].commit.author.date.substr(0, 10) + "</strong> - "; //+ "<br>"
                 text += data[i].commit.message
                 if (i < len - 1) text += "<hr>"
             }
+            text += "</pre>"
             document.getElementById("updates-div").innerHTML = text.replace(/\n/g, "<br />")
         },
         function (xhr) {
