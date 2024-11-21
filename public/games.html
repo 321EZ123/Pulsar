@@ -548,7 +548,8 @@ background-image: linear-gradient(315deg, #03055b, black); display: none; z-inde
 <!-- Custom cursor element -->
 <div id="customCursor" style="position: absolute; pointer-events: none; width: 20px; height: 20px; border-radius: 50%; background-color: white; display: none; transform: translate(-50%, -50%); z-index: 100;"></div>
 <script>
-document.getElementById('save').addEventListener('click', function() {
+// Save button functionality
+document.getElementById('savebutton').addEventListener('click', function() {
   // Get the HTML content of the entire page
   var pageHTML = document.documentElement.outerHTML;
 
@@ -571,38 +572,48 @@ document.getElementById('save').addEventListener('click', function() {
   // Create a download link for the data
   var downloadLink = document.createElement('a');
   downloadLink.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(dataJSON));
-  downloadLink.setAttribute('download', 'Pulsar_Data.json');
+  downloadLink.setAttribute('download', 'page_data.json');
 
   // Append the download link to the document and click it
   document.body.appendChild(downloadLink);
   downloadLink.click();
   document.body.removeChild(downloadLink);
 });
-</script>
-<script>
-document.getElementById('upload').addEventListener('click', function() {
+
+// Upload button functionality
+document.getElementById('uploadbutton').addEventListener('click', function() {
+  // Create a file input element
+  var fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.style.display = 'none';
+  document.body.appendChild(fileInput);
+
+  // Add an event listener to the file input
+  fileInput.addEventListener('change', function() {
+    // Get the selected file
+    var file = this.files[0];
+
+    // Read the file contents
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      // Parse the JSON data
+      var data = JSON.parse(e.target.result);
+
+      // Restore the page HTML and iframe contents
+      document.documentElement.outerHTML = data.pageHTML;
+      var iframes = document.getElementsByTagName('iframe');
+      for (var i = 0; i < iframes.length; i++) {
+        iframes[i].contentDocument.documentElement.outerHTML = data.iframeContents[i];
+      }
+    };
+    reader.readAsText(file);
+
+    // Remove the file input from the document
+    document.body.removeChild(fileInput);
+  });
+
   // Trigger the file input click event to open the file picker
-  document.getElementById('fileInput').click();
-});
-
-document.getElementById('fileInput').addEventListener('change', function() {
-  // Get the selected file
-  var file = this.files[0];
-
-  // Read the file contents
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    // Parse the JSON data
-    var data = JSON.parse(e.target.result);
-
-    // Restore the page HTML and iframe contents
-    document.documentElement.outerHTML = data.pageHTML;
-    var iframes = document.getElementsByTagName('iframe');
-    for (var i = 0; i < iframes.length; i++) {
-      iframes[i].contentDocument.documentElement.outerHTML = data.iframeContents[i];
-    }
-  };
-  reader.readAsText(file);
+  fileInput.click();
 });
 </script>
 <script>
