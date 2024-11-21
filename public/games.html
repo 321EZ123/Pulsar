@@ -796,7 +796,8 @@ window.addEventListener('load', function() {
     }
 </script>
 <script>
-    object.onbeforeunload =  function clearGameAutoOpen() {
+    window.onbeforeunload = 
+    function clearGameAutoOpen() {
         localStorage.removeItem('lastClickedUrl');
     }
 </script>
