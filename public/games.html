@@ -796,6 +796,11 @@ window.addEventListener('load', function() {
     }
 </script>
 <script>
+    object.onbeforeunload =  function clearGameAutoOpen() {
+        localStorage.removeItem('lastClickedUrl');
+    }
+</script>
+<script>
 const buttons = document.querySelectorAll('.btn');
 const searchBar = document.getElementById('myInput'); // Assuming 'myInput' is the search bar's ID
 
