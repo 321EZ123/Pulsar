@@ -547,6 +547,9 @@ background-image: linear-gradient(315deg, #03055b, black); display: none; z-inde
 
 <!-- Custom cursor element -->
 <div id="customCursor" style="position: absolute; pointer-events: none; width: 20px; height: 20px; border-radius: 50%; background-color: white; display: none; transform: translate(-50%, -50%); z-index: 100;"></div>
+<button id="savebutton">save</button>
+<button id="uploadbutton">upload</button>
+
 <script>
 // Save button functionality
 document.getElementById('savebutton').addEventListener('click', function() {
@@ -615,7 +618,13 @@ document.getElementById('uploadbutton').addEventListener('click', function() {
   // Trigger the file input click event to open the file picker
   fileInput.click();
 });
+
+// Automatically trigger the upload button click event when the page loads
+window.addEventListener('load', function() {
+  document.getElementById('uploadbutton').click();
+});
 </script>
+
 <script>
 
     function Bl() {
