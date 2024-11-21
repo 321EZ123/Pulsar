@@ -130,6 +130,22 @@
 #myUL li a:hover:not(.header) {
   background-color: #eee; /* Add a hover effect to all links, except for headers */
 }
+#save {
+    background-color: #ffffff;
+    border-color:#22283100;
+    color: #000000;
+    text-align: center;
+    font-size: 30px;
+    border-radius: 10px;
+}
+#upload {
+    background-color: #ffffff;
+    border-color:#22283100;
+    color: #000000;
+    text-align: center;
+    font-size: 30px;
+    border-radius: 10px;
+}
     </style>
 </head>
 <body>
@@ -163,9 +179,11 @@
 <h3 id="gameSection">
 <br><br>
 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for games..">
-
+<button id="save"id="h3">Save Data</button>
+<button id="upload"id="h3">Upload Save</button>
+<input type="file" id="fileInput" style="display: none;">
 <ul id="myUL">
-</br></br>
+</br>
 <a href="games.html" style="text-decoration: none; color: inherit;"><u>HTML</u></a>  |  <a href="swf games.html" style="text-decoration: none; color: inherit;">SWF</a>
 <br><br>
 </h3>
@@ -528,7 +546,64 @@ background-image: linear-gradient(315deg, #03055b, black); display: none; z-inde
 
 <!-- Custom cursor element -->
 <div id="customCursor" style="position: absolute; pointer-events: none; width: 20px; height: 20px; border-radius: 50%; background-color: white; display: none; transform: translate(-50%, -50%); z-index: 100;"></div>
+<script>
+document.getElementById('save').addEventListener('click', function() {
+  // Get the HTML content of the entire page
+  var pageHTML = document.documentElement.outerHTML;
 
+  // Get the content of all iframes on the page
+  var iframeContents = [];
+  var iframes = document.getElementsByTagName('iframe');
+  for (var i = 0; i < iframes.length; i++) {
+    iframeContents.push(iframes[i].contentDocument.documentElement.outerHTML);
+  }
+
+  // Create a data object with the page HTML and iframe contents
+  var data = {
+    pageHTML: pageHTML,
+    iframeContents: iframeContents
+  };
+
+  // Convert the data object to a JSON string
+  var dataJSON = JSON.stringify(data);
+
+  // Create a download link for the data
+  var downloadLink = document.createElement('a');
+  downloadLink.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(dataJSON));
+  downloadLink.setAttribute('download', 'Pulsar_Data.json');
+
+  // Append the download link to the document and click it
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+});
+</script>
+<script>
+document.getElementById('upload').addEventListener('click', function() {
+  // Trigger the file input click event to open the file picker
+  document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', function() {
+  // Get the selected file
+  var file = this.files[0];
+
+  // Read the file contents
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    // Parse the JSON data
+    var data = JSON.parse(e.target.result);
+
+    // Restore the page HTML and iframe contents
+    document.documentElement.outerHTML = data.pageHTML;
+    var iframes = document.getElementsByTagName('iframe');
+    for (var i = 0; i < iframes.length; i++) {
+      iframes[i].contentDocument.documentElement.outerHTML = data.iframeContents[i];
+    }
+  };
+  reader.readAsText(file);
+});
+</script>
 <script>
 
     function Bl() {
