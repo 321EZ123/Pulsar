@@ -75,7 +75,6 @@
             
             body {
                 font-family: "Varela Round", sans-serif;
-                background-image: linear-gradient(315deg, #03055b, black);
                 animation-name: gradAnimate;
                 animation-duration: 10s;
                 animation-iteration-count: infinite;
@@ -127,7 +126,7 @@
             }
             input[type="submit"]:hover {
                 background: linear-gradient(45deg, #006699, #003366);
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+                box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
             }
             main {
                 margin-top: 100px;
@@ -171,8 +170,8 @@
     <a href="index.html" class="nav-button">
         <i class="fas fa-home"></i> Home
     </a>
-    <a href="chat.html" class="nav-button">
-        <i class="fas fa-comment-dots fa-flip-horizontal"></i> Chat
+    <a href="ai.html" class="nav-button">
+        <i class="fas fa-robot"></i> AI
     </a>
     <a href="games.html" class="nav-button">
         <i class="fas fa-gamepad"></i> Games
@@ -187,7 +186,18 @@
     <a href="credits.html" class="credit">
         <i class="fas fa-book"></i> 
     </a>
-
+<script>
+window.embeddedChatbotConfig = {
+chatbotId: "AXvY-pj3fDuExB1D77AIk",
+domain: "www.chatbase.co"
+}
+</script>
+<script
+src="https://www.chatbase.co/embed.min.js"
+chatbotId="AXvY-pj3fDuExB1D77AIk"
+domain="www.chatbase.co"
+defer>
+</script>
 </br>
 </br>
 </br>

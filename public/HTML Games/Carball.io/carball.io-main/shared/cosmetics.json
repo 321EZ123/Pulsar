@@ -1,0 +1,16 @@
+{
+  "1": {
+    "id": 1,
+    "name": "Van",
+    "cost": 0,
+    "description": "The default vehicle for newbs.",
+    "bodyImage": "van.png"
+  },
+  "2": {
+    "id": 2,
+    "name": "car",
+    "cost": 10,
+    "description": "The iconic carball.io car.",
+    "bodyImage": "car.png"
+  }
+}
