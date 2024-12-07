@@ -29,26 +29,7 @@
     </script>
     <style>
         body {
-            cursor: none; /* Hide default cursor */
             margin: 0;
-        }
-
-        .dropdown {
-            margin: 20px;
-            display: flex;
-            justify-content: center;
-            cursor: none;
-        }
-
-        select {
-            padding: 15px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #0077ff;
-            color: #000000;
-            transition: background-color 0.3s;
-            cursor: none; /* Ensure cursor is hidden */
         }
 
 
@@ -57,20 +38,22 @@
             max-height: 17%;
         }
 
-        /* Ensure all elements also have no cursor */
+
+
+
+        /* Hide default cursor */
         * {
-            cursor: none; /* Hide default cursor on all elements */
+            cursor: none;
         }
     </style>
 </head>
 <body>
-    <div class="custom-cursor" id="customCursor">
-
-    </div>
+    <div class="custom-cursor" id="customCursor"></div>
 
     <a href="index.html" class="logo">
         <img src="Images/Pulsar Network nobg.png" alt="Pulsar Logo">
     </a>
+
     <!-- Navigation Bar -->
     <div class="nav-bar">
         <a href="index.html" class="nav-button">
@@ -89,23 +72,24 @@
             <i class="fas fa-cog"></i> Settings
         </a>
     </div>
-        <a href="credits.html" class="credit">
-            <i class="fas fa-book"></i> 
-        </a>
+    <a href="credits.html" class="credit">
+        <i class="fas fa-book"></i> 
+    </a>
 
     <br><br><br><br><br>
 
-    <div class="dropdown">
-        <select id="sites" onchange="openSite(this.value)">
-            <option value="">Tab Cloaking</option>
-            <option value="Pulsar">Pulsar</option>
-            <option value="Canva">Canva</option>
-            <option value="Clever">Clever</option>
-            <option value="Daaurrh">Daaurrh</option>
-            <option value="Gmail">Gmail</option>
-            <option value="Discord">Discord</option>
-            <option value="YouTube">YouTube</option>
-        </select>
+    <!-- Custom Dropdown Menu -->
+    <div class="custom-dropdown">
+        <button class="custom-dropdown-button">Tab Cloaking</button>
+        <div class="dropdown-options">
+            <a href="#" onclick="openSite('Pulsar')">Pulsar</a>
+            <a href="#" onclick="openSite('Canva')">Canva</a>
+            <a href="#" onclick="openSite('Clever')">Clever</a>
+            <a href="#" onclick="openSite('Daaurrh')">Daaurrh</a>
+            <a href="#" onclick="openSite('Gmail')">Gmail</a>
+            <a href="#" onclick="openSite('Discord')">Discord</a>
+            <a href="#" onclick="openSite('YouTube')">YouTube</a>
+        </div>
     </div>
 
     <script>
@@ -165,23 +149,11 @@
         }
 
         const customCursor = document.getElementById('customCursor');
-        const spikes = document.getElementById('spikes');
 
+        // Ensure custom cursor follows mouse movement
         document.addEventListener('mousemove', (e) => {
             customCursor.style.left = `${e.pageX}px`;
             customCursor.style.top = `${e.pageY}px`;
-        });
-
-        // Show spikes on hover
-        const hoverElements = document.querySelectorAll('.nav-button');
-
-        hoverElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                spikes.classList.add('visible');
-            });
-            element.addEventListener('mouseleave', () => {
-                spikes.classList.remove('visible');
-            });
         });
     </script>
 
