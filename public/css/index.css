@@ -128,23 +128,117 @@ body {
     margin: 0;
 }
 
+
+
 .custom-cursor {
     display: none; /* Hide custom cursor by default */
     position: fixed;
     width: 20px;
-    height: 20px;
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 50%;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 1); /* Arrow color */
+    border-width: 200%;
+    clip-path: polygon(
+        0 0,        /* Top-left of the arrowhead */
+        100% 50%,   /* Tip of the arrowhead */
+        0 80%      /* Bottom-left of the arrowhead */
+    );
+    transform: translate(0%, 0%); /* Ensure the tip is the touch point */
     pointer-events: none;
-    transform: translate(-50%, -50%);
     z-index: 9999;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.8), 0 0 10px rgba(0, 123, 255, 0.5), 0 0 15px rgba(0, 123, 255, 0.3); /* Blue glowing border */
+    box-shadow: 
+    0 0 15px rgba(0, 123, 255, 0.8), 
+    0 0 10px rgba(0, 123, 255, 0.5), 
+    0 0 15px rgba(0, 123, 255, 0.3); /* Blue glowing border */
 }
 
 body:hover .custom-cursor {
     display: block; /* Show custom cursor on hover */
 }
 
+
+/* Create custom dropdown-style menu */
+.custom-dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%; /* Full width of the container */
+    max-width: 250px; /* Limiting the width of the dropdown container */
+    margin: 20px auto; /* Center the dropdown with some margin */
+    font-family: Arial, sans-serif; /* Set a clean font */
+}
+
+/* Style for the dropdown button */
+.custom-dropdown-button {
+    padding: 12px 20px; /* Adjust padding for exact button appearance */
+    font-size: 16px;
+    background-color: #0077ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; /* Pointer cursor on hover */
+    outline: none;
+    box-sizing: border-box; /* Prevents any unwanted space around the button */
+    display: inline-block;
+    width: 100%; /* Ensures button fills its container width */
+    max-width: 250px; /* Limits the width of the dropdown button */
+    height: auto; /* Ensures the height is automatically adjusted based on padding */
+    line-height: 1.5; /* Prevents extra space around text */
+    text-align: center; /* Centers text horizontally */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
+}
+
+.custom-dropdown-button:hover {
+    background-color: #005cbf; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Dropdown options container */
+.dropdown-options {
+    padding: 0;
+    font-size: 16px;
+    display: none;
+    position: absolute;
+    top: 100%; /* Position dropdown below the button */
+    left: 0;
+    right: 0;
+    background-color: #0077ff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    width: 100%; /* Matches the width of the button */
+    max-width: 250px;
+    opacity: 0;
+    visibility: hidden; /* Initially hidden */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
+}
+
+/* Dropdown option styles */
+.dropdown-options a {
+    padding: 16px 20px; /* Adjust padding for better spacing */
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #005cbf;
+    transition: background-color 0.3s ease; /* Smooth background on hover */
+}
+
+.dropdown-options a:hover {
+    background-color: #005cbf;
+}
+
+/* Show dropdown options when hovering over the button */
+.custom-dropdown:hover .dropdown-options {
+    display: block;
+    opacity: 1;
+    visibility: visible; /* Make visible when the button is hovered */
+}
+
+/* Add focus-visible for better accessibility */
+.custom-dropdown-button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
 
 
 
