@@ -125,66 +125,53 @@
 
 
 
-    <script>
-        function Ba() {
-            var x = document.getElementById("gameFrame");
-            x.style.backgroundColor = "white";
-        }
-    </script>
-    <script>
-        function Bl() {
-            var x = document.getElementById("gameFrame");
-            x.style.backgroundColor = "black";
-        }
-    </script>
-    <script>
-        function HBC(url) {
-            var gameSection = document.getElementById("gameSection");
-            gameSection.style.display = "none"; // Hide the game section
-            var gameFrame = document.getElementById("gameFrame");
-            gameFrame.style.display = "block"; // Show the iframe
-            gameFrame.src = url;               // Set the iframe source
-            customCursor.style.display = 'none'; // Ensure it's hidden initially
-    
-        }
-    </script>
-    <script>
-        const customCursor = document.getElementById('customCursor');
-        const spikes = document.getElementById('spikes');
-        let mouseX = 0;
-        let mouseY = 0;
-    
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX; // Use clientX to get mouse position relative to the viewport
-            mouseY = e.clientY; // Use clientY to get mouse position relative to the viewport
-            customCursor.style.display = 'block'; // Show the cursor on mouse move
-        });
-    
-        function updateCursor() {
-            // Set the position of the custom cursor
-            customCursor.style.left = `${mouseX}px`;
-            customCursor.style.top = `${mouseY}px`;
-    
-            // Teleport if it's more than 10 pixels away from the mouse position
-            const cursorRect = customCursor.getBoundingClientRect();
-            if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
+
+        <script>
+            const customCursor = document.getElementById('customCursor');
+            const spikes = document.getElementById('spikes');
+            let mouseX = 0;
+            let mouseY = 0;
+        
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX; // Get mouse position relative to the viewport
+                mouseY = e.clientY;
+                customCursor.style.display = 'block'; // Show the cursor on mouse move
+            });
+        
+            document.addEventListener('mouseleave', () => {
+                customCursor.style.display = 'none'; // Hide the custom cursor when leaving the page
+            });
+        
+            document.addEventListener('mouseenter', () => {
+                customCursor.style.display = 'block'; // Show the custom cursor when re-entering the page
+            });
+        
+            function updateCursor() {
+                // Set the position of the custom cursor
                 customCursor.style.left = `${mouseX}px`;
                 customCursor.style.top = `${mouseY}px`;
+        
+                // Teleport if it's more than 10 pixels away from the mouse position
+                const cursorRect = customCursor.getBoundingClientRect();
+                if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
+                    customCursor.style.left = `${mouseX}px`;
+                    customCursor.style.top = `${mouseY}px`;
+                }
+                requestAnimationFrame(updateCursor);
             }
             requestAnimationFrame(updateCursor);
-        }
-        requestAnimationFrame(updateCursor);
-    
-        const hoverElements = document.querySelectorAll('.nav-button');
-        hoverElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                spikes.classList.add('visible');
+        
+            const hoverElements = document.querySelectorAll('.nav-button');
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    spikes.classList.add('visible');
+                });
+                element.addEventListener('mouseleave', () => {
+                    spikes.classList.remove('visible');
+                });
             });
-            element.addEventListener('mouseleave', () => {
-                spikes.classList.remove('visible');
-            });
-        });
-    </script>
+        </script>
+        
     </body>
     </html>
     
