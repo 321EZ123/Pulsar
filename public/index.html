@@ -24,221 +24,450 @@
         function redirectToNewURL(event) {
             if (event.keyCode === 221) {
                 var newURL = 'https://classroom.google.com/?pli=1';
-                
                 window.location.href = newURL;
             }
         }
-
         window.addEventListener('keydown', redirectToNewURL);
     </script>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
-            .container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 20px auto; /* Keep container centered */
-                width: 100%;
-                max-width: 500px; /* Increase width slightly */
-            }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto; /* Keep container centered */
+            width: 100%;
+            max-width: 600px; /* Increase width slightly */
+        }
+        #uv-address {
+            flex: 1;
+            padding: 14px; /* Increase padding */
+            font-size: 18px; /* Slightly larger font */
+        }
 
-            #uv-address {
-                flex: 1;
-                padding: 14px; /* Increase padding */
-                font-size: 18px; /* Slightly larger font */
-            }
+        #sigma {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px; /* Add space between search bar and icons */
+        }
 
-            #sigma {
-                display: flex;
-                justify-content: center;
-                margin-top: 30px; /* Add space between search bar and icons */
-            }
+        #sigma a {
+            margin: 0 10px; /* Adjust spacing between icons */
+            font-size: 24px; /* Adjust icon size as desired */
+        }
 
-            #sigma a {
-                margin: 0 10px; /* Adjust spacing between icons */
-                font-size: 24px; /* Adjust icon size as desired */
-            }
-    
-            @keyframes settingsSpin {
-                0% {rotate: 0deg;}
-                100% {rotate: 360deg;}
-            }
+        @keyframes settingsSpin {
+            0% {rotate: 0deg;}
+            100% {rotate: 360deg;}
+        }
+
+        @keyframes gradAnimate {
+            0% {background-position: 0% 2%;}
+            50% {background-position: 100% 99%;}
+            100% {background-position: 0% 2%;}
+        }
+
+        body {
+            font-family: "Varela Round", sans-serif;
+            animation-name: gradAnimate;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease;
+            color: #c0c0c0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
         
-            @keyframes gradAnimate {
-                0% {background-position: 0% 2%;}
-                50% {background-position: 100% 99%;}
-                100% {background-position: 0% 2%;}
-            }
+        .description {
+            text-align: center;
+            font-size: 1.2em;
+            color: #f0f0f0;
+        }
+        
+        .search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    animation: appear 0.5s ease-in-out; /* Animation happens instantly on load */
+}
+
+#uv-form {
+    display: flex;
+    width: 90%;
+    max-width: 600px;
+    animation: appear 0.5s ease-in-out; /* Animation happens instantly on load */
+}
+
+#uv-address {
+    justify-content: center;
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ffffff;
+    border-radius: 4px 25px 4px 25px;
+    font-size: 16px;
+    background-color: #000000;
+    color: #c0c0c0;
+    animation: appear 1s ease-in-out; /* Animation happens instantly on load */
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+        
+        #logo {
+            border-radius: 300px;
+        }
+        
+        input[type="submit"] {
+            padding: 15px;
+            border: none;
+            background: linear-gradient(45deg, #003366, #006699);
+            color: #fff;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(45deg, #006699, #003366);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        main {
+            margin-top: 100px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .search-nav-bar {
+            height: 80px;
+            width: 100%;
+            background: #000000;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            gap: 1rem;
+            position: fixed;
+            top: 0;
+            z-index: 499;
+            position: inherit;
+            min-height: 17%;
+            max-height: 17%;
+        }
+
+        footer {
+            background-color: #000000;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            width: 100%;
+        }
+
+        footer a {
+            color: #c0c0c0;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        i[class="fas fa-cog"]:hover {
+            animation-name: settingsSpin;
+            animation-duration: 0.5s;
+        }
+        .tabs-container {
+            display: flex;
+            align-items: flex-start; /* Align to the top */
+            justify-content: flex-start; /* Align tabs to the left */
+            gap: 10px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 8px;
+            background: #444;
+            color: #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: flex-start; /* Ensure content inside tab is left-aligned */
+            align-items: center;
+            gap: 5px;
+            animation: appear 0.3s ease-in-out; /* Animation happens instantly on load */
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
 
-            
-            body {
-                font-family: "Varela Round", sans-serif;
-                animation-name: gradAnimate;
-                animation-duration: 10s;
-                animation-iteration-count: infinite;
-                animation-timing-function: ease;
-                color: #c0c0c0;
-                margin: 0;
-                display: flex;
-                flex-direction: column;
-                min-height: 100vh;
-            }
-            .description {
-                text-align: center;
-                font-size: 1.2em;
-                color: #f0f0f0;
-            }
-            .search-container {
-                display: flex;
-                justify-content: center;
-                margin-top: 20px;
-            }
-            #uv-form {
-                display: flex;
-                width: 90%;
-                max-width: 600px;
-            }
-            #uv-address {
-                justify-content: center;
-                flex: 1;
-                padding: 15px;
-                border: 1px solid #555;
-                border-radius: 4px 0 0 4px;
-                font-size: 16px;
-                background-color: #000000;
-                color: #c0c0c0;
-            }
-            #logo {
-                border-radius: 300px;
-            }
-            input[type="submit"] {
-                padding: 15px;
-                border: none;
-                background: linear-gradient(45deg, #003366, #006699);
-                color: #fff;
-                border-radius: 0 4px 4px 0;
-                cursor: pointer;
-                font-size: 16px;
-                transition: background 0.3s, box-shadow 0.3s;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            }
-            input[type="submit"]:hover {
-                background: linear-gradient(45deg, #006699, #003366);
-                box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
-            }
-            main {
-                margin-top: 100px;
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            footer {
-                background-color: #000000;
-                padding: 10px;
-                text-align: center;
-                font-size: 14px;
-                color: #777;
-                width: 100%;
-            }
-            footer a {
-                color: #c0c0c0;
-                text-decoration: none;
-                margin: 0 5px;
-            }
+        .tab.active {
+            background: #ffffff;
+        }
+
+        .tab:not(.active):hover {
+    background: #ffffff88;
+}
+
+
+        .tab input {
+            border: none;
+            background: transparent;
+            color: #000000;
+            outline: none;
+            width: 180px;
+        }
+
+        .tab i {
+            margin-left: 20px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .close-tab {
+            color: #000000;
+            font-size: 14px;
+        }
+
+        #addTab {
+            background: #22222200;
+            color: #ffffff;
+            border-radius: 100px;
+            border-color:#00000000;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s;
+        }
+        .tab-content {
+            display: none;  /* Hide content of all tabs by default */
+        }
+
+        .tab.active .tab-content {
+            display: block;  /* Show content of the active tab */
+        }
+
+
+    </style>
+<script>
     
-            i[class="fas fa-cog"]:hover {
-                animation-name: settingsSpin;
-                animation-duration: 0.5s;
-            }
-        </style>
-  <script src="uv/uv.bundle.js"></script>
-  <script src="uv/uv.config.js"></script>
-  <script src="assets/register-sw.js"></script>
+</script>
 </head>
 <body>
-    <div class="custom-cursor" id="customCursor">
+    <div class="custom-cursor" id="customCursor"></div>
 
-    </div>
     <a href="index.html" class="logo">
         <img src="Images/Pulsar Network nobg.png" alt="Pulsar Logo">
     </a>
-    <!-- Navigation Bar -->
-<div class="nav-bar">
-    <a href="index.html" class="nav-button">
-        <i class="fas fa-home"></i> Home
-    </a>
-    <a href="ai.html" class="nav-button">
-        <i class="fas fa-robot"></i> AI
-    </a>
-    <a href="games.html" class="nav-button">
-        <i class="fas fa-gamepad"></i> Games
-    </a>
-    <a href="apps.html" class="nav-button">
-        <i class="fas fa-mobile-alt"></i> Apps
-    </a>
-    <a href="settings.html" class="nav-button">
-        <i class="fas fa-cog"></i> Settings
-    </a>
-</div>
-    <a href="credits.html" class="credit">
-        <i class="fas fa-book"></i> 
-    </a>
 
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-
-        <h1 id="stitle">Pulsar</h1>
-        <p id="memo">Browse the web unblocked, for free</p>
-  <div class="container">
-    <input id="uv-address" type="text" class="input" placeholder="Search...">
-    <input type="submit" value="Go">
-  </div>
+    <!-- Navigation Bar with Tabs -->
+    <div class="search-nav-bar">
+        <div class="tabs-container" id="tabsContainer">
+            <!-- Tabs will be dynamically added here -->
+            <button id="addTab" class="tab">+</button>
+        </div>
+    </div>
     
-<span id="sigma" >
+    <!-- Custom Dropdown Menu -->
+    <div class="custom-dropdown">
+        <button class="custom-dropdown-button"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+        <div class="dropdown-options">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="AI.html"><i class="fas fa-robot"></i> AI</a>
+            <a href="games.html"><i class="fas fa-gamepad"></i> Games</a>
+            <a href="apps.html"><i class="fas fa-mobile-alt"></i> Apps</a>
+            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+            <a href="credits.html"> <i class="fas fa-book"></i> Credits</a>
+        </div>
+    </div>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+    <h1 id="stitle">Pulsar</h1>
+    <p id="memo">Browse the web unblocked, for free</p>
+
+    <div class="container">
+        <input id="uv-address" type="text" class="input" placeholder="Search Pulsar or enter a URL">
+    </div>
+
+    <span id="sigma">
         <a id="sigma" href="https://discord.gg/YqvG3k9YMd" target="_blank" class="fa-brands fa-discord"></a>
         <a id="sigma" href="https://github.com/Yeti1o1/Pulsar" target="_blank"class="fa-brands fa-github"></a>
         <a id="sigma" href="https://drive.google.com/file/d/1XCHdt4XntG4CMOaCeoJP75GkAfrV_2E4/view?usp=drivesdk" target="_blank"class="fas fa-folder"></a>
-        </span>
-</br>
-</br>
+    </span>
+
     <script>
-	atOptions = {
-		'key' : '1118f7a5d44f23dbfc48da2338d22502',
-		'format' : 'iframe',
-		'height' : 60,
-		'width' : 468,
-		'params' : {}
-	};
+const addTabButton = document.getElementById('addTab');
+const tabsContainer = document.getElementById('tabsContainer');
+let tabCount = 0;
+
+// Function to adjust the size of the tabs
+function adjustTabSize() {
+    const containerWidth = tabsContainer.offsetWidth;
+    const containerRightEdge = tabsContainer.getBoundingClientRect().right;
+    let totalWidth = 0;
+    let tabs = Array.from(tabsContainer.children);
+
+    // Calculate the total width of all tabs excluding the "Add Tab" button
+    tabs.forEach(tab => {
+        if (tab !== addTabButton) {
+            totalWidth += tab.offsetWidth;
+        }
+    });
+
+    // Check the right side of the page (container) and adjust the width of tabs if close to the right
+    if (containerRightEdge >= window.innerWidth - 50) {
+        const newWidth = (window.innerWidth - 50 - addTabButton.offsetWidth) / (tabs.length - 1);
+        tabs.forEach(tab => {
+            if (tab !== addTabButton) {
+                tab.style.width = `${newWidth}px`;
+            }
+        });
+    } else {
+        tabs.forEach(tab => {
+            if (tab !== addTabButton) {
+                tab.style.width = '';
+            }
+        });
+    }
+}
+
+// Function to create a new tab with a uv-address field
+function createTab() {
+    const tab = document.createElement('div');
+    tab.classList.add('tab');
+
+    // Create the content for the tab, including the uv-address input
+    const tabContent = document.createElement('div');
+    tabContent.classList.add('tab-content');
+    tabContent.innerHTML = `
+        <input type="text" id="uv-address-${tabCount}" class="uv-address" placeholder="Enter URL">
+    `;
+
+    // Tab header with input and close button
+    tab.innerHTML = `
+        <input type="text" value="New Tab" readonly>
+        <i class="fa fa-times close-tab"></i>
+    `;
+
+    tab.appendChild(tabContent); // Add content inside the tab
+
+    const closeTabButton = tab.querySelector('.close-tab');
+    closeTabButton.addEventListener('click', () => {
+        tab.remove();
+        adjustTabSize(); // Re-adjust tab size after removal
+    });
+
+    tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+        // Add active class to the clicked tab
+        tab.classList.add('active');
+
+        // Hide content of all tabs and show content of the active tab
+        document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+        tabContent.style.display = 'block';
+    });
+
+    tabsContainer.insertBefore(tab, addTabButton); // Insert the new tab before the "Add Tab" button
+    tabCount++;
+    adjustTabSize(); // Adjust tab size when a tab is added
+
+    // Automatically select the new tab
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    // Hide the content of all tabs except the active one
+    document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+    tabContent.style.display = 'block';  // Show the content of the new tab
+}
+
+// Add event listener to the "Add Tab" button
+addTabButton.addEventListener('click', createTab);
+
+// Automatically create one tab when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    createTab();
+});
+
+// Recalculate tab sizes when the window is resized
+window.addEventListener('resize', adjustTabSize);
+
+    </script>
+    
+
+    
+<script>
+    const customCursor = document.getElementById('customCursor');
+    const spikes = document.getElementById('spikes');
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX; // Get mouse position relative to the viewport
+        mouseY = e.clientY;
+        customCursor.style.display = 'block'; // Show the cursor on mouse move
+    });
+
+    document.addEventListener('mouseleave', () => {
+        customCursor.style.display = 'none'; // Hide the custom cursor when leaving the page
+    });
+
+    document.addEventListener('mouseenter', () => {
+        customCursor.style.display = 'block'; // Show the custom cursor when re-entering the page
+    });
+
+    function updateCursor() {
+        // Set the position of the custom cursor
+        customCursor.style.left = `${mouseX}px`;
+        customCursor.style.top = `${mouseY}px`;
+
+        // Teleport if it's more than 10 pixels away from the mouse position
+        const cursorRect = customCursor.getBoundingClientRect();
+        if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
+            customCursor.style.left = `${mouseX}px`;
+            customCursor.style.top = `${mouseY}px`;
+        }
+        requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    const hoverElements = document.querySelectorAll('.nav-button');
+    hoverElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            spikes.classList.add('visible');
+        });
+        element.addEventListener('mouseleave', () => {
+            spikes.classList.remove('visible');
+        });
+    });
 </script>
-<script type="text/javascript" src="//www.highperformanceformat.com/1118f7a5d44f23dbfc48da2338d22502/invoke.js"></script>
-        <script>
-            const customCursor = document.getElementById('customCursor');
-            const spikes = document.getElementById('spikes');
-    
-            document.addEventListener('mousemove', (e) => {
-                customCursor.style.left = `${e.pageX}px`;
-                customCursor.style.top = `${e.pageY}px`;
-            });
-    
-            // Show spikes on hover
-            const hoverElements = document.querySelectorAll('.nav-button');
-    
-            hoverElements.forEach(element => {
-                element.addEventListener('mouseenter', () => {
-                    spikes.classList.add('visible');
-                });
-                element.addEventListener('mouseleave', () => {
-                    spikes.classList.remove('visible');
-                });
-            });
-        </script>
-  <script src="assets/script.js" defer></script>
+
 </body>
 </html>
