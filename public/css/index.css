@@ -43,6 +43,8 @@ body {
     top: 0;
     z-index: 499;
     position:inherit;
+    min-height: 17%;
+    max-height: 17%;
 }
 
 .nav-button {
@@ -133,23 +135,39 @@ body {
 .custom-cursor {
     display: none; /* Hide custom cursor by default */
     position: fixed;
-    width: 20px;
-    height: 30px;
-    background-color: rgba(255, 255, 255, 1); /* Arrow color */
-    border-width: 200%;
-    clip-path: polygon(
+    width: 25px;
+    height: 35px;
+    background-color: rgba(0, 82, 155, 0.8); /* Darker and more vibrant blue */
+    box-shadow: 0 0 50px rgba(0, 82, 155, 1),   /* Darker, more intense glow */
+                0 0 100px rgba(0, 82, 155, 0.8), /* Stronger glow */
+                0 0 150px rgba(0, 82, 155, 0.5); /* Very intense glowing effect */
+        clip-path: polygon(
         0 0,        /* Top-left of the arrowhead */
         100% 50%,   /* Tip of the arrowhead */
-        0 80%      /* Bottom-left of the arrowhead */
-    );
+        0 80%       /* Bottom-left of the arrowhead */
+    ); /* Original triangular shape */
     transform: translate(0%, 0%); /* Ensure the tip is the touch point */
     pointer-events: none;
     z-index: 9999;
-    box-shadow: 
-    0 0 15px rgba(0, 123, 255, 0.8), 
-    0 0 10px rgba(0, 123, 255, 0.5), 
-    0 0 15px rgba(0, 123, 255, 0.3); /* Blue glowing border */
 }
+
+.custom-cursor::after {
+    content: '';
+    position: absolute;
+    width: 20px; /* Slightly smaller for the inner triangle */
+    height: 30px; /* Slightly smaller for the inner triangle */
+    background-color: white; /* Inner triangle color */
+    clip-path: polygon(
+        0% 0%,        /* Top-left of the arrowhead */
+        100% 50%,   /* Tip of the arrowhead */
+        0 80%       /* Bottom-left of the arrowhead */
+    ); /* Same triangle shape */
+    top: 2.2px; /* Center the inner triangle */
+    left: 1.4px; /* Center the inner triangle */
+    pointer-events: none;
+    z-index: 1; /* Ensure it sits above the black border */
+}
+
 
 body:hover .custom-cursor {
     display: block; /* Show custom cursor on hover */
@@ -158,21 +176,20 @@ body:hover .custom-cursor {
 
 /* Create custom dropdown-style menu */
 .custom-dropdown {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100%; /* Full width of the container */
-    max-width: 250px; /* Limiting the width of the dropdown container */
-    margin: 20px auto; /* Center the dropdown with some margin */
+    top: 70px;
+    right: 16px;
+    position: absolute;
+    z-index: 9000;
+    width: auto; /* Adjust width to fit the button's position */
+    margin: 20px 0; /* Margin to keep it from centering */
     font-family: Arial, sans-serif; /* Set a clean font */
-}
+=}
 
 /* Style for the dropdown button */
 .custom-dropdown-button {
-    padding: 12px 20px; /* Adjust padding for exact button appearance */
-    font-size: 16px;
-    background-color: #0077ff;
+    padding: 5px 15px; /* Adjust padding for exact button appearance */
+    font-size: 30px;
+    background-color: #0077ff00;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -180,8 +197,7 @@ body:hover .custom-cursor {
     outline: none;
     box-sizing: border-box; /* Prevents any unwanted space around the button */
     display: inline-block;
-    width: 100%; /* Ensures button fills its container width */
-    max-width: 250px; /* Limits the width of the dropdown button */
+    width: auto; /* Adjust button width */
     height: auto; /* Ensures the height is automatically adjusted based on padding */
     line-height: 1.5; /* Prevents extra space around text */
     text-align: center; /* Centers text horizontally */
@@ -199,14 +215,13 @@ body:hover .custom-cursor {
     font-size: 16px;
     display: none;
     position: absolute;
-    top: 100%; /* Position dropdown below the button */
-    left: 0;
-    right: 0;
+    top: 0; /* Align the dropdown vertically */
+    left: -315%; /* Position the dropdown to the left of the button */
     background-color: #0077ff;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 100;
-    width: 100%; /* Matches the width of the button */
+    width: max-content; /* Adjust width to content size */
     max-width: 250px;
     opacity: 0;
     visibility: hidden; /* Initially hidden */
@@ -242,11 +257,6 @@ body:hover .custom-cursor {
 
 
 
-.nav-bar {
-    min-height: 17%;
-    max-height: 17%;
-}
-
 /* Ensure all elements also have no cursor */
 * {
     cursor: none !important; /* Hide default cursor on all elements */
@@ -263,8 +273,8 @@ body:hover .custom-cursor {
 
 .logo {
     position: absolute;
-    top: 8px;
-    left: 16px;
+    top: 100px;
+    left: 20px;
     z-index: 500;
   }
 
@@ -301,13 +311,23 @@ body:hover .custom-cursor {
 
 #stitle {
     text-align: center;
-    font-size: 3.2rem; /* Adjust as necessary */
+    font-size: 7rem; /* Adjust as necessary */
     color: #ffffff; /* Text color */
     text-shadow: 
         0 0 5px rgba(7, 105, 234, 0.8), /* Inner glow */
         0 0 10px rgba(7, 105, 234, 0.5), /* Middle glow */
         0 0 20px rgba(7, 105, 234, 0.3); /* Outer glow */
     animation: glowFadeAnim 3s ease-in-out infinite alternate; /* Combined animation */
+    animation: appear .6s ease-in-out; /* Animation happens instantly on load */
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 #memo {
     text-align: center;
@@ -316,6 +336,16 @@ body:hover .custom-cursor {
     color: #f0f0f0;
     margin-top: 10px; /* Space between "Pulsar" and the memo */
     font-style: italic; /* Optional: adds an italic style for a softer look */
+    animation: appear .8s ease-in-out; /* Animation happens instantly on load */
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 #sigma {
     font-size: 25px;
@@ -323,6 +353,16 @@ body:hover .custom-cursor {
     size: 50px;
     color: white;
     text-decoration: none;
+    animation: appear 2s ease-in-out; /* Animation happens instantly on load */
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 @keyframes glowFadeAnim {
     0% { 
