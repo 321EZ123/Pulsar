@@ -302,7 +302,14 @@
                 disableScrolling();
             });
         });
-    
+        document.addEventListener('mouseleave', () => {
+    customCursor.style.display = 'none'; // Hide the custom cursor when leaving the page
+});
+
+document.addEventListener('mouseenter', () => {
+    customCursor.style.display = 'block'; // Show the custom cursor when re-entering the page
+});
+
         // Custom cursor functionality
         const customCursor = document.getElementById('customCursor'); // Custom cursor element
         const gameFrame = document.getElementById('gameFrame'); // Iframe element
@@ -436,6 +443,7 @@
     });
     
     </script>
+    
     </body>
     </html>
     
