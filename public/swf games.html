@@ -41,18 +41,6 @@
             border: none;
             margin: 0;
         }
-        .custom-cursor {
-            display: none; /* Initially hidden */
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            background-color: rgba(255, 255, 255, 1);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
-        }
         .btn-container {
             position: relative;
         }
@@ -103,24 +91,48 @@
 
     <script>
         const customCursor = document.getElementById('customCursor');
-        const gameFrame = document.getElementById('liframe');
-        const navBar = document.querySelector('.nav-bar');
-
+        const spikes = document.getElementById('spikes');
+        let mouseX = 0;
+        let mouseY = 0;
+    
         document.addEventListener('mousemove', (e) => {
-            const isOverIframe = gameFrame === document.elementFromPoint(e.clientX, e.clientY);
-            const isOverNavBar = navBar === document.elementFromPoint(e.clientX, e.clientY);
-
-            if (isOverIframe || (isOverNavBar && e.movementY > 0)) {
-                customCursor.style.display = 'none'; // Hide when over iframe or moving down from navbar to iframe
-            } else {
-                customCursor.style.display = 'block'; // Show otherwise
-                customCursor.style.left = `${e.pageX}px`;
-                customCursor.style.top = `${e.pageY}px`;
-            }
+            mouseX = e.clientX; // Get mouse position relative to the viewport
+            mouseY = e.clientY;
+            customCursor.style.display = 'block'; // Show the cursor on mouse move
         });
-
-        // Initial hiding of the cursor
-        customCursor.style.display = 'none'; // Ensure it's hidden initially
+    
+        document.addEventListener('mouseleave', () => {
+            customCursor.style.display = 'none'; // Hide the custom cursor when leaving the page
+        });
+    
+        document.addEventListener('mouseenter', () => {
+            customCursor.style.display = 'block'; // Show the custom cursor when re-entering the page
+        });
+    
+        function updateCursor() {
+            // Set the position of the custom cursor
+            customCursor.style.left = `${mouseX}px`;
+            customCursor.style.top = `${mouseY}px`;
+    
+            // Teleport if it's more than 10 pixels away from the mouse position
+            const cursorRect = customCursor.getBoundingClientRect();
+            if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
+                customCursor.style.left = `${mouseX}px`;
+                customCursor.style.top = `${mouseY}px`;
+            }
+            requestAnimationFrame(updateCursor);
+        }
+        requestAnimationFrame(updateCursor);
+    
+        const hoverElements = document.querySelectorAll('.nav-button');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                spikes.classList.add('visible');
+            });
+            element.addEventListener('mouseleave', () => {
+                spikes.classList.remove('visible');
+            });
+        });
     </script>
 </body>
 </html>
