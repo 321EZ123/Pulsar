@@ -292,7 +292,7 @@
         <button class="custom-dropdown-button"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
         <div class="dropdown-options">
             <a href="index.html"><i class="fas fa-home"></i> Home</a>
-            <a href="ai.html"><i class="fas fa-robot"></i> AI</a>
+            <a href="AI.html"><i class="fas fa-robot"></i> AI</a>
             <a href="games.html"><i class="fas fa-gamepad"></i> Games</a>
             <a href="apps.html"><i class="fas fa-mobile-alt"></i> Apps</a>
             <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
@@ -357,23 +357,19 @@ function adjustTabSize() {
     }
 }
 
-// Function to create a new tab with a uv-address field
 function createTab() {
     const tab = document.createElement('div');
     tab.classList.add('tab');
 
-    // Create the content for the tab, including the uv-address input
-    const tabContent = document.createElement('div');
-    tabContent.classList.add('tab-content');
-    tabContent.innerHTML = `
-        <input type="text" id="uv-address-${tabCount}" class="uv-address" placeholder="Enter URL">
-    `;
-
-    // Tab header with input and close button
+    // Tab header with input and close button (no uv-address here)
     tab.innerHTML = `
         <input type="text" value="New Tab" readonly>
         <i class="fa fa-times close-tab"></i>
     `;
+
+    // No uv-address input inside the tab content anymore
+    const tabContent = document.createElement('div');
+    tabContent.classList.add('tab-content');
 
     tab.appendChild(tabContent); // Add content inside the tab
 
@@ -407,6 +403,7 @@ function createTab() {
     document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
     tabContent.style.display = 'block';  // Show the content of the new tab
 }
+
 
 // Add event listener to the "Add Tab" button
 addTabButton.addEventListener('click', createTab);
