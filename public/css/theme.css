@@ -87,41 +87,7 @@
     --icon-color: #ccc;
 }
 
-:root.dark-cool {
-    --primary-color: #fff;
-    --secondary-color: rgba(255, 255, 255, 0.7);
-    --background-color: #121212;
-    --highlight-color: #1e90ff;
-    --border-color: #444;
-    --icon-color: #bbb;
-}
 
-:root.monochrome {
-    --primary-color: #fff;
-    --secondary-color: rgba(255, 255, 255, 0.5);
-    --background-color: #000;
-    --highlight-color: #808080;
-    --border-color: #333;
-    --icon-color: #bbb;
-}
-
-:root.night-neon {
-    --primary-color: #fff;
-    --secondary-color: rgba(255, 255, 255, 0.7);
-    --background-color: #0c0c0c;
-    --highlight-color: #39ff14;
-    --border-color: #222;
-    --icon-color: #39ff14;
-}
-
-:root.pastel-dark {
-    --primary-color: #fff;
-    --secondary-color: rgba(255, 255, 255, 0.7);
-    --background-color: #2b2d42;
-    --highlight-color: #f5a623;
-    --border-color: #3e3e3e;
-    --icon-color: #f5a623;
-}
 
 :root.hacker {
     --primary-color: #00ff00;
