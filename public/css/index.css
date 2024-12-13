@@ -273,7 +273,7 @@ body:hover .custom-cursor {
 
 .logo {
     position: absolute;
-    top: 20px;
+    top: 10px;
     left: 20px;
     z-index: 500;
   }
