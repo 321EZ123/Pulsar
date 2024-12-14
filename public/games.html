@@ -74,25 +74,61 @@
         .nav-bar {
             min-height: 17%;
         }
-        .btn {
-            background-color: #22283100;
-            color: #0099ff;
-            font-weight: bold;
-            border: none;
-            letter-spacing: 1.5px;
-            overflow: hidden;
-            transition: 0s;
-            cursor: default;
-            margin: 15px 10px 0px;
-            width: calc((100% - 1px) / 3);
-            max-width: 300px;
-            height: calc((100% - 1px) / 3);
-            min-height: 160px;
-            max-height: 160px;
-            text-align: center;
-            opacity: 0; /* Start hidden */
-    animation: fadeIn 0.5s ease forwards; /* Apply fade-in animation */
+/* Style the button */
+.btn {
+    background-color: transparent; /* Make the top half background transparent */
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    letter-spacing: 1.5px;
+    overflow: hidden;
+    transition: 0s;
+    cursor: default;
+    margin: 20px 15px; /* Increased margin to add more space between buttons */
+    width: calc((100% - 1px) / 3); /* Keep consistent width */
+    max-width: 300px;
+    height: 200px;
+    text-align: center;
+    position: relative; /* Enable pseudo-element positioning */
+    opacity: 1; /* Fully visible */
+    border-radius: 15px 15px 0 0; /* Round only the top corners */
 }
+
+.btn::before {
+    content: '';
+    position: absolute;
+    bottom: 0; /* Position it at the bottom of the button */
+    left: 0;
+    width: 100%;
+    height: 30px; /* Set height to 30px */
+    background-color: #000000; /* Make the bottom half black */
+    border-radius: 0 0 15px 15px; /* Round only the bottom corners */
+    display: flex;
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    z-index: -1; /* Ensure it stays behind the button content */
+}
+
+.btn-text {
+    color: white; /* Ensure text is white for visibility */
+    font-size: 0.9rem;
+    pointer-events: none; /* Prevent text from interfering with clicks */
+}
+
+/* Black padding below the button */
+.btn::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; /* Increased distance between button and black padding */
+    left: 0;
+    width: 100%; /* Match the button width */
+    height: 20px; /* Height of the black padding */
+    background-color: rgba(0, 0, 0, 0.5); /* Black with 50% transparency */
+    z-index: -1; /* Ensure it doesn't overlap the button */
+    border-bottom-left-radius: 15px; /* Match button's rounded corners */
+    border-bottom-right-radius: 15px; /* Match button's rounded corners */
+}
+
 
 @keyframes fadeIn {
     from { opacity: 0; }
