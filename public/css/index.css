@@ -25,43 +25,19 @@ body {
 
 /* Pulsar Core - Glowing effect combined with sphere */
 .pulsar {
-    animation: spin 6.66s linear infinite;
+    animation: spin 20s linear infinite; /* Slower animation */
     border: 1px dotted rgba(0, 229, 255, 0.2); /* Less intense blue border with lower transparency */
     border-radius: 50%;
-    height: 800px; /* Fixed height */
-    width: 800px; /* Fixed width */
-    position: fixed; /* Keep fixed to the center */
-    top: 10%; /* Vertically center */  
-    left: 27.5%; /* Horizontally center */
-    transform: translate(-50%, -50%); /* Offset by half the width and height to center */
+    height: 150vh; /* Reduced size */
+    width: 150vw; /* Reduced size */
+    position: fixed; /* Fixed position in the viewport */
+    top: -10vh; /* Slightly off-screen vertically */
+    left: -10vw; /* Slightly off-screen horizontally */
     z-index: -1; /* Keep behind other elements */
     transform-style: preserve-3d;
-    box-shadow: 0 0 40px rgba(0, 229, 255, 0.2), 0 0 80px rgba(0, 191, 255, 0.1); /* Reduced glowing effect */
-    max-height: 100vh; /* Prevents pulsar from extending beyond the vertical bounds */
-    max-width: 100vw; /* Prevents pulsar from extending beyond the horizontal bounds */
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.3); /* Simplified glow */
     background-image: linear-gradient(315deg, rgba(8, 11, 163, 0.3), rgba(0, 0, 0, 0.6)); /* Slightly less intense gradient */
-}
-
-/* Before and After pseudo-elements for the 3D effect */
-.pulsar::before,
-.pulsar::after {
-    border: 1px dotted rgba(0, 229, 255, 0.2); /* Less intense blue border with lower transparency */
-    border-radius: 50%;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 800px; /* Fixed width */
-    height: 800px; /* Fixed height */
-    box-shadow: 0 0 40px rgba(0, 229, 255, 0.2), 0 0 80px rgba(0, 191, 255, 0.1); /* Reduced glowing effect */
-}
-
-.pulsar::before {
-    transform: rotateX(-66.6deg);
-}
-
-.pulsar::after {
-    transform: rotateX(66.6deg);
+    will-change: transform; /* Enable GPU acceleration */
 }
 
 /* Spinning animation for the sphere */
