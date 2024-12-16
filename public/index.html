@@ -5,18 +5,21 @@
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pulsar Network: Your free, fast, and secure web proxy solution.">
+    <meta name="keywords" content="proxy, web proxy, Pulsar Network, unblock websites, free web proxy, proxy server">
     <meta name="theme-color" content="#222831">
     <meta name="googlebot" content="index, follow, snippet">
     <meta name="robots" content="index, follow">
     <title>Pulsar</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link rel="stylesheet" type="text/css" href="css/Blank1.css">
-    <link rel="stylesheet" type="text/css" href="css/Blank2.css">
     <link rel="icon" type="image/x-icon" href="Images/favicon.png">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- UV Scripts -->
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="css/index.css">
+    
     <script>
         function redirectToNewURL(event) {
             if (event.keyCode === 221) {
@@ -24,112 +27,338 @@
                 window.location.href = newURL;
             }
         }
-
         window.addEventListener('keydown', redirectToNewURL);
     </script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto; /* Keep container centered */
+            width: 100%;
+            max-width: 600px; /* Increase width slightly */
+        }
         body {
-            margin: 0;
+    font-family: "Varela Round", sans-serif;
+    background-image: linear-gradient(315deg, #080ba3, black);
+    animation-name: gradAnimate;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+    color: #c0c0c0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+        }
+        #uv-address {
+            flex: 1;
+            padding: 14px; /* Increase padding */
+            font-size: 18px; /* Slightly larger font */
         }
 
+        #sigma {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px; /* Add space between search bar and icons */
+        }
 
-        .nav-bar {
+        #sigma a {
+            margin: 0 10px; /* Adjust spacing between icons */
+            font-size: 24px; /* Adjust icon size as desired */
+        }
+
+        @keyframes settingsSpin {
+            0% {rotate: 0deg;}
+            100% {rotate: 360deg;}
+        }
+
+        @keyframes gradAnimate {
+            0% {background-position: 0% 2%;}
+            50% {background-position: 100% 99%;}
+            100% {background-position: 0% 2%;}
+        }
+
+        body {
+            font-family: "Varela Round", sans-serif;
+            animation-name: gradAnimate;
+            animation-duration: 10s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease;
+            color: #c0c0c0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .description {
+            text-align: center;
+            font-size: 1.2em;
+            color: #f0f0f0;
+        }
+        
+        .search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    animation: appear 0.5s ease-in-out; /* Animation happens instantly on load */
+}
+        /* Dropdown container */
+        .updrop-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9000;
+        }
+
+        /* Button styles */
+        .updrop-button {
+            background-color: #000000;
+            color: white;
+            font-size: 24px;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Dropdown menu styles */
+        .updrop-menu {
+            display: none;
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            background-color: #000000;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            list-style: none;
+            padding: 10px;
+            z-index: 1000;
+            border-color: white;
+        }
+
+        .updrop-menu.active {
+            display: block;
+            z-index: 1000;
+        }
+
+        /* Dropdown menu items */
+        .updrop-menu li {
+            padding: 10px;
+            margin: 5px 0;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s;
+            z-index: 500;
+        }
+
+        .updrop-menu li:hover {
+            background-color: #111;
+        }
+#uv-form {
+    display: flex;
+    width: 90%;
+    max-width: 600px;
+    animation: appear 0.5s ease-in-out; /* Animation happens instantly on load */
+}
+
+#uv-address {
+    justify-content: center;
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ffffff;
+    border-radius: 4px 25px 4px 25px;
+    font-size: 16px;
+    background-color: #000000;
+    color: #c0c0c0;
+    animation: appear 1s ease-in-out; /* Animation happens instantly on load */
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.logo {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    z-index: 500;
+  }
+
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
+        
+        #logo {
+            border-radius: 300px;
+        }
+        
+        input[type="submit"] {
+            padding: 15px;
+            border: none;
+            background: linear-gradient(45deg, #003366, #006699);
+            color: #fff;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(45deg, #006699, #003366);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        main {
+            margin-top: 100px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .search-nav-bar {
+            height: 80px;
+            width: 100%;
+            background: #000000;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            gap: 1rem;
+            position: fixed;
+            top: 0;
+            z-index: 499;
+            position: inherit;
             min-height: 17%;
             max-height: 17%;
         }
-
-
-/* Create custom dropdown-style menu */
-.custom-dropdown {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100%; /* Full width of the container */
-    max-width: 250px; /* Limiting the width of the dropdown container */
-    margin: 20px auto; /* Center the dropdown with some margin */
-    font-family: Arial, sans-serif; /* Set a clean font */
-}
-
-/* Style for the dropdown button */
-.custom-dropdown-button {
-    padding: 12px 20px; /* Adjust padding for exact button appearance */
-    font-size: 16px;
-    background-color: #0077ff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer; /* Pointer cursor on hover */
-    outline: none;
-    box-sizing: border-box; /* Prevents any unwanted space around the button */
-    display: inline-block;
-    width: 100%; /* Ensures button fills its container width */
-    max-width: 250px; /* Limits the width of the dropdown button */
-    height: auto; /* Ensures the height is automatically adjusted based on padding */
-    line-height: 1.5; /* Prevents extra space around text */
-    text-align: center; /* Centers text horizontally */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
-}
-
-.custom-dropdown-button:hover {
-    background-color: #005cbf; /* Darker blue on hover */
-    transform: translateY(-2px); /* Slight lift effect on hover */
-}
-
-/* Dropdown options container */
-.dropdown-options {
-    padding: 0;
-    font-size: 16px;
-    display: none;
-    position: absolute;
-    top: 100%; /* Position dropdown below the button */
-    left: 0;
-    right: 0;
-    background-color: #0077ff;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-    width: 100%; /* Matches the width of the button */
-    max-width: 250px;
-    opacity: 0;
-    visibility: hidden; /* Initially hidden */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition */
-}
-
-/* Dropdown option styles */
-.dropdown-options a {
-    padding: 16px 20px; /* Adjust padding for better spacing */
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    border-bottom: 1px solid #005cbf;
-    transition: background-color 0.3s ease; /* Smooth background on hover */
-}
-
-.dropdown-options a:hover {
-    background-color: #005cbf;
-}
-
-/* Show dropdown options when hovering over the button */
-.custom-dropdown:hover .dropdown-options {
-    display: block;
-    opacity: 1;
-    visibility: visible; /* Make visible when the button is hovered */
-}
-
-/* Add focus-visible for better accessibility */
-.custom-dropdown-button:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-}
-
-
-
-        /* Hide default cursor */
-        * {
-            cursor: none;
+        footer {
+            background-color: #000000;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            width: 100%;
         }
+
+        footer a {
+            color: #c0c0c0;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        i[class="fas fa-cog"]:hover {
+            animation-name: settingsSpin;
+            animation-duration: 0.5s;
+        }
+        .tabs-container {
+            display: flex;
+            align-items: flex-start; /* Align to the top */
+            justify-content: flex-start; /* Align tabs to the left */
+            gap: 10px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 8px;
+            background: #444;
+            color: #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: flex-start; /* Ensure content inside tab is left-aligned */
+            align-items: center;
+            gap: 5px;
+            animation: appear 0.3s ease-in-out; /* Animation happens instantly on load */
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+        .tab.active {
+            background: #ffffff;
+        }
+
+        .tab:not(.active):hover {
+    background: #ffffff88;
+}
+
+
+        .tab input {
+            border: none;
+            background: transparent;
+            color: #000000;
+            outline: none;
+            width: 180px;
+        }
+
+        .tab i {
+            margin-left: 20px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .close-tab {
+            color: #000000;
+            font-size: 14px;
+        }
+
+        #addTab {
+            background: #22222200;
+            color: #ffffff;
+            border-radius: 100px;
+            border-color:#00000000;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s;
+        }
+        .tab-content {
+            display: none;  /* Hide content of all tabs by default */
+        }
+
+        .tab.active .tab-content {
+            display: block;  /* Show content of the active tab */
+        }
+
+
     </style>
+<script>
+    
+</script>
+<script src="uv/uv.bundle.js"></script>
+<script src="uv/uv.config.js"></script>
+<script src="assets/register-sw.js"></script>
 </head>
 <body>
     <div class="pulsar"></div>
@@ -139,123 +368,308 @@
         <img src="Images/Pulsar Network nobg.png" alt="Pulsar Logo">
     </a>
 
-    <!-- Navigation Bar -->
-    <div class="nav-bar">
-        <a href="index.html" class="nav-button">
-            <i class="fas fa-home"></i> Home
-        </a>
-        <a href="ai.html" class="nav-button">
-            <i class="fas fa-robot"></i> AI
-        </a>
-        <a href="games.html" class="nav-button">
-            <i class="fas fa-gamepad"></i> Games
-        </a>
-        <a href="apps.html" class="nav-button">
-            <i class="fas fa-mobile-alt"></i> Apps
-        </a>
-        <a href="settings.html" class="nav-button">
-            <i class="fas fa-cog"></i> Settings
-        </a>
-    </div>
-    <a href="credits.html" class="credit">
-        <i class="fas fa-book"></i> 
-    </a>
-
-    <br><br><br><br><br>
-
-    <!-- Custom Dropdown Menu -->
-    <div class="custom-dropdown">
-        <button class="custom-dropdown-button">Tab Cloaking</button>
-        <div class="dropdown-options">
-            <a href="#" onclick="openSite('Pulsar')">Pulsar</a>
-            <a href="#" onclick="openSite('Canva')">Canva</a>
-            <a href="#" onclick="openSite('Clever')">Clever</a>
-            <a href="#" onclick="openSite('Daaurrh')">Daaurrh</a>
-            <a href="#" onclick="openSite('Gmail')">Gmail</a>
-            <a href="#" onclick="openSite('Discord')">Discord</a>
-            <a href="#" onclick="openSite('YouTube')">YouTube</a>
+    <!-- Navigation Bar with Tabs -->
+    <div class="search-nav-bar">
+        <div class="tabs-container" id="tabsContainer">
+            <!-- Tabs will be dynamically added here -->
+            <button id="addTab" class="tab">+</button>
         </div>
     </div>
+    
+    <!-- Custom Dropdown Menu -->
+    <div class="custom-dropdown">
+        <button class="custom-dropdown-button"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+        <div class="dropdown-options">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="ai.html"><i class="fas fa-robot"></i> AI</a>
+            <a href="games.html"><i class="fas fa-gamepad"></i> Games</a>
+            <a href="apps.html"><i class="fas fa-mobile-alt"></i> Apps</a>
+            <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+            <a href="credits.html"> <i class="fas fa-book"></i> Credits</a>
+        </div>
+    </div>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+    <h1 id="stitle">Pulsar</h1>
+    <p id="memo">Browse the web unblocked, for free</p>
 
-</br></br></br>
-</br></br></br>
-</br></br></br>
-</br></br></br>
-</br></br></br>
-</br></br></br>
-<h3>']' is the panic button.</h3>
-    <script>
-        function openSite(site) {
-            var win = window.open();
-            var url = "settings.html"; // URL to load in iframe
+    <div class="container">
+        <input id="uv-address" type="text" class="input" placeholder="Search Pulsar or enter a URL">
+    </div>
+    <span id="sigma">
+        <a id="sigma" href="https://discord.gg/YqvG3k9YMd" target="_blank" class="fa-brands fa-discord"></a>
+        <a id="sigma" href="https://github.com/Yeti1o1/Pulsar" target="_blank"class="fa-brands fa-github"></a>
+        <a id="sigma" href="https://drive.google.com/file/d/1XCHdt4XntG4CMOaCeoJP75GkAfrV_2E4/view?usp=drivesdk" target="_blank"class="fas fa-folder"></a>
+    </span>
+    
+    </br></br>
+<div style="text-align: center;">
+    <script type="text/javascript">
+        atOptions = {
+            'key': '1118f7a5d44f23dbfc48da2338d22502',
+            'format': 'iframe',
+            'height': 60,
+            'width': 468,
+            'params': {}
+        };
+    </script>
+</div>
+    <script type="text/javascript" src="//www.highperformanceformat.com/1118f7a5d44f23dbfc48da2338d22502/invoke.js"></script>
+    <div class="updrop-container">
+        <button class="updrop-button"><i class="fa-solid fa-square-pen"></i></button>
+        <ul class="updrop-menu">
+            <li data-color="black-solid">Black</li>
+            <li data-color="white-gradient">White</li> 
+            <li data-color="green-gradient">Green</li>
+            <li data-color="red-gradient">Red</li>
+            <li data-color="blue-gradient">Sky Blue</li>
+            <li data-color="blu-gradient">Blue</li>
+            <li data-color="yellow-gradient">Yellow</li> 
+            <li data-color="orange-gradient">Orange</li>
+        </ul>
+        
+<script>
+const updropButton = document.querySelector('.updrop-button');
+const updropMenu = document.querySelector('.updrop-menu');
+const menuOptions = document.querySelectorAll('.updrop-menu li');
+const pulsarDiv = document.querySelector('.pulsar');
+const resetColorOption = document.getElementById('reset-color');
 
-            var iframe = win.document.createElement('iframe');
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.style.border = "none";
-            iframe.style.position = "fixed";
-            iframe.style.top = "0";
-            iframe.style.left = "0";
-            iframe.src = url;
-            win.document.body.appendChild(iframe);
+updropButton.addEventListener('click', () => {
+    updropMenu.classList.toggle('active');
+});
 
-            // Set the custom favicon based on the selected site
-            var link = win.document.createElement('link');
-            link.rel = 'icon';
-            link.type = 'image/x-icon';
-
-            switch (site) {
-                case 'Pulsar':
-                    link.href = 'Images/favicon.png';
-                    win.document.title = 'Pulsar';
-                    break;
-                case 'Canva':
-                    link.href = 'Images/Canva.png';
-                    win.document.title = 'Home - Canva';
-                    break;
-                case 'Clever':
-                    link.href = 'Images/Clever.png';
-                    win.document.title = 'Clever | Connect every student to a world of learning';
-                    break;
-                case 'Daaurrh':
-                    link.href = 'Images/Daaurrh.png';
-                    win.document.title = 'Daaurrh';
-                    break;
-                case 'Gmail':
-                    link.href = 'Images/Gmail.png';
-                    win.document.title = 'Inbox';
-                    break;
-                case 'Discord':
-                    link.href = 'Images/Discord.png';
-                    win.document.title = 'Discord';
-                    break;
-                case 'YouTube':
-                    link.href = 'Images/YouTube.png';
-                    win.document.title = 'YouTube';
-                    break;
-                default:
-                    return;
+menuOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        if (option.id === 'reset-color') {
+            document.body.style.backgroundImage = 'none';
+            localStorage.removeItem('bgColor');
+            pulsarDiv.style.display = 'none';
+        } else {
+            const color = option.getAttribute('data-color');
+            if (color === 'black-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)';
+            } else if (color === 'blue-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #00aaff, #0044cc)';
+            } else if (color === 'green-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #00cc66, #003300)';
+            } else if (color === 'red-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #ff0000, #8b0000)';
+            } else if (color === 'black-solid') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #000000, #000000)';
+            } else if (color === 'white-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #ffffff, #f0f0f0)';
+            } else if (color === 'yellow-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #ffff00, #ffcc00)';
+            } else if (color === 'orange-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #ff6600, #ff3300)';
+            } else if (color === 'blu-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)';
             }
 
-            win.document.head.appendChild(link);
+            localStorage.setItem('bgColor', document.body.style.backgroundImage);
+            pulsarDiv.style.display = 'block';
         }
 
-        const customCursor = document.getElementById('customCursor');
+        updropMenu.classList.remove('active'); // Close the menu after a selection
+    });
+});
 
-        // Ensure custom cursor follows mouse movement
-        document.addEventListener('mousemove', (e) => {
-            customCursor.style.left = `${e.pageX}px`;
-            customCursor.style.top = `${e.pageY}px`;
-        });
-    </script>
-        <script>
-            window.addEventListener('DOMContentLoaded', (event) => {
-        const savedBg = localStorage.getItem('bgColor');
-        if (savedBg) {
-            document.body.style.backgroundImage = savedBg;
+document.addEventListener('click', (e) => {
+    if (!updropButton.contains(e.target) && !updropMenu.contains(e.target)) {
+        updropMenu.classList.remove('active'); // Close the menu if clicked outside
+    }
+});
+
+</script>    
+<script>
+const color = option.getAttribute('data-color');
+
+if (color === 'black-solid') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #000000, #000000)';
+} else if (color === 'green-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #00cc66, #003300)';
+} else if (color === 'red-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #ff0000, #8b0000)';
+} else if (color === 'blue-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #00aaff, #0044cc)';
+} else if (color === 'white-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #ffffff, #f0f0f0)'; // White gradient
+} else if (color === 'yellow-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #ffff00, #ffcc00)'; // Yellow gradient
+} else if (color === 'orange-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #ff6600, #ff3300)'; // Orange gradient
+} else if (color === 'blu-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)'; // Blue gradient
+}
+
+
+// Save the selected background to localStorage
+localStorage.setItem('bgColor', document.body.style.backgroundImage);
+
+// Display pulsarDiv after the background change
+pulsarDiv.style.display = 'block';
+
+</script>
+
+    <script>
+const addTabButton = document.getElementById('addTab');
+const tabsContainer = document.getElementById('tabsContainer');
+let tabCount = 0;
+
+// Function to adjust the size of the tabs
+function adjustTabSize() {
+    const containerWidth = tabsContainer.offsetWidth;
+    const containerRightEdge = tabsContainer.getBoundingClientRect().right;
+    let totalWidth = 0;
+    let tabs = Array.from(tabsContainer.children);
+
+    // Calculate the total width of all tabs excluding the "Add Tab" button
+    tabs.forEach(tab => {
+        if (tab !== addTabButton) {
+            totalWidth += tab.offsetWidth;
         }
     });
+
+    // Check the right side of the page (container) and adjust the width of tabs if close to the right
+    if (containerRightEdge >= window.innerWidth - 50) {
+        const newWidth = (window.innerWidth - 50 - addTabButton.offsetWidth) / (tabs.length - 1);
+        tabs.forEach(tab => {
+            if (tab !== addTabButton) {
+                tab.style.width = `${newWidth}px`;
+            }
+        });
+    } else {
+        tabs.forEach(tab => {
+            if (tab !== addTabButton) {
+                tab.style.width = '';
+            }
+        });
+    }
+}
+
+function createTab() {
+    const tab = document.createElement('div');
+    tab.classList.add('tab');
+
+    // Tab header with input and close button (no uv-address here)
+    tab.innerHTML = `
+        <input type="text" value="New Tab" readonly>
+        <i class="fa fa-times close-tab"></i>
+    `;
+
+    // No uv-address input inside the tab content anymore
+    const tabContent = document.createElement('div');
+    tabContent.classList.add('tab-content');
+
+    tab.appendChild(tabContent); // Add content inside the tab
+
+    const closeTabButton = tab.querySelector('.close-tab');
+    closeTabButton.addEventListener('click', () => {
+        tab.remove();
+        adjustTabSize(); // Re-adjust tab size after removal
+    });
+
+    tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+        // Add active class to the clicked tab
+        tab.classList.add('active');
+
+        // Hide content of all tabs and show content of the active tab
+        document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+        tabContent.style.display = 'block';
+    });
+
+    tabsContainer.insertBefore(tab, addTabButton); // Insert the new tab before the "Add Tab" button
+    tabCount++;
+    adjustTabSize(); // Adjust tab size when a tab is added
+
+    // Automatically select the new tab
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    // Hide the content of all tabs except the active one
+    document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+    tabContent.style.display = 'block';  // Show the content of the new tab
+}
+
+
+// Add event listener to the "Add Tab" button
+addTabButton.addEventListener('click', createTab);
+
+// Automatically create one tab when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    createTab();
+});
+
+// Recalculate tab sizes when the window is resized
+window.addEventListener('resize', adjustTabSize);
+
+    </script>
     
-        </script>
+
+    
+<script>
+    const customCursor = document.getElementById('customCursor');
+    const spikes = document.getElementById('spikes');
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX; // Get mouse position relative to the viewport
+        mouseY = e.clientY;
+        customCursor.style.display = 'block'; // Show the cursor on mouse move
+    });
+
+    document.addEventListener('mouseleave', () => {
+        customCursor.style.display = 'none'; // Hide the custom cursor when leaving the page
+    });
+
+    document.addEventListener('mouseenter', () => {
+        customCursor.style.display = 'block'; // Show the custom cursor when re-entering the page
+    });
+
+    function updateCursor() {
+        // Set the position of the custom cursor
+        customCursor.style.left = `${mouseX}px`;
+        customCursor.style.top = `${mouseY}px`;
+
+        // Teleport if it's more than 10 pixels away from the mouse position
+        const cursorRect = customCursor.getBoundingClientRect();
+        if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
+            customCursor.style.left = `${mouseX}px`;
+            customCursor.style.top = `${mouseY}px`;
+        }
+        requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    const hoverElements = document.querySelectorAll('.nav-button');
+    hoverElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            spikes.classList.add('visible');
+        });
+        element.addEventListener('mouseleave', () => {
+            spikes.classList.remove('visible');
+        });
+    });
+</script>
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+const savedBg = localStorage.getItem('bgColor');
+if (savedBg) {
+    document.body.style.backgroundImage = savedBg;
+}
+});
+
+</script>
+<script src="assets/script.js" defer></script>
 </body>
 </html>
