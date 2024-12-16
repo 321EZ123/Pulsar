@@ -134,5 +134,14 @@
             });
         });
     </script>
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+        const savedBg = localStorage.getItem('bgColor');
+        if (savedBg) {
+            document.body.style.backgroundImage = savedBg;
+        }
+    });
+    
+        </script>
 </body>
 </html>
