@@ -208,7 +208,7 @@ body:hover .custom-cursor {
     top: 70px;
     right: 16px;
     position: absolute;
-    z-index: 9000;
+    z-index: 8000;
     width: auto; /* Adjust width to fit the button's position */
     margin: 20px 0; /* Margin to keep it from centering */
     font-family: Arial, sans-serif; /* Set a clean font */
