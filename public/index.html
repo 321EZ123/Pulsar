@@ -110,7 +110,64 @@
     margin-top: 20px;
     animation: appear 0.5s ease-in-out; /* Animation happens instantly on load */
 }
+        /* Dropdown container */
+        .updrop-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9000;
+        }
 
+        /* Button styles */
+        .updrop-button {
+            background-color: #000000;
+            color: white;
+            font-size: 24px;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Dropdown menu styles */
+        .updrop-menu {
+            display: none;
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            background-color: #000000;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            list-style: none;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .updrop-menu.active {
+            display: block;
+            z-index: 1000;
+        }
+
+        /* Dropdown menu items */
+        .updrop-menu li {
+            padding: 10px;
+            margin: 5px 0;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s;
+            z-index: 500;
+        }
+
+        .updrop-menu li:hover {
+            background-color: #111;
+        }
 #uv-form {
     display: flex;
     width: 90%;
@@ -362,6 +419,96 @@
     </script>
 </div>
     <script type="text/javascript" src="//www.highperformanceformat.com/1118f7a5d44f23dbfc48da2338d22502/invoke.js"></script>
+    <div class="updrop-container">
+        <button class="updrop-button"><i class="fa-solid fa-square-pen"></i></button>
+        <ul class="updrop-menu">
+            <li data-color="black-solid">Black Gradient</li>
+            <li data-color="green-gradient">Green Gradient</li>
+            <li data-color="red-gradient">Red Gradient</li>
+            <li data-color="blue-gradient">Light Blue Gradient</li>
+            <li data-color="white-gradient">White Gradient</li> 
+            <li data-color="yellow-gradient">Yellow Gradient</li> 
+            <li data-color="orange-gradient">Orange Gradient</li>
+        </ul>
+        
+<script>
+const updropButton = document.querySelector('.updrop-button');
+const updropMenu = document.querySelector('.updrop-menu');
+const menuOptions = document.querySelectorAll('.updrop-menu li');
+const pulsarDiv = document.querySelector('.pulsar');
+const resetColorOption = document.getElementById('reset-color');
+
+updropButton.addEventListener('click', () => {
+    updropMenu.classList.toggle('active');
+});
+
+menuOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        if (option.id === 'reset-color') {
+            document.body.style.backgroundImage = 'none';
+            localStorage.removeItem('bgColor');
+            pulsarDiv.style.display = 'none';
+        } else {
+            const color = option.getAttribute('data-color');
+            if (color === 'black-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)';
+            } else if (color === 'blue-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #00aaff, #0044cc)';
+            } else if (color === 'green-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #00cc66, #003300)';
+            } else if (color === 'red-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #ff0000, #8b0000)';
+            } else if (color === 'black-solid') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #000000, #000000)';
+            } else if (color === 'white-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #ffffff, #f0f0f0)';
+            } else if (color === 'yellow-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #ffff00, #ffcc00)';
+            } else if (color === 'orange-gradient') {
+                document.body.style.backgroundImage = 'linear-gradient(315deg, #ff6600, #ff3300)';
+            }
+
+            localStorage.setItem('bgColor', document.body.style.backgroundImage);
+            pulsarDiv.style.display = 'block';
+        }
+
+        updropMenu.classList.remove('active'); // Close the menu after a selection
+    });
+});
+
+document.addEventListener('click', (e) => {
+    if (!updropButton.contains(e.target) && !updropMenu.contains(e.target)) {
+        updropMenu.classList.remove('active'); // Close the menu if clicked outside
+    }
+});
+
+</script>    
+<script>
+const color = option.getAttribute('data-color');
+
+if (color === 'black-solid') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #000000, #000000)';
+} else if (color === 'green-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #00cc66, #003300)';
+} else if (color === 'red-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #ff0000, #8b0000)';
+} else if (color === 'blue-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #00aaff, #0044cc)';
+} else if (color === 'white-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #ffffff, #f0f0f0)'; // White gradient
+} else if (color === 'yellow-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #ffff00, #ffcc00)'; // Yellow gradient
+} else if (color === 'orange-gradient') {
+    document.body.style.backgroundImage = 'linear-gradient(315deg, #ff6600, #ff3300)'; // Orange gradient
+}
+
+// Save the selected background to localStorage
+localStorage.setItem('bgColor', document.body.style.backgroundImage);
+
+// Display pulsarDiv after the background change
+pulsarDiv.style.display = 'block';
+
+</script>
 
     <script>
 const addTabButton = document.getElementById('addTab');
