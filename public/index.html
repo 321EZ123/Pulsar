@@ -19,7 +19,7 @@
     <!-- UV Scripts -->
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="css/index.css">
-    
+    <link rel="stylesheet" href="css/i.css">
     <script>
         function redirectToNewURL(event) {
             if (event.keyCode === 221) {
@@ -29,330 +29,6 @@
         }
         window.addEventListener('keydown', redirectToNewURL);
     </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
-
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto; /* Keep container centered */
-            width: 100%;
-            max-width: 600px; /* Increase width slightly */
-        }
-        body {
-    font-family: "Varela Round", sans-serif;
-    background-image: linear-gradient(315deg, #080ba3, black);
-    animation-name: gradAnimate;
-    animation-duration: 10s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease;
-    color: #c0c0c0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-        }
-        #uv-address {
-            flex: 1;
-            padding: 14px; /* Increase padding */
-            font-size: 18px; /* Slightly larger font */
-        }
-
-        #sigma {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px; /* Add space between search bar and icons */
-        }
-
-        #sigma a {
-            margin: 0 10px; /* Adjust spacing between icons */
-            font-size: 24px; /* Adjust icon size as desired */
-        }
-
-        @keyframes settingsSpin {
-            0% {rotate: 0deg;}
-            100% {rotate: 360deg;}
-        }
-
-        @keyframes gradAnimate {
-            0% {background-position: 0% 2%;}
-            50% {background-position: 100% 99%;}
-            100% {background-position: 0% 2%;}
-        }
-
-        body {
-            font-family: "Varela Round", sans-serif;
-            animation-name: gradAnimate;
-            animation-duration: 10s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease;
-            color: #c0c0c0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        
-        .description {
-            text-align: center;
-            font-size: 1.2em;
-            color: #f0f0f0;
-        }
-        
-        .search-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    animation: appear 0.5s ease-in-out; /* Animation happens instantly on load */
-}
-        /* Dropdown container */
-        .updrop-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9000;
-        }
-
-        /* Button styles */
-        .updrop-button {
-            background-color: #000000;
-            color: white;
-            font-size: 24px;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Dropdown menu styles */
-        .updrop-menu {
-            display: none;
-            position: absolute;
-            bottom: 60px;
-            right: 0;
-            background-color: #000000;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            list-style: none;
-            padding: 10px;
-            z-index: 1000;
-            border-color: white;
-        }
-
-        .updrop-menu.active {
-            display: block;
-            z-index: 1000;
-        }
-
-        /* Dropdown menu items */
-        .updrop-menu li {
-            padding: 10px;
-            margin: 5px 0;
-            color: white;
-            cursor: pointer;
-            border-radius: 4px;
-            text-align: center;
-            transition: background-color 0.3s;
-            z-index: 500;
-        }
-
-        .updrop-menu li:hover {
-            background-color: #111;
-        }
-#uv-form {
-    display: flex;
-    width: 90%;
-    max-width: 600px;
-    animation: appear 0.5s ease-in-out; /* Animation happens instantly on load */
-}
-
-#uv-address {
-    justify-content: center;
-    flex: 1;
-    padding: 15px;
-    border: 1px solid #ffffff;
-    border-radius: 4px 25px 4px 25px;
-    font-size: 16px;
-    background-color: #000000;
-    color: #c0c0c0;
-    animation: appear 1s ease-in-out; /* Animation happens instantly on load */
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-.logo {
-    position: absolute;
-    top: 100px;
-    left: 20px;
-    z-index: 500;
-  }
-
-.logo img {
-    height: 50px;
-    width: auto;
-}
-
-        
-        #logo {
-            border-radius: 300px;
-        }
-        
-        input[type="submit"] {
-            padding: 15px;
-            border: none;
-            background: linear-gradient(45deg, #003366, #006699);
-            color: #fff;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        input[type="submit"]:hover {
-            background: linear-gradient(45deg, #006699, #003366);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        main {
-            margin-top: 100px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .search-nav-bar {
-            height: 80px;
-            width: 100%;
-            background: #000000;
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            gap: 1rem;
-            position: fixed;
-            top: 0;
-            z-index: 499;
-            position: inherit;
-            min-height: 17%;
-            max-height: 17%;
-        }
-        footer {
-            background-color: #000000;
-            padding: 10px;
-            text-align: center;
-            font-size: 14px;
-            color: #777;
-            width: 100%;
-        }
-
-        footer a {
-            color: #c0c0c0;
-            text-decoration: none;
-            margin: 0 5px;
-        }
-
-        i[class="fas fa-cog"]:hover {
-            animation-name: settingsSpin;
-            animation-duration: 0.5s;
-        }
-        .tabs-container {
-            display: flex;
-            align-items: flex-start; /* Align to the top */
-            justify-content: flex-start; /* Align tabs to the left */
-            gap: 10px;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-        }
-
-        .tab {
-            padding: 8px;
-            background: #444;
-            color: #ffffff;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            flex-shrink: 0;
-            display: flex;
-            justify-content: flex-start; /* Ensure content inside tab is left-aligned */
-            align-items: center;
-            gap: 5px;
-            animation: appear 0.3s ease-in-out; /* Animation happens instantly on load */
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-
-        .tab.active {
-            background: #ffffff;
-        }
-
-        .tab:not(.active):hover {
-    background: #ffffff88;
-}
-
-
-        .tab input {
-            border: none;
-            background: transparent;
-            color: #000000;
-            outline: none;
-            width: 180px;
-        }
-
-        .tab i {
-            margin-left: 20px;
-            cursor: pointer;
-            font-size: 20px;
-        }
-
-        .close-tab {
-            color: #000000;
-            font-size: 14px;
-        }
-
-        #addTab {
-            background: #22222200;
-            color: #ffffff;
-            border-radius: 100px;
-            border-color:#00000000;
-            cursor: pointer;
-            font-size: 20px;
-            transition: background-color 0.3s;
-        }
-        .tab-content {
-            display: none;  /* Hide content of all tabs by default */
-        }
-
-        .tab.active .tab-content {
-            display: block;  /* Show content of the active tab */
-        }
-
-
-    </style>
 <script>
     
 </script>
@@ -419,6 +95,7 @@
         };
     </script>
 </div>
+<script type="text/javascript" src="i.js"></script>
     <script type="text/javascript" src="//www.highperformanceformat.com/1118f7a5d44f23dbfc48da2338d22502/invoke.js"></script>
     <div class="updrop-container">
         <button class="updrop-button"><i class="fa-solid fa-square-pen"></i></button>
@@ -433,243 +110,244 @@
             <li data-color="orange-gradient">Orange</li>
         </ul>
         
+<script src="assets/script.js" defer></script>
 <script>
-const updropButton = document.querySelector('.updrop-button');
-const updropMenu = document.querySelector('.updrop-menu');
-const menuOptions = document.querySelectorAll('.updrop-menu li');
-const pulsarDiv = document.querySelector('.pulsar');
-const resetColorOption = document.getElementById('reset-color');
-
-updropButton.addEventListener('click', () => {
-    updropMenu.classList.toggle('active');
-});
-
-menuOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        if (option.id === 'reset-color') {
-            document.body.style.backgroundImage = 'none';
-            localStorage.removeItem('bgColor');
-            pulsarDiv.style.display = 'none';
-        } else {
-            const color = option.getAttribute('data-color');
-            if (color === 'black-gradient') {
-                document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)';
-            } else if (color === 'blue-gradient') {
-                document.body.style.backgroundImage = 'linear-gradient(315deg, #00aaff, #0044cc)';
-            } else if (color === 'green-gradient') {
-                document.body.style.backgroundImage = 'linear-gradient(315deg, #00cc66, #003300)';
-            } else if (color === 'red-gradient') {
-                document.body.style.backgroundImage = 'linear-gradient(315deg, #ff0000, #8b0000)';
-            } else if (color === 'black-solid') {
-                document.body.style.backgroundImage = 'linear-gradient(315deg, #000000, #000000)';
-            } else if (color === 'white-gradient') {
-                document.body.style.backgroundImage = 'linear-gradient(315deg, #ffffff, #f0f0f0)';
-            } else if (color === 'yellow-gradient') {
-                document.body.style.backgroundImage = 'linear-gradient(315deg, #ffff00, #ffcc00)';
-            } else if (color === 'orange-gradient') {
-                document.body.style.backgroundImage = 'linear-gradient(315deg, #ff6600, #ff3300)';
-            } else if (color === 'blu-gradient') {
-                document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)';
-            }
-
-            localStorage.setItem('bgColor', document.body.style.backgroundImage);
-            pulsarDiv.style.display = 'block';
-        }
-
-        updropMenu.classList.remove('active'); // Close the menu after a selection
+    const updropButton = document.querySelector('.updrop-button');
+    const updropMenu = document.querySelector('.updrop-menu');
+    const menuOptions = document.querySelectorAll('.updrop-menu li');
+    const pulsarDiv = document.querySelector('.pulsar');
+    const resetColorOption = document.getElementById('reset-color');
+    
+    updropButton.addEventListener('click', () => {
+        updropMenu.classList.toggle('active');
     });
-});
-
-document.addEventListener('click', (e) => {
-    if (!updropButton.contains(e.target) && !updropMenu.contains(e.target)) {
-        updropMenu.classList.remove('active'); // Close the menu if clicked outside
-    }
-});
-
-</script>    
-<script>
-const color = option.getAttribute('data-color');
-
-if (color === 'black-solid') {
-    document.body.style.backgroundImage = 'linear-gradient(315deg, #000000, #000000)';
-} else if (color === 'green-gradient') {
-    document.body.style.backgroundImage = 'linear-gradient(315deg, #00cc66, #003300)';
-} else if (color === 'red-gradient') {
-    document.body.style.backgroundImage = 'linear-gradient(315deg, #ff0000, #8b0000)';
-} else if (color === 'blue-gradient') {
-    document.body.style.backgroundImage = 'linear-gradient(315deg, #00aaff, #0044cc)';
-} else if (color === 'white-gradient') {
-    document.body.style.backgroundImage = 'linear-gradient(315deg, #ffffff, #f0f0f0)'; // White gradient
-} else if (color === 'yellow-gradient') {
-    document.body.style.backgroundImage = 'linear-gradient(315deg, #ffff00, #ffcc00)'; // Yellow gradient
-} else if (color === 'orange-gradient') {
-    document.body.style.backgroundImage = 'linear-gradient(315deg, #ff6600, #ff3300)'; // Orange gradient
-} else if (color === 'blu-gradient') {
-    document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)'; // Blue gradient
-}
-
-
-// Save the selected background to localStorage
-localStorage.setItem('bgColor', document.body.style.backgroundImage);
-
-// Display pulsarDiv after the background change
-pulsarDiv.style.display = 'block';
-
-</script>
-
+    
+    menuOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            if (option.id === 'reset-color') {
+                document.body.style.backgroundImage = 'none';
+                localStorage.removeItem('bgColor');
+                pulsarDiv.style.display = 'none';
+            } else {
+                const color = option.getAttribute('data-color');
+                if (color === 'black-gradient') {
+                    document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)';
+                } else if (color === 'blue-gradient') {
+                    document.body.style.backgroundImage = 'linear-gradient(315deg, #00aaff, #0044cc)';
+                } else if (color === 'green-gradient') {
+                    document.body.style.backgroundImage = 'linear-gradient(315deg, #00cc66, #003300)';
+                } else if (color === 'red-gradient') {
+                    document.body.style.backgroundImage = 'linear-gradient(315deg, #ff0000, #8b0000)';
+                } else if (color === 'black-solid') {
+                    document.body.style.backgroundImage = 'linear-gradient(315deg, #000000, #000000)';
+                } else if (color === 'white-gradient') {
+                    document.body.style.backgroundImage = 'linear-gradient(315deg, #ffffff, #f0f0f0)';
+                } else if (color === 'yellow-gradient') {
+                    document.body.style.backgroundImage = 'linear-gradient(315deg, #ffff00, #ffcc00)';
+                } else if (color === 'orange-gradient') {
+                    document.body.style.backgroundImage = 'linear-gradient(315deg, #ff6600, #ff3300)';
+                } else if (color === 'blu-gradient') {
+                    document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)';
+                }
+    
+                localStorage.setItem('bgColor', document.body.style.backgroundImage);
+                pulsarDiv.style.display = 'block';
+            }
+    
+            updropMenu.classList.remove('active'); // Close the menu after a selection
+        });
+    });
+    
+    document.addEventListener('click', (e) => {
+        if (!updropButton.contains(e.target) && !updropMenu.contains(e.target)) {
+            updropMenu.classList.remove('active'); // Close the menu if clicked outside
+        }
+    });
+    
+    </script>    
     <script>
-const addTabButton = document.getElementById('addTab');
-const tabsContainer = document.getElementById('tabsContainer');
-let tabCount = 0;
-
-// Function to adjust the size of the tabs
-function adjustTabSize() {
-    const containerWidth = tabsContainer.offsetWidth;
-    const containerRightEdge = tabsContainer.getBoundingClientRect().right;
-    let totalWidth = 0;
-    let tabs = Array.from(tabsContainer.children);
-
-    // Calculate the total width of all tabs excluding the "Add Tab" button
-    tabs.forEach(tab => {
-        if (tab !== addTabButton) {
-            totalWidth += tab.offsetWidth;
-        }
-    });
-
-    // Check the right side of the page (container) and adjust the width of tabs if close to the right
-    if (containerRightEdge >= window.innerWidth - 50) {
-        const newWidth = (window.innerWidth - 50 - addTabButton.offsetWidth) / (tabs.length - 1);
-        tabs.forEach(tab => {
-            if (tab !== addTabButton) {
-                tab.style.width = `${newWidth}px`;
-            }
-        });
-    } else {
-        tabs.forEach(tab => {
-            if (tab !== addTabButton) {
-                tab.style.width = '';
-            }
-        });
+    const color = option.getAttribute('data-color');
+    
+    if (color === 'black-solid') {
+        document.body.style.backgroundImage = 'linear-gradient(315deg, #000000, #000000)';
+    } else if (color === 'green-gradient') {
+        document.body.style.backgroundImage = 'linear-gradient(315deg, #00cc66, #003300)';
+    } else if (color === 'red-gradient') {
+        document.body.style.backgroundImage = 'linear-gradient(315deg, #ff0000, #8b0000)';
+    } else if (color === 'blue-gradient') {
+        document.body.style.backgroundImage = 'linear-gradient(315deg, #00aaff, #0044cc)';
+    } else if (color === 'white-gradient') {
+        document.body.style.backgroundImage = 'linear-gradient(315deg, #ffffff, #f0f0f0)'; // White gradient
+    } else if (color === 'yellow-gradient') {
+        document.body.style.backgroundImage = 'linear-gradient(315deg, #ffff00, #ffcc00)'; // Yellow gradient
+    } else if (color === 'orange-gradient') {
+        document.body.style.backgroundImage = 'linear-gradient(315deg, #ff6600, #ff3300)'; // Orange gradient
+    } else if (color === 'blu-gradient') {
+        document.body.style.backgroundImage = 'linear-gradient(315deg, #080ba3, black)'; // Blue gradient
     }
-}
-
-function createTab() {
-    const tab = document.createElement('div');
-    tab.classList.add('tab');
-
-    // Tab header with input and close button (no uv-address here)
-    tab.innerHTML = `
-        <input type="text" value="New Tab" readonly>
-        <i class="fa fa-times close-tab"></i>
-    `;
-
-    // No uv-address input inside the tab content anymore
-    const tabContent = document.createElement('div');
-    tabContent.classList.add('tab-content');
-
-    tab.appendChild(tabContent); // Add content inside the tab
-
-    const closeTabButton = tab.querySelector('.close-tab');
-    closeTabButton.addEventListener('click', () => {
-        tab.remove();
-        adjustTabSize(); // Re-adjust tab size after removal
-    });
-
-    tab.addEventListener('click', () => {
-        // Remove active class from all tabs
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-
-        // Add active class to the clicked tab
-        tab.classList.add('active');
-
-        // Hide content of all tabs and show content of the active tab
-        document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
-        tabContent.style.display = 'block';
-    });
-
-    tabsContainer.insertBefore(tab, addTabButton); // Insert the new tab before the "Add Tab" button
-    tabCount++;
-    adjustTabSize(); // Adjust tab size when a tab is added
-
-    // Automatically select the new tab
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-
-    // Hide the content of all tabs except the active one
-    document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
-    tabContent.style.display = 'block';  // Show the content of the new tab
-}
-
-
-// Add event listener to the "Add Tab" button
-addTabButton.addEventListener('click', createTab);
-
-// Automatically create one tab when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    createTab();
-});
-
-// Recalculate tab sizes when the window is resized
-window.addEventListener('resize', adjustTabSize);
-
+    
+    
+    // Save the selected background to localStorage
+    localStorage.setItem('bgColor', document.body.style.backgroundImage);
+    
+    // Display pulsarDiv after the background change
+    pulsarDiv.style.display = 'block';
+    
     </script>
     
-
+        <script>
+    const addTabButton = document.getElementById('addTab');
+    const tabsContainer = document.getElementById('tabsContainer');
+    let tabCount = 0;
     
-<script>
-    const customCursor = document.getElementById('customCursor');
-    const spikes = document.getElementById('spikes');
-    let mouseX = 0;
-    let mouseY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX; // Get mouse position relative to the viewport
-        mouseY = e.clientY;
-        customCursor.style.display = 'block'; // Show the cursor on mouse move
+    // Function to adjust the size of the tabs
+    function adjustTabSize() {
+        const containerWidth = tabsContainer.offsetWidth;
+        const containerRightEdge = tabsContainer.getBoundingClientRect().right;
+        let totalWidth = 0;
+        let tabs = Array.from(tabsContainer.children);
+    
+        // Calculate the total width of all tabs excluding the "Add Tab" button
+        tabs.forEach(tab => {
+            if (tab !== addTabButton) {
+                totalWidth += tab.offsetWidth;
+            }
+        });
+    
+        // Check the right side of the page (container) and adjust the width of tabs if close to the right
+        if (containerRightEdge >= window.innerWidth - 50) {
+            const newWidth = (window.innerWidth - 50 - addTabButton.offsetWidth) / (tabs.length - 1);
+            tabs.forEach(tab => {
+                if (tab !== addTabButton) {
+                    tab.style.width = `${newWidth}px`;
+                }
+            });
+        } else {
+            tabs.forEach(tab => {
+                if (tab !== addTabButton) {
+                    tab.style.width = '';
+                }
+            });
+        }
+    }
+    
+    function createTab() {
+        const tab = document.createElement('div');
+        tab.classList.add('tab');
+    
+        // Tab header with input and close button (no uv-address here)
+        tab.innerHTML = `
+            <input type="text" value="New Tab" readonly>
+            <i class="fa fa-times close-tab"></i>
+        `;
+    
+        // No uv-address input inside the tab content anymore
+        const tabContent = document.createElement('div');
+        tabContent.classList.add('tab-content');
+    
+        tab.appendChild(tabContent); // Add content inside the tab
+    
+        const closeTabButton = tab.querySelector('.close-tab');
+        closeTabButton.addEventListener('click', () => {
+            tab.remove();
+            adjustTabSize(); // Re-adjust tab size after removal
+        });
+    
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    
+            // Add active class to the clicked tab
+            tab.classList.add('active');
+    
+            // Hide content of all tabs and show content of the active tab
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            tabContent.style.display = 'block';
+        });
+    
+        tabsContainer.insertBefore(tab, addTabButton); // Insert the new tab before the "Add Tab" button
+        tabCount++;
+        adjustTabSize(); // Adjust tab size when a tab is added
+    
+        // Automatically select the new tab
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+    
+        // Hide the content of all tabs except the active one
+        document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+        tabContent.style.display = 'block';  // Show the content of the new tab
+    }
+    
+    
+    // Add event listener to the "Add Tab" button
+    addTabButton.addEventListener('click', createTab);
+    
+    // Automatically create one tab when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        createTab();
     });
-
-    document.addEventListener('mouseleave', () => {
-        customCursor.style.display = 'none'; // Hide the custom cursor when leaving the page
-    });
-
-    document.addEventListener('mouseenter', () => {
-        customCursor.style.display = 'block'; // Show the custom cursor when re-entering the page
-    });
-
-    function updateCursor() {
-        // Set the position of the custom cursor
-        customCursor.style.left = `${mouseX}px`;
-        customCursor.style.top = `${mouseY}px`;
-
-        // Teleport if it's more than 10 pixels away from the mouse position
-        const cursorRect = customCursor.getBoundingClientRect();
-        if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
+    
+    // Recalculate tab sizes when the window is resized
+    window.addEventListener('resize', adjustTabSize);
+    
+        </script>
+        
+    
+        
+    <script>
+        const customCursor = document.getElementById('customCursor');
+        const spikes = document.getElementById('spikes');
+        let mouseX = 0;
+        let mouseY = 0;
+    
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX; // Get mouse position relative to the viewport
+            mouseY = e.clientY;
+            customCursor.style.display = 'block'; // Show the cursor on mouse move
+        });
+    
+        document.addEventListener('mouseleave', () => {
+            customCursor.style.display = 'none'; // Hide the custom cursor when leaving the page
+        });
+    
+        document.addEventListener('mouseenter', () => {
+            customCursor.style.display = 'block'; // Show the custom cursor when re-entering the page
+        });
+    
+        function updateCursor() {
+            // Set the position of the custom cursor
             customCursor.style.left = `${mouseX}px`;
             customCursor.style.top = `${mouseY}px`;
+    
+            // Teleport if it's more than 10 pixels away from the mouse position
+            const cursorRect = customCursor.getBoundingClientRect();
+            if (Math.abs(mouseX - cursorRect.left) > 10 || Math.abs(mouseY - cursorRect.top) > 10) {
+                customCursor.style.left = `${mouseX}px`;
+                customCursor.style.top = `${mouseY}px`;
+            }
+            requestAnimationFrame(updateCursor);
         }
         requestAnimationFrame(updateCursor);
+    
+        const hoverElements = document.querySelectorAll('.nav-button');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                spikes.classList.add('visible');
+            });
+            element.addEventListener('mouseleave', () => {
+                spikes.classList.remove('visible');
+            });
+        });
+    </script>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+    const savedBg = localStorage.getItem('bgColor');
+    if (savedBg) {
+        document.body.style.backgroundImage = savedBg;
     }
-    requestAnimationFrame(updateCursor);
-
-    const hoverElements = document.querySelectorAll('.nav-button');
-    hoverElements.forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            spikes.classList.add('visible');
-        });
-        element.addEventListener('mouseleave', () => {
-            spikes.classList.remove('visible');
-        });
     });
-</script>
-<script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-const savedBg = localStorage.getItem('bgColor');
-if (savedBg) {
-    document.body.style.backgroundImage = savedBg;
-}
-});
-
-</script>
-<script src="assets/script.js" defer></script>
-</body>
-</html>
+    
+    </script>
+    <script src="assets/script.js" defer></script>
+    </body>
+    </html>
