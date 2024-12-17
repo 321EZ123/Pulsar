@@ -55,7 +55,7 @@
 .custom-dropdown-button {
     padding: 12px 20px; /* Adjust padding for exact button appearance */
     font-size: 16px;
-    background-color: #0077ff;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -72,7 +72,7 @@
 }
 
 .custom-dropdown-button:hover {
-    background-color: #005cbf; /* Darker blue on hover */
+    background-color: #111; /* Darker blue on hover */
     transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
@@ -85,7 +85,7 @@
     top: 100%; /* Position dropdown below the button */
     left: 0;
     right: 0;
-    background-color: #0077ff;
+    background-color: #000000;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 100;
@@ -102,12 +102,12 @@
     display: block;
     color: #fff;
     text-decoration: none;
-    border-bottom: 1px solid #005cbf;
+    border-bottom: 1px solid #000000;
     transition: background-color 0.3s ease; /* Smooth background on hover */
 }
 
 .dropdown-options a:hover {
-    background-color: #005cbf;
+    background-color: #111;
 }
 
 /* Show dropdown options when hovering over the button */
@@ -161,7 +161,6 @@
         <i class="fas fa-book"></i> 
     </a>
 
-    <br><br><br><br><br>
 
     <!-- Custom Dropdown Menu -->
     <div class="custom-dropdown">
@@ -177,8 +176,6 @@
         </div>
     </div>
 
-</br></br></br>
-</br></br></br>
 </br></br></br>
 </br></br></br>
 </br></br></br>
@@ -248,5 +245,29 @@
             customCursor.style.top = `${e.pageY}px`;
         });
     </script>
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+        const savedBg = localStorage.getItem('bgColor');
+        if (savedBg) {
+            document.body.style.backgroundImage = savedBg;
+        }
+    });
+    // Apply saved background and hover colors from local storage on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedBg = localStorage.getItem('bgColor');
+    const savedNavHoverColor = localStorage.getItem('navHoverColor');
+
+    // Apply the background color if saved in localStorage
+    if (savedBg) {
+        document.body.style.backgroundImage = savedBg;
+    }
+
+    // Apply the hover color for navigation if saved in localStorage
+    if (savedNavHoverColor) {
+        document.documentElement.style.setProperty('--nav-hover-color', savedNavHoverColor);
+    }
+});
+
+        </script>
 </body>
 </html>
