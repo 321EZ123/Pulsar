@@ -26,16 +26,15 @@ body {
 /* Pulsar Core - Glowing effect combined with sphere */
 .pulsar {
     animation: spin 20s linear infinite; /* Slower animation */
-    border: 1px dotted rgba(0, 229, 255, 0.2); /* Less intense blue border with lower transparency */
-    border-radius: 50%;
-    height: 150vh; /* Reduced size */
-    width: 150vw; /* Reduced size */
+    height: 170vh; /* Reduced size */
+    width: 170vw; /* Reduced size */
     position: fixed; /* Fixed position in the viewport */
     top: -10vh; /* Slightly off-screen vertically */
     left: -10vw; /* Slightly off-screen horizontally */
     z-index: -1; /* Keep behind other elements */
     transform-style: preserve-3d;
-    box-shadow: 0 0 40px rgba(0, 229, 255, 0.3); /* Simplified glow */
+    border-radius: 100%;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3); /* Simplified glow */
     background-image: linear-gradient(315deg, rgba(8, 11, 163, 0.3), rgba(0, 0, 0, 0.6)); /* Slightly less intense gradient */
     will-change: transform; /* Enable GPU acceleration */
 }
@@ -119,6 +118,13 @@ body {
     height: 24px;
     width: 24px;
 }
+:root {
+    --nav-hover-color: #080ba3; /* Default color */
+}
+
+.tabs-container button:hover {
+    background-color: var(--nav-hover-color);
+}
 
 .nav-button:hover {
     background: #0077ff;
@@ -126,28 +132,28 @@ body {
 }
 /* For WebKit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
-    width: 12px; /* Width of the scrollbar */
+    width: 11px; /* Width of the scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-    background: #111; /* Track color */
+    background: #000000; /* Track color */
     border-radius: 10px; /* Rounded corners for the track */
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #0077ff; /* Thumb color */
+    background: #000000; /* Thumb color */
     border-radius: 10px; /* Rounded corners for the thumb */
     transition: background 0.3s; /* Smooth transition */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #0077ff; /* Change thumb color on hover */
+    background: #000000; /* Change thumb color on hover */
 }
 
 /* For Firefox */
 * {
     scrollbar-width: thin; /* Make scrollbar thinner */
-    scrollbar-color: #0077ff #393e46; /* Thumb and track color */
+    scrollbar-color: #000000 #000000; /* Thumb and track color */
 }
 
 /* For IE and Edge */
@@ -166,10 +172,7 @@ body {
     position: fixed;
     width: 25px;
     height: 35px;
-    background-color: rgba(0, 82, 155, 0.8); /* Darker and more vibrant blue */
-    box-shadow: 0 0 50px rgba(0, 82, 155, 1),   /* Darker, more intense glow */
-                0 0 100px rgba(0, 82, 155, 0.8), /* Stronger glow */
-                0 0 150px rgba(0, 82, 155, 0.5); /* Very intense glowing effect */
+    background-color: rgba(0, 0, 0, 0.8); /* Darker and more vibrant blue */
         clip-path: polygon(
         0 0,        /* Top-left of the arrowhead */
         100% 50%,   /* Tip of the arrowhead */
@@ -205,6 +208,7 @@ body:hover .custom-cursor {
 
 /* Create custom dropdown-style menu */
 .custom-dropdown {
+    backgroudn-color: black;
     top: 70px;
     right: 16px;
     position: absolute;
@@ -234,7 +238,7 @@ body:hover .custom-cursor {
 }
 
 .custom-dropdown-button:hover {
-    background-color: #005cbf; /* Darker blue on hover */
+    background-color: #111; /* Darker blue on hover */
     transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
@@ -246,7 +250,7 @@ body:hover .custom-cursor {
     position: absolute;
     top: 0; /* Align the dropdown vertically */
     left: -315%; /* Position the dropdown to the left of the button */
-    background-color: #0077ff;
+    background-color: #000000;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 100;
@@ -263,12 +267,12 @@ body:hover .custom-cursor {
     display: block;
     color: #fff;
     text-decoration: none;
-    border-bottom: 1px solid #005cbf;
+    border-bottom: 1px solid #000000;
     transition: background-color 0.3s ease; /* Smooth background on hover */
 }
 
 .dropdown-options a:hover {
-    background-color: #005cbf;
+    background-color: #111;
 }
 
 /* Show dropdown options when hovering over the button */
@@ -338,44 +342,7 @@ body:hover .custom-cursor {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); /* Subtle glow */
 }
 
-#stitle {
-    text-align: center;
-    font-size: 7rem; /* Adjust as necessary */
-    color: #ffffff; /* Text color */
-    text-shadow: 
-        0 0 5px rgba(7, 105, 234, 0.8), /* Inner glow */
-        0 0 10px rgba(7, 105, 234, 0.5), /* Middle glow */
-        0 0 20px rgba(7, 105, 234, 0.3); /* Outer glow */
-    animation: glowFadeAnim 3s ease-in-out infinite alternate; /* Combined animation */
-    animation: appear .6s ease-in-out; /* Animation happens instantly on load */
-}
 
-@keyframes appear {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-#memo {
-    text-align: center;
-    align: center;
-    font-size: 1.1em;
-    color: #f0f0f0;
-    margin-top: 10px; /* Space between "Pulsar" and the memo */
-    font-style: italic; /* Optional: adds an italic style for a softer look */
-    animation: appear .8s ease-in-out; /* Animation happens instantly on load */
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
 #sigma {
     font-size: 25px;
     text-align: center;
