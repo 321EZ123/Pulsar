@@ -220,6 +220,7 @@ main {
     position: inherit;
     min-height: 17%;
     max-height: 17%;
+    top: 0;
 }
 footer {
     background-color: #000000;
