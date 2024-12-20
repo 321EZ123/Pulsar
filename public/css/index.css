@@ -136,24 +136,24 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #000000; /* Track color */
+    background: #000000; /* Track color (black) */
     border-radius: 10px; /* Rounded corners for the track */
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ffffff; /* Thumb color */
+    background: #ffffff; /* Thumb color (white) */
     border-radius: 10px; /* Rounded corners for the thumb */
     transition: background 0.3s; /* Smooth transition */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #ffffff; /* Change thumb color on hover */
+    background: #ffffff; /* Keep thumb white on hover */
 }
 
 /* For Firefox */
 * {
     scrollbar-width: thin; /* Make scrollbar thinner */
-    scrollbar-color: #000000 #000000; /* Thumb and track color */
+    scrollbar-color: #ffffff #000000; /* Thumb is white, track is black */
 }
 
 /* For IE and Edge */
