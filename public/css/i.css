@@ -215,12 +215,11 @@ main {
     padding: 0.75rem 1rem;
     gap: 1rem;
     position: fixed;
-    top: 0;
     z-index: 499;
     position: inherit;
     min-height: 17%;
     max-height: 17%;
-    top: 0;
+    top: -80;
 }
 footer {
     background-color: #000000;
