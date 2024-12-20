@@ -141,13 +141,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #000000; /* Thumb color */
+    background: #ffffff; /* Thumb color */
     border-radius: 10px; /* Rounded corners for the thumb */
     transition: background 0.3s; /* Smooth transition */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #000000; /* Change thumb color on hover */
+    background: #ffffff; /* Change thumb color on hover */
 }
 
 /* For Firefox */
