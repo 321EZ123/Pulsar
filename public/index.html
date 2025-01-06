@@ -29,17 +29,20 @@
         }
         window.addEventListener('keydown', redirectToNewURL);
     </script>
-  <script src="dist/uv.bundle.js"></script> <!-- Ensure this points to the correct path -->
-  <script>
-    const uv = new UV({
-      prefix: '/service/', // Match the prefix in `uv.config.js`
-      bare: '/bare/',
-    });
-  </script>
 
-<script src="uv/uv.bundle.js"></script>
-<script src="uv/uv.config.js"></script>
-<script src="assets/register-sw.js"></script>
+<script src="/uv/uv.bundle.js"></script>
+<script src="/uv/uv.config.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/uv/sw.js", {
+            scope: __uv$config.prefix,
+        });
+    });
+}
+</script>
+
 </head>
 <body>
     <div class="pulsar"></div>
@@ -79,22 +82,12 @@
     <h1 id="stitle">Pulsar</h1>
     <p id="memo">Browse the web unblocked, for free</p>
 
-    <form id="proxy-form">
-        <input type="text" id="proxy-url" placeholder="Search Pulsar or enter a URL" required>
-        <button type="submit">Go</button>
-      </form>
-      <script>
-        document.getElementById('proxy-form').addEventListener('submit', function(e) {
-          e.preventDefault(); // Prevent form submission
-          const url = document.getElementById('proxy-url').value.trim();
-          if (url) {
-            // Redirect to the proxied URL
-            window.location.href = uv.prefix + uv.encodeUrl(url);
-          } else {
-            alert('Please enter a valid URL.');
-          }
-        });
-      </script>
+      <div class="container">
+      <input type="text" id="urlInput" placeholder="Search Pulsar or enter a URL">
+      <button id="searchButton">Search Text</button>
+        </div>
+      <iframe id="iframeWindow" class="iframeWindow"></iframe>
+
     <span id="sigma">
         <a id="sigma" href="https://discord.gg/YqvG3k9YMd" target="_blank" class="fa-brands fa-discord"></a>
         <a id="sigma" href="https://github.com/Yeti1o1/Pulsar" target="_blank"class="fa-brands fa-github"></a>
@@ -366,6 +359,6 @@
     });
     
     </script>
-    <script src="assets/script.js" defer></script>
-    </body>
-    </html>
+    <script src="example.js"></script>
+</body>
+</html>

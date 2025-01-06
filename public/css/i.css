@@ -25,7 +25,7 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 }
-#uv-address {
+#urlInput {
     flex: 1;
     padding: 14px; /* Increase padding */
     font-size: 18px; /* Slightly larger font */
